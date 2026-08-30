@@ -59,10 +59,12 @@ foram **substituídos por trechos reais da fala**, aprovados pelo cliente:
 - **Legendas:** só palavras-chave em destaque (cor de marca + leve scale),
   fonte grande e legível, faixa inferior central, sem cobrir o rosto — nunca
   legenda verbatim contínua.
-- **B-roll:** imagens contextualizando a fala (pessoas sendo acolhidas, mãos
-  estendidas, Bíblia/versículos, igreja, atendimento terapêutico, símbolos de
-  cuidado), entrando/saindo com movimento sutil (não estático). Buscar via
-  `/media-use` primeiro; gerar via Kairogen MCP (Nano Banana 2) o que faltar.
+- **B-roll:** **motion design nativo (HTML+CSS+SVG+GSAP)**, sem fotos/imagens
+  geradas — decisão tomada com o cliente depois que os 3 caminhos de mídia
+  externa se mostraram bloqueados pela rede deste ambiente (ver Notes).
+  Tipografia grande, ícones desenhados em SVG, listas/contadores animados,
+  formas geométricas com movimento sutil (não estático) para contextualizar
+  cada beat.
 - **Design:** paleta e tipografia a definir na etapa de composição (preset
   sóbrio/acolhedor, compatível com conteúdo de fé — evitar tom corporativo
   frio).
@@ -82,5 +84,11 @@ foram **substituídos por trechos reais da fala**, aprovados pelo cliente:
 - Transcrição automática via whisper.cpp falhou (download do modelo bloqueado
   por política de rede — `huggingface.co` inacessível). Contornado com a
   transcrição em PDF fornecida pelo cliente.
+- B-roll fotográfico/gerado por IA não foi possível: Kairogen MCP
+  desconectado (não reconectou), e os dois fallbacks também bloqueados pela
+  política de rede — `huggingface.co`/mirrors para modelos locais, e o
+  domínio `heygen.com` inteiro (catálogo de fotos do `/media-use`). Decisão
+  confirmada com o cliente: seguir com motion design nativo em vez de
+  esperar/depender de mídia externa.
 - Mídia bruta e renders ficam fora do git (`.gitignore` na raiz do repo) —
   só o código da composição é versionado.
