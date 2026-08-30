@@ -273,3 +273,85 @@ ${animLines.join("\n")}
 
 fs.writeFileSync(path.join(PROJECT, "index.html"), html);
 console.log(`\nWrote index.html (${(html.length / 1024).toFixed(0)} KB), duration ${num(NEW_DURATION)}s`);
+
+// ---- 8. Split into 6 independently-renderable chunks -----------------------
+// A single 30min/54k-frame render exhausted disk (a persistent 21GB frame
+// cache) and blew past the CLI's internal ffmpeg-extraction timeout. Six
+// ~5min chunks (~9k frames each) render individually, then get stitched back
+// with a cheap `-c copy` concat — same fix shape as the base-video cuts, one
+// level up.
+const N_CHUNKS = 6;
+const MARGIN = 0.5;
+
+function chunkBoundaries(nChunks, totalDuration, beats) {
+  const raw = Array.from({ length: nChunks - 1 }, (_, i) => (totalDuration * (i + 1)) / nChunks);
+  return raw.map((b) => {
+    const hit = beats.find((beat) => b > beat.newAt - MARGIN && b < beat.newAt + beat.dur + MARGIN);
+    if (!hit) return b;
+    // Prefer pushing the boundary just past the beat; fall back to just before it.
+    const after = hit.newAt + hit.dur + MARGIN;
+    const before = hit.newAt - MARGIN;
+    return after <= totalDuration ? after : before;
+  });
+}
+
+const cuts = [0, ...chunkBoundaries(N_CHUNKS, NEW_DURATION, BEATS), NEW_DURATION];
+// 1-indexed (chunk-1.html .. chunk-6.html) so they read naturally when joining them later.
+const chunks = cuts.slice(0, -1).map((start, i) => ({ index: i + 1, start, end: cuts[i + 1] }));
+
+fs.writeFileSync(path.join(PROJECT, "build", "chunks.json"), JSON.stringify(chunks, null, 2));
+
+function chunkHtml(chunk) {
+  const compId = `chunk${chunk.index}`;
+  const dur = num(chunk.end - chunk.start);
+  const localBeats = BEATS.filter((b) => b.newAt >= chunk.start - 0.01 && b.newAt < chunk.end - 0.01).map((b) => ({
+    ...b,
+    newAt: num(b.newAt - chunk.start),
+  }));
+
+  const chunkOverlays = localBeats
+    .map((b) => {
+      if (b.id === "b-pilares") return pilaresHtml(b);
+      if (b.id === "b-chamado-preparo") return chamadoPreparoHtml(b);
+      return captionHtml(b);
+    })
+    .join("\n\n");
+
+  const chunkAnimLines = [];
+  for (const b of localBeats) {
+    if (b.id === "b-pilares") {
+      PILLARS.forEach((_, i) => {
+        const at = num(b.newAt + 0.35 + i * 0.85);
+        chunkAnimLines.push(`  tl.fromTo("#${b.id}-p${i}", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, ${at});`);
+      });
+    } else if (b.id === "b-chamado-preparo") {
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, ${num(b.newAt + 0.15)});`);
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-right", { autoAlpha: 0, xPercent: 14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, ${num(b.newAt + 0.15)});`);
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, ${num(b.newAt + 0.7)});`);
+    } else {
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, ${num(b.newAt + 0.1)});`);
+      chunkAnimLines.push(`  tl.fromTo("#${b.id} .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, ${num(b.newAt)});`);
+    }
+  }
+
+  const chunkMediaClip = `      <video id="base" class="clip talking-head" src="${BASE_VIDEO}" data-start="0" data-duration="${dur}" data-media-start="${num(chunk.start)}" data-has-audio="true" data-track-index="${TRACK_VIDEO}" playsinline></video>`;
+
+  return html
+    .replace(/data-composition-id="main"/, `data-composition-id="${compId}"`)
+    .replace(`data-duration="${num(NEW_DURATION)}"`, `data-duration="${dur}"`)
+    .replace(mediaClips, chunkMediaClip)
+    .replace(overlayClips, chunkOverlays || "      <!-- no beats in this chunk -->")
+    .replace(animLines.join("\n"), chunkAnimLines.join("\n"))
+    .replace('window.__timelines["main"]', `window.__timelines["${compId}"]`)
+    .replace("<title>Terapia com Alma — Aula 1 (VSL)</title>", `<title>Terapia com Alma — chunk ${chunk.index}</title>`);
+}
+
+for (const chunk of chunks) {
+  fs.writeFileSync(path.join(PROJECT, `chunk-${chunk.index}.html`), chunkHtml(chunk));
+}
+
+console.log(`\nWrote ${chunks.length} chunk files:`);
+for (const c of chunks) {
+  const beatsIn = BEATS.filter((b) => b.newAt >= c.start - 0.01 && b.newAt < c.end - 0.01).map((b) => b.id);
+  console.log(`  chunk-${c.index}.html: [${c.start.toFixed(1)}s, ${c.end.toFixed(1)}s) dur=${(c.end - c.start).toFixed(1)}s beats=[${beatsIn.join(", ") || "none"}]`);
+}

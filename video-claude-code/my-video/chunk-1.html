@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Terapia com Alma — chunk 1</title>
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg: #0b0e14;
+        --ink: #f5f1e8;
+        --accent: #d4a24e;
+        --accent-2: #7c9885;
+      }
+      body { margin: 0; background: var(--bg); color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+      .clip { position: absolute; inset: 0; }
+      .talking-head { width: 100%; height: 100%; object-fit: cover; }
+
+      /* Keyword caption card: lower-third center, never over the face */
+      .caption-card {
+        display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+        padding-bottom: 90px; text-align: center; pointer-events: none;
+      }
+      .caption-pre {
+        margin: 0 0 6px; font-size: 34px; font-weight: 400; color: var(--ink);
+        text-shadow: 0 2px 12px rgba(0,0,0,.65);
+      }
+      .caption-word {
+        margin: 0; font-size: 76px; font-weight: 800; letter-spacing: 0.5px;
+        color: var(--accent); text-shadow: 0 4px 18px rgba(0,0,0,.7);
+      }
+
+      /* Full-screen cutaway graphics */
+      .cutaway { background: linear-gradient(160deg, #0b0e14 0%, #141a24 100%); display: grid; place-items: center; }
+      .cutaway-inner { width: 1500px; }
+      .cutaway-title { text-align: center; font-size: 40px; letter-spacing: 4px; color: var(--accent-2); margin: 0 0 56px; font-weight: 700; }
+      .pillars { display: flex; flex-direction: column; gap: 22px; }
+      .pillar { display: flex; align-items: center; gap: 28px; background: rgba(255,255,255,0.04); border-left: 6px solid var(--accent); border-radius: 8px; padding: 20px 36px; }
+      .pillar-n { font-size: 44px; font-weight: 800; color: var(--accent); width: 90px; }
+      .pillar-label { font-size: 44px; font-weight: 700; color: var(--ink); letter-spacing: 1px; }
+
+      .compare { display: flex; align-items: center; justify-content: center; gap: 70px; width: 1700px; }
+      .compare-side { flex: 1; background: rgba(255,255,255,0.04); border-radius: 12px; padding: 56px 44px; text-align: center; }
+      .compare-line { font-size: 40px; font-weight: 700; margin: 0 0 18px; color: var(--ink); }
+      .compare-line .hl { color: var(--accent); }
+      .compare-result { font-size: 30px; color: #c9c2b3; margin: 0; }
+      .compare-plus { font-size: 64px; font-weight: 800; color: var(--accent-2); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="chunk1" data-start="0" data-width="1920" data-height="1080" data-duration="302.434">
+      <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="302.434" data-media-start="0" data-has-audio="true" data-track-index="0" playsinline></video>
+
+      <section id="b-pilares" class="clip cutaway" data-start="294.734" data-duration="7.2" data-track-index="5">
+        <div class="cutaway-inner">
+          <h2 class="cutaway-title">OS 5 PILARES DA FORMAÇÃO</h2>
+          <div class="pillars" id="b-pilares-list">
+          <div class="pillar" id="b-pilares-p0">
+            <span class="pillar-n">01</span>
+            <span class="pillar-label">CHAMADO</span>
+          </div>
+          <div class="pillar" id="b-pilares-p1">
+            <span class="pillar-n">02</span>
+            <span class="pillar-label">TRANSFORMAÇÃO</span>
+          </div>
+          <div class="pillar" id="b-pilares-p2">
+            <span class="pillar-n">03</span>
+            <span class="pillar-label">DEPENDÊNCIA</span>
+          </div>
+          <div class="pillar" id="b-pilares-p3">
+            <span class="pillar-n">04</span>
+            <span class="pillar-label">PREPARO</span>
+          </div>
+          <div class="pillar" id="b-pilares-p4">
+            <span class="pillar-n">05</span>
+            <span class="pillar-label">SERVIÇO</span>
+          </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#b-pilares-p0", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 295.084);
+  tl.fromTo("#b-pilares-p1", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 295.934);
+  tl.fromTo("#b-pilares-p2", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 296.784);
+  tl.fromTo("#b-pilares-p3", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 297.634);
+  tl.fromTo("#b-pilares-p4", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 298.484);
+      window.__timelines["chunk1"] = tl;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Terapia com Alma — chunk 4</title>
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg: #0b0e14;
+        --ink: #f5f1e8;
+        --accent: #d4a24e;
+        --accent-2: #7c9885;
+      }
+      body { margin: 0; background: var(--bg); color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+      .clip { position: absolute; inset: 0; }
+      .talking-head { width: 100%; height: 100%; object-fit: cover; }
+
+      /* Keyword caption card: lower-third center, never over the face */
+      .caption-card {
+        display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+        padding-bottom: 90px; text-align: center; pointer-events: none;
+      }
+      .caption-pre {
+        margin: 0 0 6px; font-size: 34px; font-weight: 400; color: var(--ink);
+        text-shadow: 0 2px 12px rgba(0,0,0,.65);
+      }
+      .caption-word {
+        margin: 0; font-size: 76px; font-weight: 800; letter-spacing: 0.5px;
+        color: var(--accent); text-shadow: 0 4px 18px rgba(0,0,0,.7);
+      }
+
+      /* Full-screen cutaway graphics */
+      .cutaway { background: linear-gradient(160deg, #0b0e14 0%, #141a24 100%); display: grid; place-items: center; }
+      .cutaway-inner { width: 1500px; }
+      .cutaway-title { text-align: center; font-size: 40px; letter-spacing: 4px; color: var(--accent-2); margin: 0 0 56px; font-weight: 700; }
+      .pillars { display: flex; flex-direction: column; gap: 22px; }
+      .pillar { display: flex; align-items: center; gap: 28px; background: rgba(255,255,255,0.04); border-left: 6px solid var(--accent); border-radius: 8px; padding: 20px 36px; }
+      .pillar-n { font-size: 44px; font-weight: 800; color: var(--accent); width: 90px; }
+      .pillar-label { font-size: 44px; font-weight: 700; color: var(--ink); letter-spacing: 1px; }
+
+      .compare { display: flex; align-items: center; justify-content: center; gap: 70px; width: 1700px; }
+      .compare-side { flex: 1; background: rgba(255,255,255,0.04); border-radius: 12px; padding: 56px 44px; text-align: center; }
+      .compare-line { font-size: 40px; font-weight: 700; margin: 0 0 18px; color: var(--ink); }
+      .compare-line .hl { color: var(--accent); }
+      .compare-result { font-size: 30px; color: #c9c2b3; margin: 0; }
+      .compare-plus { font-size: 64px; font-weight: 800; color: var(--accent-2); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="chunk4" data-start="0" data-width="1920" data-height="1080" data-duration="299.302">
+      <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="299.302" data-media-start="897.907" data-has-audio="true" data-track-index="0" playsinline></video>
+
+      <div id="b-pessoas" class="clip caption-card" data-start="34.869" data-duration="2.4" data-track-index="5">
+        <p class="caption-pre">ele trabalha com</p>
+        <p class="caption-word" id="b-pessoas-word">PESSOAS</p>
+      </div>
+
+      <div id="b-vidas" class="clip caption-card" data-start="62.479" data-duration="2.6" data-track-index="5">
+        <p class="caption-pre">você atende</p>
+        <p class="caption-word" id="b-vidas-word">VIDAS</p>
+      </div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#b-pessoas-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 34.969);
+  tl.fromTo("#b-pessoas .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 34.869);
+  tl.fromTo("#b-vidas-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 62.579);
+  tl.fromTo("#b-vidas .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 62.479);
+      window.__timelines["chunk4"] = tl;
+    </script>
+  </body>
+</html>
