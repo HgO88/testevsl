@@ -474,11 +474,7 @@ const html = `<!doctype html>
         --accent-2: #7c9885;
       }
       body { margin: 0; background: var(--bg); color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
-      /* Authored at 1920x1080 (every px size is tuned for it) but rendered at
-         1280x720 — client asked to drop to 720p for render speed. Scaling the
-         root keeps the whole layout identical, just smaller. */
-      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000;
-              transform: scale(0.6666667); transform-origin: top left; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
       .clip { position: absolute; inset: 0; }
       .talking-head { width: 100%; height: 100%; object-fit: cover; }
 
@@ -564,7 +560,7 @@ const html = `<!doctype html>
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-width="1280" data-height="720" data-duration="${num(NEW_DURATION)}">
+    <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="${num(NEW_DURATION)}">
 ${mediaClips}
 
 ${overlayClips}
