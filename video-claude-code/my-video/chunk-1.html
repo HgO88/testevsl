@@ -75,6 +75,32 @@
     <div id="root" data-composition-id="chunk1" data-start="0" data-width="1920" data-height="1080" data-duration="302.434">
       <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="302.434" data-media-start="0" data-has-audio="true" data-track-index="0" playsinline></video>
 
+      <div id="b-intro-chamado" class="clip caption-card" data-start="2.297" data-duration="2.4" data-track-index="5">
+        <p class="caption-pre">você foi</p>
+        <p class="caption-word" id="b-intro-chamado-word">CHAMADO?</p>
+      </div>
+
+      <div id="b-confesso" class="clip camcorder-hud" data-start="89.498" data-duration="6.5" data-track-index="5">
+        <span class="cam-corner tl"></span>
+        <span class="cam-corner tr"></span>
+        <span class="cam-corner bl"></span>
+        <span class="cam-corner br"></span>
+        <div class="cam-battery"><span class="cam-battery-icon"></span></div>
+        <div class="cam-rec"><span class="cam-rec-dot" id="b-confesso-dot"></span>REC</div>
+        <div class="cam-4k">4K 60FPS</div>
+        <div class="cam-hd">HD</div>
+      </div>
+
+      <div id="b-preparo-intro" class="clip caption-card" data-start="152.312" data-duration="2.4" data-track-index="5">
+        <p class="caption-pre">cuidar de vida exige</p>
+        <p class="caption-word" id="b-preparo-intro-word">PREPARO</p>
+      </div>
+
+      <div id="b-essencia" class="clip caption-card" data-start="236.106" data-duration="2.8" data-track-index="5">
+        <p class="caption-pre">não podemos perder a</p>
+        <p class="caption-word" id="b-essencia-word">ESSÊNCIA DO CHAMADO</p>
+      </div>
+
       <section id="b-pilares" class="clip cutaway" data-start="294.734" data-duration="7.2" data-track-index="5">
         <div class="cutaway-bgs">
         <img class="cutaway-bg" id="b-pilares-bgimg0" src="media/broll/maos-oracao-cruz.jpg" alt="" />
@@ -113,6 +139,17 @@
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#b-intro-chamado-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 2.397);
+  tl.fromTo("#b-intro-chamado .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 2.297);
+  tl.fromTo("#base", { filter: "grayscale(0%)" }, { filter: "grayscale(100%)", duration: 0.5 }, 89.498);
+  tl.fromTo("#base", { filter: "grayscale(100%)" }, { filter: "grayscale(0%)", duration: 0.5 }, 95.498);
+  tl.fromTo("#b-confesso", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 89.498);
+  tl.to("#b-confesso", { autoAlpha: 0, duration: 0.3 }, 95.698);
+  tl.to("#b-confesso-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 16, yoyo: true }, 89.798);
+  tl.fromTo("#b-preparo-intro-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 152.412);
+  tl.fromTo("#b-preparo-intro .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 152.312);
+  tl.fromTo("#b-essencia-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 236.206);
+  tl.fromTo("#b-essencia .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 236.106);
   tl.fromTo("#b-pilares .cutaway-bgs", { scale: 1 }, { scale: 1.12, duration: 7.2, ease: "none" }, 294.734);
   tl.fromTo("#b-pilares-p0", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 295.084);
   tl.fromTo("#b-pilares-bgimg0", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, 294.734);
@@ -132,6 +169,7 @@
   tl.set("#b-pilares-bgimg4", { autoAlpha: 0 }, 294.734);
   tl.fromTo("#b-pilares-bgimg3", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.6 }, 298.484);
   tl.fromTo("#b-pilares-bgimg4", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, 298.484);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.06, duration: 302.434, ease: "none" }, 0);
       window.__timelines["chunk1"] = tl;
     </script>
   </body>

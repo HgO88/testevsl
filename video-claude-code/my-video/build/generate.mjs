@@ -109,6 +109,13 @@ console.log(`source: ${SOURCE_DURATION.toFixed(1)}s -> new timeline: ${NEW_DURAT
 // his most personal/vulnerable line ("as maiores feridas da sua história podem
 // se tornar o lugar onde Deus fará brotar o maior ministério de cuidado").
 const BEATS = [
+  // -- opening/hook reinforcement (client feedback: chunk-1 is the "chamada",
+  // it needs more energy — more keyword captions + a 2nd camcorder moment) --
+  { id: "b-intro-chamado", kind: "caption", srcAt: 3, holdBefore: 0.15, dur: 2.4, pre: "você foi", word: "CHAMADO?" },
+  { id: "b-confesso", kind: "camcorder", srcAt: 98, holdBefore: 0.1, dur: 6.5 },
+  { id: "b-preparo-intro", kind: "caption", srcAt: 163, holdBefore: 0.15, dur: 2.4, pre: "cuidar de vida exige", word: "PREPARO" },
+  { id: "b-essencia", kind: "caption", srcAt: 258, holdBefore: 0.15, dur: 2.8, pre: "não podemos perder a", word: "ESSÊNCIA DO CHAMADO" },
+  // -- original 5 approved beats --
   { id: "b-pilares", kind: "cutaway", srcAt: 323, holdBefore: 0.3, dur: 7.2 },
   { id: "b-pessoas", kind: "caption", srcAt: 1049, holdBefore: 0.15, dur: 2.4, pre: "ele trabalha com", word: "PESSOAS" },
   { id: "b-vidas", kind: "caption", srcAt: 1079, holdBefore: 0.15, dur: 2.6, pre: "você atende", word: "VIDAS" },
@@ -422,6 +429,14 @@ function chunkHtml(chunk) {
   }
 
   const chunkMediaClip = `      <video id="base" class="clip talking-head" src="${BASE_VIDEO}" data-start="0" data-duration="${dur}" data-media-start="${num(chunk.start)}" data-has-audio="true" data-track-index="${TRACK_VIDEO}" playsinline></video>`;
+
+  // Client feedback: chunk-1 is the "chamada" (opening hook) and read as too
+  // static. A subtle continuous push-in over the whole chunk keeps it feeling
+  // alive without fighting the camcorder beat's own filter tween (different
+  // property: scale vs. filter, both safe to co-animate on #base).
+  if (chunk.index === 1) {
+    chunkAnimLines.push(`  tl.fromTo("#base", { scale: 1 }, { scale: 1.06, duration: ${dur}, ease: "none" }, 0);`);
+  }
 
   return html
     .replace(/data-composition-id="main"/, `data-composition-id="${compId}"`)
