@@ -17,18 +17,18 @@
       .clip { position: absolute; inset: 0; }
       .talking-head { width: 100%; height: 100%; object-fit: cover; }
 
-      /* Keyword caption card: lower-third center, never over the face */
+      /* Highlight card — client-supplied reference: pure black frame, one line
+         of large white italic serif, centered. Replaces the earlier gold
+         bold-caps lower-third. */
       .caption-card {
-        display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-        padding-bottom: 90px; text-align: center; pointer-events: none;
+        background: #000;
+        display: flex; align-items: center; justify-content: center;
+        padding: 0 140px; text-align: center; pointer-events: none;
       }
-      .caption-pre {
-        margin: 0 0 6px; font-size: 34px; font-weight: 400; color: var(--ink);
-        text-shadow: 0 2px 12px rgba(0,0,0,.65);
-      }
-      .caption-word {
-        margin: 0; font-size: 76px; font-weight: 800; letter-spacing: 0.5px;
-        color: var(--accent); text-shadow: 0 4px 18px rgba(0,0,0,.7);
+      .caption-line {
+        margin: 0; font-family: Georgia, "Times New Roman", serif; font-style: italic;
+        font-weight: 400; font-size: 104px; line-height: 1.2; letter-spacing: 0.5px;
+        color: #fff;
       }
 
       /* Full-screen cutaway graphics */
@@ -56,19 +56,28 @@
 
       /* Camcorder / recording-HUD highlight treatment (over the still-visible talking head) */
       .camcorder-hud { pointer-events: none; font-family: "Courier New", Courier, monospace; color: #fff; }
-      .cam-corner { position: absolute; width: 34px; height: 34px; border-color: rgba(255,255,255,.85); border-style: solid; border-width: 0; }
-      .cam-corner.tl { top: 40px; left: 40px; border-top-width: 3px; border-left-width: 3px; }
-      .cam-corner.tr { top: 40px; right: 40px; border-top-width: 3px; border-right-width: 3px; }
-      .cam-corner.bl { bottom: 40px; left: 40px; border-bottom-width: 3px; border-left-width: 3px; }
-      .cam-corner.br { bottom: 40px; right: 40px; border-bottom-width: 3px; border-right-width: 3px; }
-      .cam-battery { position: absolute; top: 48px; left: 84px; }
-      .cam-battery-icon { display: inline-block; width: 34px; height: 16px; border: 2px solid #fff; border-radius: 3px; position: relative; }
-      .cam-battery-icon::before { content: ""; position: absolute; inset: 2px; right: 8px; background: #fff; }
-      .cam-battery-icon::after { content: ""; position: absolute; right: -6px; top: 4px; width: 4px; height: 8px; background: #fff; border-radius: 0 2px 2px 0; }
-      .cam-rec { position: absolute; top: 48px; right: 84px; font-size: 22px; font-weight: 700; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
-      .cam-rec-dot { width: 14px; height: 14px; border-radius: 50%; background: #e5484d; display: inline-block; }
-      .cam-4k { position: absolute; bottom: 48px; left: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
-      .cam-hd { position: absolute; bottom: 48px; right: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
+      /* Sizes are the client reference's (854x480) scaled x2.25 to 1080p — at
+         the original px values the HUD was invisibly small on a 1080p frame. */
+      .cam-corner { position: absolute; width: 84px; height: 84px; border-color: rgba(255,255,255,.95); border-style: solid; border-width: 0; }
+      .cam-corner.tl { top: 46px; left: 46px; border-top-width: 6px; border-left-width: 6px; }
+      .cam-corner.tr { top: 46px; right: 46px; border-top-width: 6px; border-right-width: 6px; }
+      .cam-corner.bl { bottom: 46px; left: 46px; border-bottom-width: 6px; border-left-width: 6px; }
+      .cam-corner.br { bottom: 46px; right: 46px; border-bottom-width: 6px; border-right-width: 6px; }
+      /* Center focus reticle, as in the reference */
+      .cam-focus { position: absolute; left: 50%; top: 47%; transform: translate(-50%, -50%); width: 400px; height: 260px; }
+      .cam-focus span { position: absolute; width: 52px; height: 52px; border-color: rgba(255,255,255,.9); border-style: solid; border-width: 0; }
+      .cam-focus .f-tl { top: 0; left: 0; border-top-width: 5px; border-left-width: 5px; }
+      .cam-focus .f-tr { top: 0; right: 0; border-top-width: 5px; border-right-width: 5px; }
+      .cam-focus .f-bl { bottom: 0; left: 0; border-bottom-width: 5px; border-left-width: 5px; }
+      .cam-focus .f-br { bottom: 0; right: 0; border-bottom-width: 5px; border-right-width: 5px; }
+      .cam-battery { position: absolute; top: 58px; left: 156px; }
+      .cam-battery-icon { display: inline-block; width: 62px; height: 30px; border: 4px solid #fff; border-radius: 5px; position: relative; }
+      .cam-battery-icon::before { content: ""; position: absolute; inset: 4px; right: 15px; background: #fff; }
+      .cam-battery-icon::after { content: ""; position: absolute; right: -11px; top: 7px; width: 8px; height: 14px; background: #fff; border-radius: 0 3px 3px 0; }
+      .cam-rec { position: absolute; top: 58px; right: 156px; font-size: 38px; font-weight: 700; letter-spacing: 2px; display: flex; align-items: center; gap: 14px; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+      .cam-rec-dot { width: 24px; height: 24px; border-radius: 50%; background: #e5484d; display: inline-block; }
+      .cam-4k { position: absolute; bottom: 58px; left: 156px; font-size: 30px; font-weight: 600; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+      .cam-hd { position: absolute; bottom: 58px; right: 156px; font-size: 30px; font-weight: 600; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
 
       /* Photo-then-black-card quote pair (client reference: b-roll photo plays
          alone, THEN a hard cut to a solid-black card with the italic quote —
@@ -86,19 +95,16 @@
     <div id="root" data-composition-id="chunk4" data-start="0" data-width="1920" data-height="1080" data-duration="299.302">
       <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="299.302" data-media-start="897.907" data-has-audio="true" data-track-index="0" playsinline></video>
 
-      <div id="b-pessoas" class="clip caption-card" data-start="34.869" data-duration="2.4" data-track-index="5">
-        <p class="caption-pre">ele trabalha com</p>
-        <p class="caption-word" id="b-pessoas-word">PESSOAS</p>
+      <div id="b-pessoas" class="clip caption-card" data-start="34.869" data-duration="3" data-track-index="5">
+        <p class="caption-line" id="b-pessoas-word">Ele Trabalha com Pessoas</p>
       </div>
 
-      <div id="b-vidas" class="clip caption-card" data-start="62.479" data-duration="2.6" data-track-index="5">
-        <p class="caption-pre">você atende</p>
-        <p class="caption-word" id="b-vidas-word">VIDAS</p>
+      <div id="b-vidas" class="clip caption-card" data-start="62.479" data-duration="3" data-track-index="5">
+        <p class="caption-line" id="b-vidas-word">Você Atende Vidas</p>
       </div>
 
-      <div id="b-acolhida" class="clip caption-card" data-start="168.219" data-duration="2.6" data-track-index="5">
-        <p class="caption-pre">jesus via vidas a serem</p>
-        <p class="caption-word" id="b-acolhida-word">ACOLHIDAS</p>
+      <div id="b-acolhida" class="clip caption-card" data-start="168.219" data-duration="3" data-track-index="5">
+        <p class="caption-line" id="b-acolhida-word">Vidas a Serem Acolhidas</p>
       </div>
 
       <section id="b-quote-amor-photo" class="clip cutaway quote-photo" data-start="241.349" data-duration="2" data-track-index="5">
@@ -117,35 +123,35 @@
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
-  tl.fromTo("#b-pessoas-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 34.969);
-  tl.fromTo("#b-pessoas .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 34.869);
-  tl.fromTo("#b-vidas-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 62.579);
-  tl.fromTo("#b-vidas .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 62.479);
-  tl.fromTo("#b-acolhida-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 168.319);
-  tl.fromTo("#b-acolhida .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 168.219);
+  tl.fromTo("#b-pessoas-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 34.869);
+  tl.to("#b-pessoas-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 37.469);
+  tl.fromTo("#b-vidas-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 62.479);
+  tl.to("#b-vidas-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 65.079);
+  tl.fromTo("#b-acolhida-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 168.219);
+  tl.to("#b-acolhida-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 170.819);
   tl.fromTo("#b-quote-amor-bg", { scale: 1 }, { scale: 1.08, duration: 2, ease: "none" }, 241.349);
   tl.fromTo("#b-quote-amor-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 243.349);
   tl.fromTo("#b-broll-2-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 203.069);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 15.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 16.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 41.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 42.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 67.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 68.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 93.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 94.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 119.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 120.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 145.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 146.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 197.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 198.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 223.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 224.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 249.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 250.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 275.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 276.7);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 15.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 21.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 41.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 47.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 67.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 73.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 93.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 99.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 119.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 125.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 145.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 151.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 197.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 203.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 223.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 229.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 249.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 255.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 275.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 281.3);
       window.__timelines["chunk4"] = tl;
     </script>
   </body>

@@ -111,28 +111,30 @@ console.log(`source: ${SOURCE_DURATION.toFixed(1)}s -> new timeline: ${NEW_DURAT
 const BEATS = [
   // -- opening/hook reinforcement (client feedback: chunk-1 is the "chamada",
   // it needs more energy — more keyword captions + a 2nd camcorder moment) --
-  { id: "b-intro-chamado", kind: "caption", srcAt: 3, holdBefore: 0.15, dur: 2.4, pre: "você foi", word: "CHAMADO?" },
-  { id: "b-confesso", kind: "camcorder", srcAt: 98, holdBefore: 0.1, dur: 6 },
-  { id: "b-preparo-intro", kind: "caption", srcAt: 163, holdBefore: 0.15, dur: 2.4, pre: "cuidar de vida exige", word: "PREPARO" },
-  { id: "b-essencia", kind: "caption", srcAt: 258, holdBefore: 0.15, dur: 2.8, pre: "não podemos perder a", word: "ESSÊNCIA DO CHAMADO" },
+  // Client reference opens on the recording HUD for its first ~6s, then snaps
+  // to full colour — so this is the film's cold open, not a mid-video accent.
+  { id: "b-confesso", kind: "camcorder", srcAt: 1, holdBefore: 0, dur: 6 },
+  { id: "b-intro-chamado", kind: "caption", srcAt: 9, holdBefore: 0.15, dur: 3.0, line: "Você foi Chamado?" },
+  { id: "b-preparo-intro", kind: "caption", srcAt: 163, holdBefore: 0.15, dur: 3.0, line: "Cuidar de Vida Exige Preparo" },
+  { id: "b-essencia", kind: "caption", srcAt: 258, holdBefore: 0.15, dur: 3.0, line: "A Essência do Chamado" },
   // -- original 5 approved beats --
   { id: "b-pilares", kind: "cutaway", srcAt: 323, holdBefore: 0.3, dur: 7.2 },
   // -- reinforcement pass 2 (client: same energy across the whole video, not
   // just the opening) — 2-3 more keyword captions per chunk that had little
   // or no caption of its own --
-  { id: "b-transformacao-2", kind: "caption", srcAt: 368, holdBefore: 0.15, dur: 2.4, pre: "o segundo pilar é a", word: "TRANSFORMAÇÃO" },
-  { id: "b-feridas", kind: "caption", srcAt: 600, holdBefore: 0.15, dur: 2.4, pre: "deus chama pessoas que já foram", word: "FERIDAS" },
-  { id: "b-restauracao", kind: "caption", srcAt: 765, holdBefore: 0.15, dur: 2.6, pre: "deus usa pessoas para trazer", word: "RESTAURAÇÃO" },
-  { id: "b-transforma-2", kind: "caption", srcAt: 905, holdBefore: 0.15, dur: 2.4, pre: "deus me consola, deus me", word: "TRANSFORMA" },
-  { id: "b-pessoas", kind: "caption", srcAt: 1049, holdBefore: 0.15, dur: 2.4, pre: "ele trabalha com", word: "PESSOAS" },
-  { id: "b-vidas", kind: "caption", srcAt: 1079, holdBefore: 0.15, dur: 2.6, pre: "você atende", word: "VIDAS" },
-  { id: "b-acolhida", kind: "caption", srcAt: 1195, holdBefore: 0.15, dur: 2.6, pre: "jesus via vidas a serem", word: "ACOLHIDAS" },
-  { id: "b-excelencia", kind: "caption", srcAt: 1580, holdBefore: 0.15, dur: 2.6, pre: "segunda perna:", word: "EXCELÊNCIA NO PREPARO" },
-  { id: "b-dependencia-2", kind: "caption", srcAt: 1608, holdBefore: 0.15, dur: 2.4, pre: "o quarto pilar é a", word: "DEPENDÊNCIA" },
-  { id: "b-servico-2", kind: "caption", srcAt: 1820, holdBefore: 0.15, dur: 2.4, pre: "o quinto pilar é o", word: "SERVIÇO" },
-  { id: "b-carater", kind: "caption", srcAt: 1912, holdBefore: 0.15, dur: 2.6, pre: "a maior ferramenta é o seu", word: "CARÁTER" },
+  { id: "b-transformacao-2", kind: "caption", srcAt: 368, holdBefore: 0.15, dur: 2.8, line: "Transformação" },
+  { id: "b-feridas", kind: "caption", srcAt: 600, holdBefore: 0.15, dur: 3.2, line: "Deus Chama Quem Já Foi Ferido" },
+  { id: "b-restauracao", kind: "caption", srcAt: 765, holdBefore: 0.15, dur: 2.8, line: "Restauração" },
+  { id: "b-transforma-2", kind: "caption", srcAt: 905, holdBefore: 0.15, dur: 3.2, line: "Deus Me Consola, Deus Me Transforma" },
+  { id: "b-pessoas", kind: "caption", srcAt: 1049, holdBefore: 0.15, dur: 3.0, line: "Ele Trabalha com Pessoas" },
+  { id: "b-vidas", kind: "caption", srcAt: 1079, holdBefore: 0.15, dur: 3.0, line: "Você Atende Vidas" },
+  { id: "b-acolhida", kind: "caption", srcAt: 1195, holdBefore: 0.15, dur: 3.0, line: "Vidas a Serem Acolhidas" },
+  { id: "b-excelencia", kind: "caption", srcAt: 1580, holdBefore: 0.15, dur: 3.0, line: "Excelência no Preparo" },
+  { id: "b-dependencia-2", kind: "caption", srcAt: 1608, holdBefore: 0.15, dur: 2.8, line: "Dependência" },
+  { id: "b-servico-2", kind: "caption", srcAt: 1820, holdBefore: 0.15, dur: 2.8, line: "Serviço" },
+  { id: "b-carater", kind: "caption", srcAt: 1912, holdBefore: 0.15, dur: 3.2, line: "A Maior Ferramenta é o Seu Caráter" },
   { id: "b-chamado-preparo", kind: "cutaway", srcAt: 1490, holdBefore: 0.3, dur: 7.6 },
-  { id: "b-cuidador", kind: "caption", srcAt: 1942, holdBefore: 0.15, dur: 3.0, pre: "você é", word: "CUIDADOR DE VIDA" },
+  { id: "b-cuidador", kind: "caption", srcAt: 1942, holdBefore: 0.15, dur: 3.2, line: "Você é Cuidador de Vida" },
   { id: "b-camcorder", kind: "camcorder", srcAt: 992, holdBefore: 0.2, dur: 6 },
   // -- reinforcement pass 3 (client: "gostaria também da adição de mais img")
   // -- one full-screen quote-card per chunk that had no photo cutaway yet,
@@ -177,16 +179,18 @@ function num(n) {
 // caption), so it never double-animates #base at the same instant.
 const PUNCH_INTERVAL = 26; // seconds between snap zooms
 const PUNCH_MARGIN = 1.5; // stay clear of other beats by this much
+const ZOOM_HOLD = 5.7; // in(1.2s) + hold(4.5s) before easing back out
 function punchZoomLines(rangeStart, rangeEnd, beatsInRange, offset) {
   const lines = [];
   for (let t = rangeStart + PUNCH_INTERVAL * 0.6; t < rangeEnd - 2; t += PUNCH_INTERVAL) {
     const clashes = beatsInRange.some((b) => t > b.newAt - PUNCH_MARGIN && t < b.newAt + b.dur + PUNCH_MARGIN);
     if (clashes) continue;
     const at = num(t - offset);
-    // Hold at the punched-in scale for a beat before easing back, so the two
-    // tweens don't butt up at the same instant (lint: overlapping_gsap_tweens).
-    lines.push(`  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, ${at});`);
-    lines.push(`  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, ${num(at + 1.1)});`);
+    // Client: "o efeito de zoom nao precisa ser tao rapido / pode aproximar e
+    // quando ele acabar a frase retorna ao tamanho original" — so: ease IN over
+    // ~1.2s, HOLD through the sentence (~4.5s), then ease back out over ~1.2s.
+    lines.push(`  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, ${at});`);
+    lines.push(`  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, ${num(at + ZOOM_HOLD)});`);
   }
   return lines;
 }
@@ -254,8 +258,7 @@ function chamadoPreparoHtml(b) {
 
 function captionHtml(b) {
   return `      <div id="${b.id}" class="clip caption-card" data-start="${num(b.newAt)}" data-duration="${b.dur}" data-track-index="${TRACK_OVERLAY}">
-        <p class="caption-pre">${b.pre}</p>
-        <p class="caption-word" id="${b.id}-word">${b.word}</p>
+        <p class="caption-line" id="${b.id}-word">${b.line}</p>
       </div>`;
 }
 
@@ -265,6 +268,9 @@ function camcorderHtml(b) {
         <span class="cam-corner tr"></span>
         <span class="cam-corner bl"></span>
         <span class="cam-corner br"></span>
+        <div class="cam-focus">
+          <span class="f-tl"></span><span class="f-tr"></span><span class="f-bl"></span><span class="f-br"></span>
+        </div>
         <div class="cam-battery"><span class="cam-battery-icon"></span></div>
         <div class="cam-rec"><span class="cam-rec-dot" id="${b.id}-dot"></span>REC</div>
         <div class="cam-4k">4K 60FPS</div>
@@ -346,8 +352,9 @@ for (const b of BEATS) {
   } else if (b.kind === "broll") {
     animLines.push(`  tl.fromTo("#${b.id}-bg", { scale: 1 }, { scale: 1.1, duration: ${b.dur}, ease: "none" }, ${num(b.newAt)});`);
   } else {
-    animLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, ${num(b.newAt + 0.1)});`);
-    animLines.push(`  tl.fromTo("#${b.id} .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, ${num(b.newAt)});`);
+    // Reference style: a quiet fade + a hair of scale, never a bouncy pop.
+    animLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, ${num(b.newAt)});`);
+    animLines.push(`  tl.to("#${b.id}-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, ${num(b.newAt + b.dur - 0.4)});`);
   }
 }
 
@@ -375,18 +382,18 @@ const html = `<!doctype html>
       .clip { position: absolute; inset: 0; }
       .talking-head { width: 100%; height: 100%; object-fit: cover; }
 
-      /* Keyword caption card: lower-third center, never over the face */
+      /* Highlight card — client-supplied reference: pure black frame, one line
+         of large white italic serif, centered. Replaces the earlier gold
+         bold-caps lower-third. */
       .caption-card {
-        display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-        padding-bottom: 90px; text-align: center; pointer-events: none;
+        background: #000;
+        display: flex; align-items: center; justify-content: center;
+        padding: 0 140px; text-align: center; pointer-events: none;
       }
-      .caption-pre {
-        margin: 0 0 6px; font-size: 34px; font-weight: 400; color: var(--ink);
-        text-shadow: 0 2px 12px rgba(0,0,0,.65);
-      }
-      .caption-word {
-        margin: 0; font-size: 76px; font-weight: 800; letter-spacing: 0.5px;
-        color: var(--accent); text-shadow: 0 4px 18px rgba(0,0,0,.7);
+      .caption-line {
+        margin: 0; font-family: Georgia, "Times New Roman", serif; font-style: italic;
+        font-weight: 400; font-size: 104px; line-height: 1.2; letter-spacing: 0.5px;
+        color: #fff;
       }
 
       /* Full-screen cutaway graphics */
@@ -414,19 +421,28 @@ const html = `<!doctype html>
 
       /* Camcorder / recording-HUD highlight treatment (over the still-visible talking head) */
       .camcorder-hud { pointer-events: none; font-family: "Courier New", Courier, monospace; color: #fff; }
-      .cam-corner { position: absolute; width: 34px; height: 34px; border-color: rgba(255,255,255,.85); border-style: solid; border-width: 0; }
-      .cam-corner.tl { top: 40px; left: 40px; border-top-width: 3px; border-left-width: 3px; }
-      .cam-corner.tr { top: 40px; right: 40px; border-top-width: 3px; border-right-width: 3px; }
-      .cam-corner.bl { bottom: 40px; left: 40px; border-bottom-width: 3px; border-left-width: 3px; }
-      .cam-corner.br { bottom: 40px; right: 40px; border-bottom-width: 3px; border-right-width: 3px; }
-      .cam-battery { position: absolute; top: 48px; left: 84px; }
-      .cam-battery-icon { display: inline-block; width: 34px; height: 16px; border: 2px solid #fff; border-radius: 3px; position: relative; }
-      .cam-battery-icon::before { content: ""; position: absolute; inset: 2px; right: 8px; background: #fff; }
-      .cam-battery-icon::after { content: ""; position: absolute; right: -6px; top: 4px; width: 4px; height: 8px; background: #fff; border-radius: 0 2px 2px 0; }
-      .cam-rec { position: absolute; top: 48px; right: 84px; font-size: 22px; font-weight: 700; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
-      .cam-rec-dot { width: 14px; height: 14px; border-radius: 50%; background: #e5484d; display: inline-block; }
-      .cam-4k { position: absolute; bottom: 48px; left: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
-      .cam-hd { position: absolute; bottom: 48px; right: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
+      /* Sizes are the client reference's (854x480) scaled x2.25 to 1080p — at
+         the original px values the HUD was invisibly small on a 1080p frame. */
+      .cam-corner { position: absolute; width: 84px; height: 84px; border-color: rgba(255,255,255,.95); border-style: solid; border-width: 0; }
+      .cam-corner.tl { top: 46px; left: 46px; border-top-width: 6px; border-left-width: 6px; }
+      .cam-corner.tr { top: 46px; right: 46px; border-top-width: 6px; border-right-width: 6px; }
+      .cam-corner.bl { bottom: 46px; left: 46px; border-bottom-width: 6px; border-left-width: 6px; }
+      .cam-corner.br { bottom: 46px; right: 46px; border-bottom-width: 6px; border-right-width: 6px; }
+      /* Center focus reticle, as in the reference */
+      .cam-focus { position: absolute; left: 50%; top: 47%; transform: translate(-50%, -50%); width: 400px; height: 260px; }
+      .cam-focus span { position: absolute; width: 52px; height: 52px; border-color: rgba(255,255,255,.9); border-style: solid; border-width: 0; }
+      .cam-focus .f-tl { top: 0; left: 0; border-top-width: 5px; border-left-width: 5px; }
+      .cam-focus .f-tr { top: 0; right: 0; border-top-width: 5px; border-right-width: 5px; }
+      .cam-focus .f-bl { bottom: 0; left: 0; border-bottom-width: 5px; border-left-width: 5px; }
+      .cam-focus .f-br { bottom: 0; right: 0; border-bottom-width: 5px; border-right-width: 5px; }
+      .cam-battery { position: absolute; top: 58px; left: 156px; }
+      .cam-battery-icon { display: inline-block; width: 62px; height: 30px; border: 4px solid #fff; border-radius: 5px; position: relative; }
+      .cam-battery-icon::before { content: ""; position: absolute; inset: 4px; right: 15px; background: #fff; }
+      .cam-battery-icon::after { content: ""; position: absolute; right: -11px; top: 7px; width: 8px; height: 14px; background: #fff; border-radius: 0 3px 3px 0; }
+      .cam-rec { position: absolute; top: 58px; right: 156px; font-size: 38px; font-weight: 700; letter-spacing: 2px; display: flex; align-items: center; gap: 14px; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+      .cam-rec-dot { width: 24px; height: 24px; border-radius: 50%; background: #e5484d; display: inline-block; }
+      .cam-4k { position: absolute; bottom: 58px; left: 156px; font-size: 30px; font-weight: 600; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+      .cam-hd { position: absolute; bottom: 58px; right: 156px; font-size: 30px; font-weight: 600; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
 
       /* Photo-then-black-card quote pair (client reference: b-roll photo plays
          alone, THEN a hard cut to a solid-black card with the italic quote —
@@ -529,8 +545,8 @@ function chunkHtml(chunk) {
     } else if (b.kind === "broll") {
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-bg", { scale: 1 }, { scale: 1.1, duration: ${b.dur}, ease: "none" }, ${num(b.newAt)});`);
     } else {
-      chunkAnimLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, ${num(b.newAt + 0.1)});`);
-      chunkAnimLines.push(`  tl.fromTo("#${b.id} .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, ${num(b.newAt)});`);
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, ${num(b.newAt)});`);
+      chunkAnimLines.push(`  tl.to("#${b.id}-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, ${num(b.newAt + b.dur - 0.4)});`);
     }
   }
 

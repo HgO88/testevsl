@@ -17,18 +17,18 @@
       .clip { position: absolute; inset: 0; }
       .talking-head { width: 100%; height: 100%; object-fit: cover; }
 
-      /* Keyword caption card: lower-third center, never over the face */
+      /* Highlight card — client-supplied reference: pure black frame, one line
+         of large white italic serif, centered. Replaces the earlier gold
+         bold-caps lower-third. */
       .caption-card {
-        display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-        padding-bottom: 90px; text-align: center; pointer-events: none;
+        background: #000;
+        display: flex; align-items: center; justify-content: center;
+        padding: 0 140px; text-align: center; pointer-events: none;
       }
-      .caption-pre {
-        margin: 0 0 6px; font-size: 34px; font-weight: 400; color: var(--ink);
-        text-shadow: 0 2px 12px rgba(0,0,0,.65);
-      }
-      .caption-word {
-        margin: 0; font-size: 76px; font-weight: 800; letter-spacing: 0.5px;
-        color: var(--accent); text-shadow: 0 4px 18px rgba(0,0,0,.7);
+      .caption-line {
+        margin: 0; font-family: Georgia, "Times New Roman", serif; font-style: italic;
+        font-weight: 400; font-size: 104px; line-height: 1.2; letter-spacing: 0.5px;
+        color: #fff;
       }
 
       /* Full-screen cutaway graphics */
@@ -56,19 +56,28 @@
 
       /* Camcorder / recording-HUD highlight treatment (over the still-visible talking head) */
       .camcorder-hud { pointer-events: none; font-family: "Courier New", Courier, monospace; color: #fff; }
-      .cam-corner { position: absolute; width: 34px; height: 34px; border-color: rgba(255,255,255,.85); border-style: solid; border-width: 0; }
-      .cam-corner.tl { top: 40px; left: 40px; border-top-width: 3px; border-left-width: 3px; }
-      .cam-corner.tr { top: 40px; right: 40px; border-top-width: 3px; border-right-width: 3px; }
-      .cam-corner.bl { bottom: 40px; left: 40px; border-bottom-width: 3px; border-left-width: 3px; }
-      .cam-corner.br { bottom: 40px; right: 40px; border-bottom-width: 3px; border-right-width: 3px; }
-      .cam-battery { position: absolute; top: 48px; left: 84px; }
-      .cam-battery-icon { display: inline-block; width: 34px; height: 16px; border: 2px solid #fff; border-radius: 3px; position: relative; }
-      .cam-battery-icon::before { content: ""; position: absolute; inset: 2px; right: 8px; background: #fff; }
-      .cam-battery-icon::after { content: ""; position: absolute; right: -6px; top: 4px; width: 4px; height: 8px; background: #fff; border-radius: 0 2px 2px 0; }
-      .cam-rec { position: absolute; top: 48px; right: 84px; font-size: 22px; font-weight: 700; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
-      .cam-rec-dot { width: 14px; height: 14px; border-radius: 50%; background: #e5484d; display: inline-block; }
-      .cam-4k { position: absolute; bottom: 48px; left: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
-      .cam-hd { position: absolute; bottom: 48px; right: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
+      /* Sizes are the client reference's (854x480) scaled x2.25 to 1080p — at
+         the original px values the HUD was invisibly small on a 1080p frame. */
+      .cam-corner { position: absolute; width: 84px; height: 84px; border-color: rgba(255,255,255,.95); border-style: solid; border-width: 0; }
+      .cam-corner.tl { top: 46px; left: 46px; border-top-width: 6px; border-left-width: 6px; }
+      .cam-corner.tr { top: 46px; right: 46px; border-top-width: 6px; border-right-width: 6px; }
+      .cam-corner.bl { bottom: 46px; left: 46px; border-bottom-width: 6px; border-left-width: 6px; }
+      .cam-corner.br { bottom: 46px; right: 46px; border-bottom-width: 6px; border-right-width: 6px; }
+      /* Center focus reticle, as in the reference */
+      .cam-focus { position: absolute; left: 50%; top: 47%; transform: translate(-50%, -50%); width: 400px; height: 260px; }
+      .cam-focus span { position: absolute; width: 52px; height: 52px; border-color: rgba(255,255,255,.9); border-style: solid; border-width: 0; }
+      .cam-focus .f-tl { top: 0; left: 0; border-top-width: 5px; border-left-width: 5px; }
+      .cam-focus .f-tr { top: 0; right: 0; border-top-width: 5px; border-right-width: 5px; }
+      .cam-focus .f-bl { bottom: 0; left: 0; border-bottom-width: 5px; border-left-width: 5px; }
+      .cam-focus .f-br { bottom: 0; right: 0; border-bottom-width: 5px; border-right-width: 5px; }
+      .cam-battery { position: absolute; top: 58px; left: 156px; }
+      .cam-battery-icon { display: inline-block; width: 62px; height: 30px; border: 4px solid #fff; border-radius: 5px; position: relative; }
+      .cam-battery-icon::before { content: ""; position: absolute; inset: 4px; right: 15px; background: #fff; }
+      .cam-battery-icon::after { content: ""; position: absolute; right: -11px; top: 7px; width: 8px; height: 14px; background: #fff; border-radius: 0 3px 3px 0; }
+      .cam-rec { position: absolute; top: 58px; right: 156px; font-size: 38px; font-weight: 700; letter-spacing: 2px; display: flex; align-items: center; gap: 14px; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+      .cam-rec-dot { width: 24px; height: 24px; border-radius: 50%; background: #e5484d; display: inline-block; }
+      .cam-4k { position: absolute; bottom: 58px; left: 156px; font-size: 30px; font-weight: 600; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+      .cam-hd { position: absolute; bottom: 58px; right: 156px; font-size: 30px; font-weight: 600; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
 
       /* Photo-then-black-card quote pair (client reference: b-roll photo plays
          alone, THEN a hard cut to a solid-black card with the italic quote —
@@ -86,30 +95,30 @@
     <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="1795.814">
       <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="1795.814" data-has-audio="true" data-track-index="0" playsinline></video>
 
-      <div id="b-intro-chamado" class="clip caption-card" data-start="2.297" data-duration="2.4" data-track-index="5">
-        <p class="caption-pre">você foi</p>
-        <p class="caption-word" id="b-intro-chamado-word">CHAMADO?</p>
-      </div>
-
-      <div id="b-confesso" class="clip camcorder-hud" data-start="89.498" data-duration="6" data-track-index="5">
+      <div id="b-confesso" class="clip camcorder-hud" data-start="0.147" data-duration="6" data-track-index="5">
         <span class="cam-corner tl"></span>
         <span class="cam-corner tr"></span>
         <span class="cam-corner bl"></span>
         <span class="cam-corner br"></span>
+        <div class="cam-focus">
+          <span class="f-tl"></span><span class="f-tr"></span><span class="f-bl"></span><span class="f-br"></span>
+        </div>
         <div class="cam-battery"><span class="cam-battery-icon"></span></div>
         <div class="cam-rec"><span class="cam-rec-dot" id="b-confesso-dot"></span>REC</div>
         <div class="cam-4k">4K 60FPS</div>
         <div class="cam-hd">HD</div>
       </div>
 
-      <div id="b-preparo-intro" class="clip caption-card" data-start="152.312" data-duration="2.4" data-track-index="5">
-        <p class="caption-pre">cuidar de vida exige</p>
-        <p class="caption-word" id="b-preparo-intro-word">PREPARO</p>
+      <div id="b-intro-chamado" class="clip caption-card" data-start="7.903" data-duration="3" data-track-index="5">
+        <p class="caption-line" id="b-intro-chamado-word">Você foi Chamado?</p>
       </div>
 
-      <div id="b-essencia" class="clip caption-card" data-start="236.106" data-duration="2.8" data-track-index="5">
-        <p class="caption-pre">não podemos perder a</p>
-        <p class="caption-word" id="b-essencia-word">ESSÊNCIA DO CHAMADO</p>
+      <div id="b-preparo-intro" class="clip caption-card" data-start="152.312" data-duration="3" data-track-index="5">
+        <p class="caption-line" id="b-preparo-intro-word">Cuidar de Vida Exige Preparo</p>
+      </div>
+
+      <div id="b-essencia" class="clip caption-card" data-start="236.106" data-duration="3" data-track-index="5">
+        <p class="caption-line" id="b-essencia-word">A Essência do Chamado</p>
       </div>
 
       <section id="b-pilares" class="clip cutaway" data-start="294.734" data-duration="7.2" data-track-index="5">
@@ -148,59 +157,48 @@
         </div>
       </section>
 
-      <div id="b-transformacao-2" class="clip caption-card" data-start="336.454" data-duration="2.4" data-track-index="5">
-        <p class="caption-pre">o segundo pilar é a</p>
-        <p class="caption-word" id="b-transformacao-2-word">TRANSFORMAÇÃO</p>
+      <div id="b-transformacao-2" class="clip caption-card" data-start="336.454" data-duration="2.8" data-track-index="5">
+        <p class="caption-line" id="b-transformacao-2-word">Transformação</p>
       </div>
 
-      <div id="b-feridas" class="clip caption-card" data-start="545.828" data-duration="2.4" data-track-index="5">
-        <p class="caption-pre">deus chama pessoas que já foram</p>
-        <p class="caption-word" id="b-feridas-word">FERIDAS</p>
+      <div id="b-feridas" class="clip caption-card" data-start="545.828" data-duration="3.2" data-track-index="5">
+        <p class="caption-line" id="b-feridas-word">Deus Chama Quem Já Foi Ferido</p>
       </div>
 
-      <div id="b-restauracao" class="clip caption-card" data-start="693.629" data-duration="2.6" data-track-index="5">
-        <p class="caption-pre">deus usa pessoas para trazer</p>
-        <p class="caption-word" id="b-restauracao-word">RESTAURAÇÃO</p>
+      <div id="b-restauracao" class="clip caption-card" data-start="693.629" data-duration="2.8" data-track-index="5">
+        <p class="caption-line" id="b-restauracao-word">Restauração</p>
       </div>
 
-      <div id="b-transforma-2" class="clip caption-card" data-start="812.502" data-duration="2.4" data-track-index="5">
-        <p class="caption-pre">deus me consola, deus me</p>
-        <p class="caption-word" id="b-transforma-2-word">TRANSFORMA</p>
+      <div id="b-transforma-2" class="clip caption-card" data-start="812.502" data-duration="3.2" data-track-index="5">
+        <p class="caption-line" id="b-transforma-2-word">Deus Me Consola, Deus Me Transforma</p>
       </div>
 
-      <div id="b-pessoas" class="clip caption-card" data-start="932.776" data-duration="2.4" data-track-index="5">
-        <p class="caption-pre">ele trabalha com</p>
-        <p class="caption-word" id="b-pessoas-word">PESSOAS</p>
+      <div id="b-pessoas" class="clip caption-card" data-start="932.776" data-duration="3" data-track-index="5">
+        <p class="caption-line" id="b-pessoas-word">Ele Trabalha com Pessoas</p>
       </div>
 
-      <div id="b-vidas" class="clip caption-card" data-start="960.386" data-duration="2.6" data-track-index="5">
-        <p class="caption-pre">você atende</p>
-        <p class="caption-word" id="b-vidas-word">VIDAS</p>
+      <div id="b-vidas" class="clip caption-card" data-start="960.386" data-duration="3" data-track-index="5">
+        <p class="caption-line" id="b-vidas-word">Você Atende Vidas</p>
       </div>
 
-      <div id="b-acolhida" class="clip caption-card" data-start="1066.126" data-duration="2.6" data-track-index="5">
-        <p class="caption-pre">jesus via vidas a serem</p>
-        <p class="caption-word" id="b-acolhida-word">ACOLHIDAS</p>
+      <div id="b-acolhida" class="clip caption-card" data-start="1066.126" data-duration="3" data-track-index="5">
+        <p class="caption-line" id="b-acolhida-word">Vidas a Serem Acolhidas</p>
       </div>
 
-      <div id="b-excelencia" class="clip caption-card" data-start="1406.296" data-duration="2.6" data-track-index="5">
-        <p class="caption-pre">segunda perna:</p>
-        <p class="caption-word" id="b-excelencia-word">EXCELÊNCIA NO PREPARO</p>
+      <div id="b-excelencia" class="clip caption-card" data-start="1406.296" data-duration="3" data-track-index="5">
+        <p class="caption-line" id="b-excelencia-word">Excelência no Preparo</p>
       </div>
 
-      <div id="b-dependencia-2" class="clip caption-card" data-start="1429.736" data-duration="2.4" data-track-index="5">
-        <p class="caption-pre">o quarto pilar é a</p>
-        <p class="caption-word" id="b-dependencia-2-word">DEPENDÊNCIA</p>
+      <div id="b-dependencia-2" class="clip caption-card" data-start="1429.736" data-duration="2.8" data-track-index="5">
+        <p class="caption-line" id="b-dependencia-2-word">Dependência</p>
       </div>
 
-      <div id="b-servico-2" class="clip caption-card" data-start="1618.646" data-duration="2.4" data-track-index="5">
-        <p class="caption-pre">o quinto pilar é o</p>
-        <p class="caption-word" id="b-servico-2-word">SERVIÇO</p>
+      <div id="b-servico-2" class="clip caption-card" data-start="1618.646" data-duration="2.8" data-track-index="5">
+        <p class="caption-line" id="b-servico-2-word">Serviço</p>
       </div>
 
-      <div id="b-carater" class="clip caption-card" data-start="1704.286" data-duration="2.6" data-track-index="5">
-        <p class="caption-pre">a maior ferramenta é o seu</p>
-        <p class="caption-word" id="b-carater-word">CARÁTER</p>
+      <div id="b-carater" class="clip caption-card" data-start="1704.286" data-duration="3.2" data-track-index="5">
+        <p class="caption-line" id="b-carater-word">A Maior Ferramenta é o Seu Caráter</p>
       </div>
 
       <section id="b-chamado-preparo" class="clip cutaway" data-start="1328.166" data-duration="7.6" data-track-index="5">
@@ -223,9 +221,8 @@
         </div>
       </section>
 
-      <div id="b-cuidador" class="clip caption-card" data-start="1733.266" data-duration="3" data-track-index="5">
-        <p class="caption-pre">você é</p>
-        <p class="caption-word" id="b-cuidador-word">CUIDADOR DE VIDA</p>
+      <div id="b-cuidador" class="clip caption-card" data-start="1733.266" data-duration="3.2" data-track-index="5">
+        <p class="caption-line" id="b-cuidador-word">Você é Cuidador de Vida</p>
       </div>
 
       <div id="b-camcorder" class="clip camcorder-hud" data-start="882.033" data-duration="6" data-track-index="5">
@@ -233,6 +230,9 @@
         <span class="cam-corner tr"></span>
         <span class="cam-corner bl"></span>
         <span class="cam-corner br"></span>
+        <div class="cam-focus">
+          <span class="f-tl"></span><span class="f-tr"></span><span class="f-bl"></span><span class="f-br"></span>
+        </div>
         <div class="cam-battery"><span class="cam-battery-icon"></span></div>
         <div class="cam-rec"><span class="cam-rec-dot" id="b-camcorder-dot"></span>REC</div>
         <div class="cam-4k">4K 60FPS</div>
@@ -303,17 +303,17 @@
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
-  tl.fromTo("#b-intro-chamado-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 2.397);
-  tl.fromTo("#b-intro-chamado .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 2.297);
-  tl.fromTo("#base", { filter: "grayscale(0%)" }, { filter: "grayscale(100%)", duration: 0.5 }, 89.498);
-  tl.fromTo("#base", { filter: "grayscale(100%)" }, { filter: "grayscale(0%)", duration: 0.5 }, 94.998);
-  tl.fromTo("#b-confesso", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 89.498);
-  tl.to("#b-confesso", { autoAlpha: 0, duration: 0.3 }, 95.198);
-  tl.to("#b-confesso-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 14, yoyo: true }, 89.798);
-  tl.fromTo("#b-preparo-intro-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 152.412);
-  tl.fromTo("#b-preparo-intro .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 152.312);
-  tl.fromTo("#b-essencia-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 236.206);
-  tl.fromTo("#b-essencia .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 236.106);
+  tl.fromTo("#base", { filter: "grayscale(0%)" }, { filter: "grayscale(100%)", duration: 0.5 }, 0.147);
+  tl.fromTo("#base", { filter: "grayscale(100%)" }, { filter: "grayscale(0%)", duration: 0.5 }, 5.647);
+  tl.fromTo("#b-confesso", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 0.147);
+  tl.to("#b-confesso", { autoAlpha: 0, duration: 0.3 }, 5.847);
+  tl.to("#b-confesso-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 14, yoyo: true }, 0.447);
+  tl.fromTo("#b-intro-chamado-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 7.903);
+  tl.to("#b-intro-chamado-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 10.503);
+  tl.fromTo("#b-preparo-intro-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 152.312);
+  tl.to("#b-preparo-intro-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 154.912);
+  tl.fromTo("#b-essencia-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 236.106);
+  tl.to("#b-essencia-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 238.706);
   tl.fromTo("#b-pilares .cutaway-bgs", { scale: 1 }, { scale: 1.12, duration: 7.2, ease: "none" }, 294.734);
   tl.fromTo("#b-pilares-p0", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 295.084);
   tl.fromTo("#b-pilares-bgimg0", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, 294.734);
@@ -333,35 +333,35 @@
   tl.set("#b-pilares-bgimg4", { autoAlpha: 0 }, 294.734);
   tl.fromTo("#b-pilares-bgimg3", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.6 }, 298.484);
   tl.fromTo("#b-pilares-bgimg4", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, 298.484);
-  tl.fromTo("#b-transformacao-2-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 336.554);
-  tl.fromTo("#b-transformacao-2 .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 336.454);
-  tl.fromTo("#b-feridas-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 545.928);
-  tl.fromTo("#b-feridas .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 545.828);
-  tl.fromTo("#b-restauracao-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 693.729);
-  tl.fromTo("#b-restauracao .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 693.629);
-  tl.fromTo("#b-transforma-2-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 812.602);
-  tl.fromTo("#b-transforma-2 .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 812.502);
-  tl.fromTo("#b-pessoas-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 932.876);
-  tl.fromTo("#b-pessoas .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 932.776);
-  tl.fromTo("#b-vidas-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 960.486);
-  tl.fromTo("#b-vidas .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 960.386);
-  tl.fromTo("#b-acolhida-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 1066.226);
-  tl.fromTo("#b-acolhida .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 1066.126);
-  tl.fromTo("#b-excelencia-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 1406.396);
-  tl.fromTo("#b-excelencia .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 1406.296);
-  tl.fromTo("#b-dependencia-2-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 1429.836);
-  tl.fromTo("#b-dependencia-2 .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 1429.736);
-  tl.fromTo("#b-servico-2-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 1618.746);
-  tl.fromTo("#b-servico-2 .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 1618.646);
-  tl.fromTo("#b-carater-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 1704.386);
-  tl.fromTo("#b-carater .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 1704.286);
+  tl.fromTo("#b-transformacao-2-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 336.454);
+  tl.to("#b-transformacao-2-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 338.854);
+  tl.fromTo("#b-feridas-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 545.828);
+  tl.to("#b-feridas-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 548.628);
+  tl.fromTo("#b-restauracao-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 693.629);
+  tl.to("#b-restauracao-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 696.029);
+  tl.fromTo("#b-transforma-2-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 812.502);
+  tl.to("#b-transforma-2-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 815.302);
+  tl.fromTo("#b-pessoas-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 932.776);
+  tl.to("#b-pessoas-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 935.376);
+  tl.fromTo("#b-vidas-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 960.386);
+  tl.to("#b-vidas-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 962.986);
+  tl.fromTo("#b-acolhida-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1066.126);
+  tl.to("#b-acolhida-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1068.726);
+  tl.fromTo("#b-excelencia-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1406.296);
+  tl.to("#b-excelencia-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1408.896);
+  tl.fromTo("#b-dependencia-2-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1429.736);
+  tl.to("#b-dependencia-2-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1432.136);
+  tl.fromTo("#b-servico-2-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1618.646);
+  tl.to("#b-servico-2-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1621.046);
+  tl.fromTo("#b-carater-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1704.286);
+  tl.to("#b-carater-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1707.086);
   tl.fromTo("#b-chamado-preparo-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, 1328.316);
   tl.fromTo("#b-chamado-preparo-right", { autoAlpha: 0, xPercent: 14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, 1328.316);
   tl.fromTo("#b-chamado-preparo-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, 1328.866);
   tl.fromTo("#b-chamado-preparo-bg-left", { scale: 1 }, { scale: 1.1, duration: 7.4, ease: "none" }, 1328.316);
   tl.fromTo("#b-chamado-preparo-bg-right", { scale: 1 }, { scale: 1.1, duration: 7.4, ease: "none" }, 1328.316);
-  tl.fromTo("#b-cuidador-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 1733.366);
-  tl.fromTo("#b-cuidador .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 1733.266);
+  tl.fromTo("#b-cuidador-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1733.266);
+  tl.to("#b-cuidador-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1736.066);
   tl.fromTo("#base", { filter: "grayscale(0%)" }, { filter: "grayscale(100%)", duration: 0.5 }, 882.033);
   tl.fromTo("#base", { filter: "grayscale(100%)" }, { filter: "grayscale(0%)", duration: 0.5 }, 887.533);
   tl.fromTo("#b-camcorder", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 882.033);
@@ -380,138 +380,140 @@
   tl.fromTo("#b-broll-1-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 413.661);
   tl.fromTo("#b-broll-2-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 1100.976);
   tl.fromTo("#b-broll-3-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 1552.846);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 15.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 16.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 41.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 42.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 67.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 68.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 119.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 120.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 145.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 146.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 171.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 172.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 197.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 198.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 223.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 224.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 249.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 250.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 275.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 276.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 327.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 328.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 353.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 354.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 379.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 380.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 405.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 406.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 431.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 432.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 457.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 458.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 483.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 484.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 509.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 510.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 535.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 536.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 561.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 562.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 587.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 588.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 613.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 614.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 639.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 640.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 665.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 666.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 691.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 692.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 717.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 718.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 743.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 744.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 769.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 770.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 795.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 796.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 821.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 822.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 847.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 848.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 873.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 874.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 899.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 900.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 925.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 926.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 951.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 952.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 977.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 978.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1003.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1004.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1029.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1030.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1055.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1056.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1081.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1082.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1107.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1108.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1133.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1134.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1159.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1160.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1185.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1186.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1211.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1212.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1237.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1238.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1263.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1264.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1289.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1290.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1315.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1316.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1341.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1342.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1367.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1368.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1393.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1394.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1419.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1420.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1445.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1446.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1471.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1472.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1497.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1498.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1523.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1524.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1549.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1550.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1575.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1576.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1601.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1602.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1627.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1628.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1653.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1654.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1679.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1680.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1731.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1732.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1757.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1758.7);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 1783.6);
-  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 1784.7);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 15.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 21.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 41.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 47.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 67.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 73.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 93.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 99.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 119.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 125.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 145.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 151.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 171.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 177.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 197.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 203.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 223.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 229.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 249.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 255.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 275.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 281.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 327.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 333.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 353.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 359.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 379.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 385.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 405.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 411.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 431.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 437.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 457.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 463.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 483.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 489.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 509.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 515.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 535.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 541.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 561.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 567.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 587.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 593.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 613.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 619.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 639.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 645.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 665.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 671.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 691.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 697.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 717.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 723.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 743.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 749.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 769.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 775.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 795.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 801.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 821.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 827.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 847.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 853.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 873.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 879.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 899.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 905.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 925.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 931.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 951.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 957.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 977.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 983.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1003.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1009.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1029.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1035.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1055.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1061.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1081.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1087.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1107.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1113.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1133.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1139.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1159.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1165.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1185.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1191.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1211.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1217.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1237.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1243.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1263.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1269.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1289.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1295.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1315.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1321.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1341.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1347.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1367.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1373.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1393.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1399.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1419.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1425.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1445.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1451.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1471.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1477.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1497.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1503.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1523.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1529.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1549.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1555.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1575.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1581.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1601.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1607.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1627.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1633.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1653.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1659.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1679.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1685.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1731.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1737.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1757.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1763.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1783.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1789.3);
       window.__timelines["main"] = tl;
     </script>
   </body>
