@@ -384,12 +384,15 @@ const html = `<!doctype html>
       .cam-4k { position: absolute; bottom: 48px; left: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
       .cam-hd { position: absolute; bottom: 48px; right: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
 
-      /* Full-screen quote card (client photo + a strong line from the transcript) */
+      /* Full-screen quote card (client photo + a strong line from the transcript).
+         Client reference: italic serif, bottom-left, over a black gradient —
+         not centered bold caps (that treatment stays for keyword captions). */
+      .quote-cutaway.cutaway { display: flex; align-items: flex-end; justify-content: flex-start; padding: 0 0 110px 110px; }
       .quote-cutaway .cutaway-bg { position: absolute; inset: 0; }
-      .quote-cutaway .cutaway-scrim { background: linear-gradient(180deg, rgba(11,14,20,.35) 0%, rgba(11,14,20,.72) 45%, rgba(11,14,20,.88) 100%); }
-      .quote-inner { width: 1400px; text-align: center; background: rgba(11,14,20,.5); border-radius: 16px; padding: 48px 60px; }
-      .quote-kicker { font-size: 28px; letter-spacing: 3px; color: var(--accent-2); font-weight: 700; margin: 0 0 26px; }
-      .quote-text { font-size: 56px; font-weight: 800; line-height: 1.25; color: var(--ink); margin: 0; text-shadow: 0 4px 20px rgba(0,0,0,.6); }
+      .quote-cutaway .cutaway-scrim { background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,.55) 45%, rgba(0,0,0,.88) 65%, rgba(0,0,0,.97) 100%); }
+      .quote-inner { width: 1150px; text-align: left; }
+      .quote-kicker { font-family: Georgia, "Times New Roman", serif; font-style: italic; font-size: 24px; letter-spacing: 2px; color: var(--accent-2); font-weight: 400; margin: 0 0 16px; text-shadow: 0 2px 10px rgba(0,0,0,.9); }
+      .quote-text { font-family: Georgia, "Times New Roman", serif; font-style: italic; font-weight: 400; font-size: 52px; line-height: 1.35; color: var(--ink); text-align: left; margin: 0; text-shadow: 0 2px 6px rgba(0,0,0,.95), 0 0 24px rgba(0,0,0,.9); }
       .quote-text .hl { color: var(--accent); }
     </style>
   </head>
