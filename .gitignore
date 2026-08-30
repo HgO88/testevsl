@@ -11,6 +11,7 @@ video-claude-code/**/.hyperframes-cache/
 video-claude-code/**/render-output/
 video-claude-code/**/renders/
 video-claude-code/**/snapshots*/
+video-claude-code/**/snap-*/
 video-claude-code/**/.*-transaction-*/
 video-claude-code/**/work-*/
 video-claude-code/init.log
