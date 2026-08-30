@@ -75,6 +75,16 @@
     <div id="root" data-composition-id="chunk6" data-start="0" data-width="1920" data-height="1080" data-duration="299.302">
       <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="299.302" data-media-start="1496.512" data-has-audio="true" data-track-index="0" playsinline></video>
 
+      <div id="b-servico-2" class="clip caption-card" data-start="122.135" data-duration="2.4" data-track-index="5">
+        <p class="caption-pre">o quinto pilar é o</p>
+        <p class="caption-word" id="b-servico-2-word">SERVIÇO</p>
+      </div>
+
+      <div id="b-carater" class="clip caption-card" data-start="207.775" data-duration="2.6" data-track-index="5">
+        <p class="caption-pre">a maior ferramenta é o seu</p>
+        <p class="caption-word" id="b-carater-word">CARÁTER</p>
+      </div>
+
       <div id="b-cuidador" class="clip caption-card" data-start="236.755" data-duration="3" data-track-index="5">
         <p class="caption-pre">você é</p>
         <p class="caption-word" id="b-cuidador-word">CUIDADOR DE VIDA</p>
@@ -82,8 +92,14 @@
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#b-servico-2-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 122.235);
+  tl.fromTo("#b-servico-2 .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 122.135);
+  tl.fromTo("#b-carater-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 207.875);
+  tl.fromTo("#b-carater .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 207.775);
   tl.fromTo("#b-cuidador-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 236.855);
   tl.fromTo("#b-cuidador .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 236.755);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.05, duration: 149.651, ease: "sine.inOut" }, 0);
+  tl.fromTo("#base", { scale: 1.05 }, { scale: 1, duration: 149.651, ease: "sine.inOut" }, 149.651);
       window.__timelines["chunk6"] = tl;
     </script>
   </body>

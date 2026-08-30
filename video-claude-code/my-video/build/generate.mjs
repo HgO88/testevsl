@@ -117,8 +117,20 @@ const BEATS = [
   { id: "b-essencia", kind: "caption", srcAt: 258, holdBefore: 0.15, dur: 2.8, pre: "não podemos perder a", word: "ESSÊNCIA DO CHAMADO" },
   // -- original 5 approved beats --
   { id: "b-pilares", kind: "cutaway", srcAt: 323, holdBefore: 0.3, dur: 7.2 },
+  // -- reinforcement pass 2 (client: same energy across the whole video, not
+  // just the opening) — 2-3 more keyword captions per chunk that had little
+  // or no caption of its own --
+  { id: "b-transformacao-2", kind: "caption", srcAt: 368, holdBefore: 0.15, dur: 2.4, pre: "o segundo pilar é a", word: "TRANSFORMAÇÃO" },
+  { id: "b-feridas", kind: "caption", srcAt: 600, holdBefore: 0.15, dur: 2.4, pre: "deus chama pessoas que já foram", word: "FERIDAS" },
+  { id: "b-restauracao", kind: "caption", srcAt: 765, holdBefore: 0.15, dur: 2.6, pre: "deus usa pessoas para trazer", word: "RESTAURAÇÃO" },
+  { id: "b-transforma-2", kind: "caption", srcAt: 905, holdBefore: 0.15, dur: 2.4, pre: "deus me consola, deus me", word: "TRANSFORMA" },
   { id: "b-pessoas", kind: "caption", srcAt: 1049, holdBefore: 0.15, dur: 2.4, pre: "ele trabalha com", word: "PESSOAS" },
   { id: "b-vidas", kind: "caption", srcAt: 1079, holdBefore: 0.15, dur: 2.6, pre: "você atende", word: "VIDAS" },
+  { id: "b-acolhida", kind: "caption", srcAt: 1195, holdBefore: 0.15, dur: 2.6, pre: "jesus via vidas a serem", word: "ACOLHIDAS" },
+  { id: "b-excelencia", kind: "caption", srcAt: 1580, holdBefore: 0.15, dur: 2.6, pre: "segunda perna:", word: "EXCELÊNCIA NO PREPARO" },
+  { id: "b-dependencia-2", kind: "caption", srcAt: 1608, holdBefore: 0.15, dur: 2.4, pre: "o quarto pilar é a", word: "DEPENDÊNCIA" },
+  { id: "b-servico-2", kind: "caption", srcAt: 1820, holdBefore: 0.15, dur: 2.4, pre: "o quinto pilar é o", word: "SERVIÇO" },
+  { id: "b-carater", kind: "caption", srcAt: 1912, holdBefore: 0.15, dur: 2.6, pre: "a maior ferramenta é o seu", word: "CARÁTER" },
   { id: "b-chamado-preparo", kind: "cutaway", srcAt: 1490, holdBefore: 0.3, dur: 7.6 },
   { id: "b-cuidador", kind: "caption", srcAt: 1942, holdBefore: 0.15, dur: 3.0, pre: "você é", word: "CUIDADOR DE VIDA" },
   { id: "b-camcorder", kind: "camcorder", srcAt: 992, holdBefore: 0.2, dur: 7 },
@@ -265,6 +277,13 @@ for (const b of BEATS) {
     animLines.push(`  tl.fromTo("#${b.id} .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, ${num(b.newAt)});`);
   }
 }
+
+// Continuous camera-with-intent motion on the talking head (client feedback:
+// the whole video read as static). The per-chunk files (section 8) repeat
+// this once per ~5min chunk so every concatenation seam sits at scale 1; this
+// single-file version just spans the whole timeline for parity.
+animLines.push(`  tl.fromTo("#base", { scale: 1 }, { scale: 1.05, duration: ${num(NEW_DURATION / 2)}, ease: "sine.inOut" }, 0);`);
+animLines.push(`  tl.fromTo("#base", { scale: 1.05 }, { scale: 1, duration: ${num(NEW_DURATION / 2)}, ease: "sine.inOut" }, ${num(NEW_DURATION / 2)});`);
 
 // ---- 7. Assemble index.html -------------------------------------------------
 const html = `<!doctype html>
@@ -430,13 +449,15 @@ function chunkHtml(chunk) {
 
   const chunkMediaClip = `      <video id="base" class="clip talking-head" src="${BASE_VIDEO}" data-start="0" data-duration="${dur}" data-media-start="${num(chunk.start)}" data-has-audio="true" data-track-index="${TRACK_VIDEO}" playsinline></video>`;
 
-  // Client feedback: chunk-1 is the "chamada" (opening hook) and read as too
-  // static. A subtle continuous push-in over the whole chunk keeps it feeling
-  // alive without fighting the camcorder beat's own filter tween (different
-  // property: scale vs. filter, both safe to co-animate on #base).
-  if (chunk.index === 1) {
-    chunkAnimLines.push(`  tl.fromTo("#base", { scale: 1 }, { scale: 1.06, duration: ${dur}, ease: "none" }, 0);`);
-  }
+  // Client feedback: the whole video read as too static (camera parada).
+  // Subtle continuous camera-with-intent motion on the talking head, every
+  // chunk — a slow symmetric push-in-then-back (ends back at scale 1 exactly
+  // where it started) so concatenating chunk-N into chunk-(N+1) never pops:
+  // both sides of every seam sit at scale 1. Safe to co-animate with the
+  // camcorder beat's own filter tween (different CSS property: scale vs.
+  // filter).
+  chunkAnimLines.push(`  tl.fromTo("#base", { scale: 1 }, { scale: 1.05, duration: ${num(dur / 2)}, ease: "sine.inOut" }, 0);`);
+  chunkAnimLines.push(`  tl.fromTo("#base", { scale: 1.05 }, { scale: 1, duration: ${num(dur / 2)}, ease: "sine.inOut" }, ${num(dur / 2)});`);
 
   return html
     .replace(/data-composition-id="main"/, `data-composition-id="${compId}"`)

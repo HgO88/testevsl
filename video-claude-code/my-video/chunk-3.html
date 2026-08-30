@@ -75,6 +75,16 @@
     <div id="root" data-composition-id="chunk3" data-start="0" data-width="1920" data-height="1080" data-duration="299.302">
       <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="299.302" data-media-start="598.605" data-has-audio="true" data-track-index="0" playsinline></video>
 
+      <div id="b-restauracao" class="clip caption-card" data-start="95.025" data-duration="2.6" data-track-index="5">
+        <p class="caption-pre">deus usa pessoas para trazer</p>
+        <p class="caption-word" id="b-restauracao-word">RESTAURAÇÃO</p>
+      </div>
+
+      <div id="b-transforma-2" class="clip caption-card" data-start="213.898" data-duration="2.4" data-track-index="5">
+        <p class="caption-pre">deus me consola, deus me</p>
+        <p class="caption-word" id="b-transforma-2-word">TRANSFORMA</p>
+      </div>
+
       <div id="b-camcorder" class="clip camcorder-hud" data-start="283.429" data-duration="7" data-track-index="5">
         <span class="cam-corner tl"></span>
         <span class="cam-corner tr"></span>
@@ -88,11 +98,17 @@
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#b-restauracao-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 95.125);
+  tl.fromTo("#b-restauracao .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 95.025);
+  tl.fromTo("#b-transforma-2-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 213.998);
+  tl.fromTo("#b-transforma-2 .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 213.898);
   tl.fromTo("#base", { filter: "grayscale(0%)" }, { filter: "grayscale(100%)", duration: 0.5 }, 283.429);
   tl.fromTo("#base", { filter: "grayscale(100%)" }, { filter: "grayscale(0%)", duration: 0.5 }, 289.929);
   tl.fromTo("#b-camcorder", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 283.429);
   tl.to("#b-camcorder", { autoAlpha: 0, duration: 0.3 }, 290.129);
   tl.to("#b-camcorder-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 16, yoyo: true }, 283.729);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.05, duration: 149.651, ease: "sine.inOut" }, 0);
+  tl.fromTo("#base", { scale: 1.05 }, { scale: 1, duration: 149.651, ease: "sine.inOut" }, 149.651);
       window.__timelines["chunk3"] = tl;
     </script>
   </body>

@@ -75,6 +75,16 @@
     <div id="root" data-composition-id="chunk5" data-start="0" data-width="1920" data-height="1080" data-duration="299.302">
       <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="299.302" data-media-start="1197.209" data-has-audio="true" data-track-index="0" playsinline></video>
 
+      <div id="b-excelencia" class="clip caption-card" data-start="209.087" data-duration="2.6" data-track-index="5">
+        <p class="caption-pre">segunda perna:</p>
+        <p class="caption-word" id="b-excelencia-word">EXCELÊNCIA NO PREPARO</p>
+      </div>
+
+      <div id="b-dependencia-2" class="clip caption-card" data-start="232.527" data-duration="2.4" data-track-index="5">
+        <p class="caption-pre">o quarto pilar é a</p>
+        <p class="caption-word" id="b-dependencia-2-word">DEPENDÊNCIA</p>
+      </div>
+
       <section id="b-chamado-preparo" class="clip cutaway" data-start="130.957" data-duration="7.6" data-track-index="5">
         <div class="cutaway-inner compare">
           <div class="compare-side" id="b-chamado-preparo-left">
@@ -97,11 +107,17 @@
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#b-excelencia-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 209.187);
+  tl.fromTo("#b-excelencia .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 209.087);
+  tl.fromTo("#b-dependencia-2-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 232.627);
+  tl.fromTo("#b-dependencia-2 .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 232.527);
   tl.fromTo("#b-chamado-preparo-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, 131.107);
   tl.fromTo("#b-chamado-preparo-right", { autoAlpha: 0, xPercent: 14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, 131.107);
   tl.fromTo("#b-chamado-preparo-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, 131.657);
   tl.fromTo("#b-chamado-preparo-bg-left", { scale: 1 }, { scale: 1.1, duration: 7.4, ease: "none" }, 131.107);
   tl.fromTo("#b-chamado-preparo-bg-right", { scale: 1 }, { scale: 1.1, duration: 7.4, ease: "none" }, 131.107);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.05, duration: 149.651, ease: "sine.inOut" }, 0);
+  tl.fromTo("#base", { scale: 1.05 }, { scale: 1, duration: 149.651, ease: "sine.inOut" }, 149.651);
       window.__timelines["chunk5"] = tl;
     </script>
   </body>

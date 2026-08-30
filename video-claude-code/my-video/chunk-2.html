@@ -75,11 +75,24 @@
     <div id="root" data-composition-id="chunk2" data-start="0" data-width="1920" data-height="1080" data-duration="296.17">
       <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="296.17" data-media-start="302.434" data-has-audio="true" data-track-index="0" playsinline></video>
 
-      <!-- no beats in this chunk -->
+      <div id="b-transformacao-2" class="clip caption-card" data-start="34.02" data-duration="2.4" data-track-index="5">
+        <p class="caption-pre">o segundo pilar é a</p>
+        <p class="caption-word" id="b-transformacao-2-word">TRANSFORMAÇÃO</p>
+      </div>
+
+      <div id="b-feridas" class="clip caption-card" data-start="243.394" data-duration="2.4" data-track-index="5">
+        <p class="caption-pre">deus chama pessoas que já foram</p>
+        <p class="caption-word" id="b-feridas-word">FERIDAS</p>
+      </div>
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
-
+  tl.fromTo("#b-transformacao-2-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 34.12);
+  tl.fromTo("#b-transformacao-2 .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 34.02);
+  tl.fromTo("#b-feridas-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 243.494);
+  tl.fromTo("#b-feridas .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 243.394);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.05, duration: 148.085, ease: "sine.inOut" }, 0);
+  tl.fromTo("#base", { scale: 1.05 }, { scale: 1, duration: 148.085, ease: "sine.inOut" }, 148.085);
       window.__timelines["chunk2"] = tl;
     </script>
   </body>
