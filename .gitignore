@@ -9,6 +9,10 @@ video-claude-code/**/node_modules/
 video-claude-code/**/dist/
 video-claude-code/**/.hyperframes-cache/
 video-claude-code/**/render-output/
+video-claude-code/**/renders/
+video-claude-code/**/snapshots*/
+video-claude-code/**/.*-transaction-*/
+video-claude-code/**/work-*/
 video-claude-code/init.log
 video-claude-code/pid.txt
 
