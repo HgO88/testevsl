@@ -13,7 +13,11 @@
         --accent-2: #7c9885;
       }
       body { margin: 0; background: var(--bg); color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
-      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+      /* Authored at 1920x1080 (every px size is tuned for it) but rendered at
+         1280x720 — client asked to drop to 720p for render speed. Scaling the
+         root keeps the whole layout identical, just smaller. */
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000;
+              transform: scale(0.6666667); transform-origin: top left; }
       .clip { position: absolute; inset: 0; }
       .talking-head { width: 100%; height: 100%; object-fit: cover; }
 
@@ -25,11 +29,18 @@
         display: flex; align-items: center; justify-content: center;
         padding: 0 140px; text-align: center; pointer-events: none;
       }
+      .caption-inner { max-width: 1560px; }
       .caption-line {
         margin: 0; font-family: Georgia, "Times New Roman", serif; font-style: italic;
         font-weight: 400; font-size: 104px; line-height: 1.2; letter-spacing: 0.5px;
         color: #fff;
       }
+      /* Scripture cards carry more words, so they set smaller under a reference */
+      .caption-ref {
+        margin: 0 0 34px; font-family: Arial, Helvetica, sans-serif; font-style: normal;
+        font-weight: 700; font-size: 30px; letter-spacing: 6px; color: var(--accent);
+      }
+      .caption-line.is-verse { font-size: 66px; line-height: 1.32; }
 
       /* Full-screen cutaway graphics */
       .cutaway { background: linear-gradient(160deg, #0b0e14 0%, #141a24 100%); display: grid; place-items: center; position: relative; overflow: hidden; }
@@ -92,10 +103,10 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="1795.814">
-      <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="1795.814" data-has-audio="true" data-track-index="0" playsinline></video>
+    <div id="root" data-composition-id="main" data-start="0" data-width="1280" data-height="720" data-duration="1756.544">
+      <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="1756.544" data-has-audio="true" data-track-index="0" playsinline></video>
 
-      <div id="b-confesso" class="clip camcorder-hud" data-start="0.147" data-duration="6" data-track-index="5">
+      <div id="b-confesso" class="clip camcorder-hud" data-start="0.097" data-duration="6" data-track-index="5">
         <span class="cam-corner tl"></span>
         <span class="cam-corner tr"></span>
         <span class="cam-corner bl"></span>
@@ -109,15 +120,85 @@
         <div class="cam-hd">HD</div>
       </div>
 
-      <div id="b-preparo-intro" class="clip caption-card" data-start="152.312" data-duration="3" data-track-index="5">
-        <p class="caption-line" id="b-preparo-intro-word">Cuidar de Vida Exige Preparo</p>
+      <div id="b-despertando" class="clip caption-card" data-start="19.715" data-duration="3" data-track-index="5">
+        <div class="caption-inner" id="b-despertando-word">
+        <p class="caption-line">Deus Está Despertando Pessoas</p>
+        </div>
       </div>
 
-      <div id="b-essencia" class="clip caption-card" data-start="236.106" data-duration="3" data-track-index="5">
-        <p class="caption-line" id="b-essencia-word">A Essência do Chamado</p>
+      <div id="b-por-onde" class="clip caption-card" data-start="48.282" data-duration="3.2" data-track-index="5">
+        <div class="caption-inner" id="b-por-onde-word">
+        <p class="caption-line">Mas Não Sei Por Onde Começar…</p>
+        </div>
       </div>
 
-      <section id="b-pilares" class="clip cutaway" data-start="294.734" data-duration="7.2" data-track-index="5">
+      <div id="b-preparar-melhor" class="clip caption-card" data-start="99.698" data-duration="3" data-track-index="5">
+        <div class="caption-inner" id="b-preparar-melhor-word">
+        <p class="caption-line">Preciso Me Preparar Melhor</p>
+        </div>
+      </div>
+
+      <div id="b-preparo-intro" class="clip caption-card" data-start="149.862" data-duration="3" data-track-index="5">
+        <div class="caption-inner" id="b-preparo-intro-word">
+        <p class="caption-line">Cuidar de Vida Exige Preparo</p>
+        </div>
+      </div>
+
+      <div id="b-profissao-chamado" class="clip caption-card" data-start="178.772" data-duration="3" data-track-index="5">
+        <div class="caption-inner" id="b-profissao-chamado-word">
+        <p class="caption-line">Profissão ou Chamado?</p>
+        </div>
+      </div>
+
+      <div id="b-nasce-chamado" class="clip caption-card" data-start="448.043" data-duration="3.2" data-track-index="5">
+        <div class="caption-inner" id="b-nasce-chamado-word">
+        <p class="caption-line">O Terapeuta Cristão Nasce de um Chamado</p>
+        </div>
+      </div>
+
+      <div id="b-vocacao" class="clip caption-card" data-start="485.601" data-duration="3" data-track-index="5">
+        <div class="caption-inner" id="b-vocacao-word">
+        <p class="caption-line">O Reino Começa pela Vocação</p>
+        </div>
+      </div>
+
+      <div id="b-compaixao" class="clip caption-card" data-start="1088.156" data-duration="3" data-track-index="5">
+        <div class="caption-inner" id="b-compaixao-word">
+        <p class="caption-line">Não Foi a Técnica. Foi a Compaixão.</p>
+        </div>
+      </div>
+
+      <div id="b-chama-prepara" class="clip caption-card" data-start="1143.136" data-duration="3" data-track-index="5">
+        <div class="caption-inner" id="b-chama-prepara-word">
+        <p class="caption-line">Deus Chama e Depois Prepara</p>
+        </div>
+      </div>
+
+      <div id="b-presente-resp" class="clip caption-card" data-start="1254.646" data-duration="3.4" data-track-index="5">
+        <div class="caption-inner" id="b-presente-resp-word">
+        <p class="caption-line">Chamado é Presente. Preparo é Responsabilidade.</p>
+        </div>
+      </div>
+
+      <div id="b-ja-preparando" class="clip caption-card" data-start="1469.496" data-duration="3.2" data-track-index="5">
+        <div class="caption-inner" id="b-ja-preparando-word">
+        <p class="caption-line">Deus Já Está Preparando as Pessoas</p>
+        </div>
+      </div>
+
+      <div id="b-nao-corra" class="clip caption-card" data-start="1547.286" data-duration="3.2" data-track-index="5">
+        <div class="caption-inner" id="b-nao-corra-word">
+        <p class="caption-line">Não Corra Atrás. Esteja Preparado.</p>
+        </div>
+      </div>
+
+      <div id="b-essencia" class="clip caption-card" data-start="231.856" data-duration="3" data-track-index="5">
+        <div class="caption-inner" id="b-essencia-word">
+        <p class="caption-line">A Essência do Chamado</p>
+        </div>
+      </div>
+
+      <section id="b-pilares" class="clip cutaway" data-start="289.284" data-duration="7.2" data-track-index="5">
         <div class="cutaway-bgs">
         <img class="cutaway-bg" id="b-pilares-bgimg0" src="media/broll/maos-oracao-cruz.jpg" alt="" />
         <img class="cutaway-bg" id="b-pilares-bgimg1" src="media/broll/pessoa-ajoelhada-deus-respira.jpg" alt="" />
@@ -153,51 +234,73 @@
         </div>
       </section>
 
-      <div id="b-transformacao-2" class="clip caption-card" data-start="336.454" data-duration="2.8" data-track-index="5">
-        <p class="caption-line" id="b-transformacao-2-word">Transformação</p>
+      <div id="b-transformacao-2" class="clip caption-card" data-start="330.284" data-duration="2.8" data-track-index="5">
+        <div class="caption-inner" id="b-transformacao-2-word">
+        <p class="caption-line">Transformação</p>
+        </div>
       </div>
 
-      <div id="b-feridas" class="clip caption-card" data-start="545.828" data-duration="3.2" data-track-index="5">
-        <p class="caption-line" id="b-feridas-word">Deus Chama Quem Já Foi Ferido</p>
+      <div id="b-feridas" class="clip caption-card" data-start="535.218" data-duration="3.2" data-track-index="5">
+        <div class="caption-inner" id="b-feridas-word">
+        <p class="caption-line">Deus Chama Quem Já Foi Ferido</p>
+        </div>
       </div>
 
-      <div id="b-restauracao" class="clip caption-card" data-start="693.629" data-duration="2.8" data-track-index="5">
-        <p class="caption-line" id="b-restauracao-word">Restauração</p>
+      <div id="b-restauracao" class="clip caption-card" data-start="680.019" data-duration="2.8" data-track-index="5">
+        <div class="caption-inner" id="b-restauracao-word">
+        <p class="caption-line">Restauração</p>
+        </div>
       </div>
 
-      <div id="b-transforma-2" class="clip caption-card" data-start="812.502" data-duration="3.2" data-track-index="5">
-        <p class="caption-line" id="b-transforma-2-word">Deus Me Consola, Deus Me Transforma</p>
+      <div id="b-transforma-2" class="clip caption-card" data-start="795.172" data-duration="3.2" data-track-index="5">
+        <div class="caption-inner" id="b-transforma-2-word">
+        <p class="caption-line">Deus Me Consola, Deus Me Transforma</p>
+        </div>
       </div>
 
-      <div id="b-pessoas" class="clip caption-card" data-start="932.776" data-duration="3" data-track-index="5">
-        <p class="caption-line" id="b-pessoas-word">Ele Trabalha com Pessoas</p>
+      <div id="b-pessoas" class="clip caption-card" data-start="911.726" data-duration="3" data-track-index="5">
+        <div class="caption-inner" id="b-pessoas-word">
+        <p class="caption-line">Ele Trabalha com Pessoas</p>
+        </div>
       </div>
 
-      <div id="b-vidas" class="clip caption-card" data-start="960.386" data-duration="3" data-track-index="5">
-        <p class="caption-line" id="b-vidas-word">Você Atende Vidas</p>
+      <div id="b-vidas" class="clip caption-card" data-start="938.736" data-duration="3" data-track-index="5">
+        <div class="caption-inner" id="b-vidas-word">
+        <p class="caption-line">Você Atende Vidas</p>
+        </div>
       </div>
 
-      <div id="b-acolhida" class="clip caption-card" data-start="1066.126" data-duration="3" data-track-index="5">
-        <p class="caption-line" id="b-acolhida-word">Vidas a Serem Acolhidas</p>
+      <div id="b-acolhida" class="clip caption-card" data-start="1042.796" data-duration="3" data-track-index="5">
+        <div class="caption-inner" id="b-acolhida-word">
+        <p class="caption-line">Vidas a Serem Acolhidas</p>
+        </div>
       </div>
 
-      <div id="b-excelencia" class="clip caption-card" data-start="1406.296" data-duration="3" data-track-index="5">
-        <p class="caption-line" id="b-excelencia-word">Excelência no Preparo</p>
+      <div id="b-excelencia" class="clip caption-card" data-start="1374.686" data-duration="3" data-track-index="5">
+        <div class="caption-inner" id="b-excelencia-word">
+        <p class="caption-line">Excelência no Preparo</p>
+        </div>
       </div>
 
-      <div id="b-dependencia-2" class="clip caption-card" data-start="1429.736" data-duration="2.8" data-track-index="5">
-        <p class="caption-line" id="b-dependencia-2-word">Dependência</p>
+      <div id="b-dependencia-2" class="clip caption-card" data-start="1397.306" data-duration="2.8" data-track-index="5">
+        <div class="caption-inner" id="b-dependencia-2-word">
+        <p class="caption-line">Dependência</p>
+        </div>
       </div>
 
-      <div id="b-servico-2" class="clip caption-card" data-start="1618.646" data-duration="2.8" data-track-index="5">
-        <p class="caption-line" id="b-servico-2-word">Serviço</p>
+      <div id="b-servico-2" class="clip caption-card" data-start="1582.256" data-duration="2.8" data-track-index="5">
+        <div class="caption-inner" id="b-servico-2-word">
+        <p class="caption-line">Serviço</p>
+        </div>
       </div>
 
-      <div id="b-carater" class="clip caption-card" data-start="1704.286" data-duration="3.2" data-track-index="5">
-        <p class="caption-line" id="b-carater-word">A Maior Ferramenta é o Seu Caráter</p>
+      <div id="b-carater" class="clip caption-card" data-start="1666.576" data-duration="3.2" data-track-index="5">
+        <div class="caption-inner" id="b-carater-word">
+        <p class="caption-line">A Maior Ferramenta é o Seu Caráter</p>
+        </div>
       </div>
 
-      <section id="b-chamado-preparo" class="clip cutaway" data-start="1328.166" data-duration="7.6" data-track-index="5">
+      <section id="b-chamado-preparo" class="clip cutaway" data-start="1298.776" data-duration="7.6" data-track-index="5">
         <div class="cutaway-inner compare">
           <div class="compare-side" id="b-chamado-preparo-left">
             <div class="compare-bg-wrap"><img class="compare-bg" id="b-chamado-preparo-bg-left" src="media/broll/sinais-espirito-santo.jpg" alt="" /></div>
@@ -217,11 +320,13 @@
         </div>
       </section>
 
-      <div id="b-cuidador" class="clip caption-card" data-start="1733.266" data-duration="3.2" data-track-index="5">
-        <p class="caption-line" id="b-cuidador-word">Você é Cuidador de Vida</p>
+      <div id="b-cuidador" class="clip caption-card" data-start="1695.316" data-duration="3.2" data-track-index="5">
+        <div class="caption-inner" id="b-cuidador-word">
+        <p class="caption-line">Você é Cuidador de Vida</p>
+        </div>
       </div>
 
-      <div id="b-camcorder" class="clip camcorder-hud" data-start="882.033" data-duration="6" data-track-index="5">
+      <div id="b-camcorder" class="clip camcorder-hud" data-start="862.183" data-duration="6" data-track-index="5">
         <span class="cam-corner tl"></span>
         <span class="cam-corner tr"></span>
         <span class="cam-corner bl"></span>
@@ -235,145 +340,446 @@
         <div class="cam-hd">HD</div>
       </div>
 
-      <section id="b-quote-abandono-photo" class="clip cutaway quote-photo" data-start="564.838" data-duration="2.2" data-track-index="5">
+      <section id="b-quote-abandono-photo" class="clip cutaway quote-photo" data-start="596.15" data-duration="2.2" data-track-index="5">
         <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-abandono-bg" src="media/broll/papel-parede-jesus.jpg" alt="" /></div>
       </section>
-      <section id="b-quote-abandono-text" class="clip cutaway quote-black" data-start="567.038" data-duration="3.8" data-track-index="5">
+      <section id="b-quote-abandono-text" class="clip cutaway quote-black" data-start="598.35" data-duration="3.8" data-track-index="5">
         <div class="quote-inner" id="b-quote-abandono-inner">
           
           <p class="quote-text">JESUS CONHECEU O ABANDONO, A REJEIÇÃO, A SOLIDÃO.</p>
         </div>
       </section>
 
-      <section id="b-quote-consolacao-photo" class="clip cutaway quote-photo" data-start="780.794" data-duration="2.2" data-track-index="5">
+      <section id="b-quote-consolacao-photo" class="clip cutaway quote-photo" data-start="764.904" data-duration="2.2" data-track-index="5">
         <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-consolacao-bg" src="media/broll/tua-graca-me-basta.jpg" alt="" /></div>
       </section>
-      <section id="b-quote-consolacao-text" class="clip cutaway quote-black" data-start="782.994" data-duration="4.8" data-track-index="5">
+      <section id="b-quote-consolacao-text" class="clip cutaway quote-black" data-start="767.104" data-duration="4.8" data-track-index="5">
         <div class="quote-inner" id="b-quote-consolacao-inner">
           <p class="quote-kicker">2 CORÍNTIOS 1:3-4</p>
           <p class="quote-text">DEUS DE TODA CONSOLAÇÃO, QUE NOS CONSOLA PARA CONSOLARMOS OS OUTROS.</p>
         </div>
       </section>
 
-      <section id="b-quote-amor-photo" class="clip cutaway quote-photo" data-start="1139.256" data-duration="2" data-track-index="5">
+      <section id="b-quote-amor-photo" class="clip cutaway quote-photo" data-start="1113.766" data-duration="2" data-track-index="5">
         <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-amor-bg" src="media/broll/transferir-1.jpg" alt="" /></div>
       </section>
-      <section id="b-quote-amor-text" class="clip cutaway quote-black" data-start="1141.256" data-duration="3" data-track-index="5">
+      <section id="b-quote-amor-text" class="clip cutaway quote-black" data-start="1115.766" data-duration="3" data-track-index="5">
         <div class="quote-inner" id="b-quote-amor-inner">
           
           <p class="quote-text">SOMENTE O AMOR SUSTENTA O CHAMADO.</p>
         </div>
       </section>
 
-      <section id="b-quote-honra-photo" class="clip cutaway quote-photo" data-start="1265.266" data-duration="2.2" data-track-index="5">
+      <section id="b-quote-honra-photo" class="clip cutaway quote-photo" data-start="1237.136" data-duration="2.2" data-track-index="5">
         <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-honra-bg" src="media/broll/dom-profetico.jpg" alt="" /></div>
       </section>
-      <section id="b-quote-honra-text" class="clip cutaway quote-black" data-start="1267.466" data-duration="3.8" data-track-index="5">
+      <section id="b-quote-honra-text" class="clip cutaway quote-black" data-start="1239.336" data-duration="3.8" data-track-index="5">
         <div class="quote-inner" id="b-quote-honra-inner">
           
           <p class="quote-text">O CHAMADO ABRE A PORTA. O PREPARO FAZ VOCÊ HONRAR A DEUS NELA.</p>
         </div>
       </section>
 
-      <section id="b-quote-cuidado-photo" class="clip cutaway quote-photo" data-start="1712.336" data-duration="2.2" data-track-index="5">
+      <section id="b-quote-cuidado-photo" class="clip cutaway quote-photo" data-start="1674.626" data-duration="2.2" data-track-index="5">
         <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-cuidado-bg" src="media/broll/desse-jeito.jpg" alt="" /></div>
       </section>
-      <section id="b-quote-cuidado-text" class="clip cutaway quote-black" data-start="1714.536" data-duration="3.8" data-track-index="5">
+      <section id="b-quote-cuidado-text" class="clip cutaway quote-black" data-start="1676.826" data-duration="3.8" data-track-index="5">
         <div class="quote-inner" id="b-quote-cuidado-inner">
           
           <p class="quote-text">VÃO ESQUECER AS TÉCNICAS. NUNCA VÃO ESQUECER QUE FORAM CUIDADAS POR VOCÊ.</p>
         </div>
       </section>
 
-      <section id="b-broll-1" class="clip cutaway quote-photo" data-start="413.661" data-duration="3" data-track-index="5">
+      <section id="b-broll-1" class="clip cutaway quote-photo" data-start="405.811" data-duration="3" data-track-index="5">
         <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-1-bg" src="media/broll/transferir-2.jpg" alt="" /></div>
       </section>
 
-      <section id="b-broll-2" class="clip cutaway quote-photo" data-start="1100.976" data-duration="3" data-track-index="5">
+      <section id="b-broll-2" class="clip cutaway quote-photo" data-start="1076.806" data-duration="3" data-track-index="5">
         <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-2-bg" src="media/broll/transferir-3.jpg" alt="" /></div>
       </section>
 
-      <section id="b-broll-3" class="clip cutaway quote-photo" data-start="1552.846" data-duration="3" data-track-index="5">
+      <section id="b-broll-3" class="clip cutaway quote-photo" data-start="1518.016" data-duration="3" data-track-index="5">
         <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-3-bg" src="media/broll/transferir-4.jpg" alt="" /></div>
+      </section>
+
+      <div id="b-v-heb218" class="clip caption-card" data-start="559.046" data-duration="4.4" data-track-index="5">
+        <div class="caption-inner" id="b-v-heb218-word">
+        <p class="caption-ref">HEBREUS 2:18</p>
+        <p class="caption-line is-verse">Ele mesmo sofreu quando foi tentado, e é poderoso para socorrer os que são tentados.</p>
+        </div>
+      </div>
+
+      <div id="b-v-heb415" class="clip caption-card" data-start="574.414" data-duration="4.6" data-track-index="5">
+        <div class="caption-inner" id="b-v-heb415-word">
+        <p class="caption-ref">HEBREUS 4:15</p>
+        <p class="caption-line is-verse">Temos um sumo sacerdote que, como nós, em tudo foi tentado — mas sem pecado.</p>
+        </div>
+      </div>
+
+      <div id="b-v-jo1010" class="clip caption-card" data-start="1054.396" data-duration="3.6" data-track-index="5">
+        <div class="caption-inner" id="b-v-jo1010-word">
+        <p class="caption-ref">JOÃO 10:10</p>
+        <p class="caption-line is-verse">Vim para que tenham vida, e a tenham em abundância.</p>
+        </div>
+      </div>
+
+      <div id="b-v-2tm224" class="clip caption-card" data-start="1204.936" data-duration="4.4" data-track-index="5">
+        <div class="caption-inner" id="b-v-2tm224-word">
+        <p class="caption-ref">2 TIMÓTEO 2:24</p>
+        <p class="caption-line is-verse">O servo do Senhor deve ser amável para com todos, e apto para ensinar.</p>
+        </div>
+      </div>
+
+      <div id="b-v-jo155" class="clip caption-card" data-start="1344.596" data-duration="3.4" data-track-index="5">
+        <div class="caption-inner" id="b-v-jo155-word">
+        <p class="caption-ref">JOÃO 15:5</p>
+        <p class="caption-line is-verse">Sem mim, nada podeis fazer.</p>
+        </div>
+      </div>
+
+      <div id="b-v-2tm215" class="clip caption-card" data-start="1384.976" data-duration="3.6" data-track-index="5">
+        <div class="caption-inner" id="b-v-2tm215-word">
+        <p class="caption-ref">2 TIMÓTEO 2:15</p>
+        <p class="caption-line is-verse">Procura apresentar-te a Deus como aprovado.</p>
+        </div>
+      </div>
+
+      <div id="b-v-jo644" class="clip caption-card" data-start="1447.856" data-duration="4" data-track-index="5">
+        <div class="caption-inner" id="b-v-jo644-word">
+        <p class="caption-ref">JOÃO 6:44</p>
+        <p class="caption-line is-verse">Ninguém vem a mim se o Pai que me enviou não o trouxer.</p>
+        </div>
+      </div>
+
+      <section id="b-broll-4" class="clip cutaway quote-photo" data-start="253.874" data-duration="3" data-track-index="5">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-4-bg" src="media/broll/transferir-0.jpg" alt="" /></div>
+      </section>
+
+      <section id="b-broll-5" class="clip cutaway quote-photo" data-start="710.882" data-duration="3" data-track-index="5">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-5-bg" src="media/broll/cantata-pascoa-sacrificio.jpg" alt="" /></div>
+      </section>
+
+      <section id="b-broll-6" class="clip cutaway quote-photo" data-start="959.736" data-duration="3" data-track-index="5">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-6-bg" src="media/broll/gloria-de-deus.jpg" alt="" /></div>
+      </section>
+
+      <section id="b-broll-7" class="clip cutaway quote-photo" data-start="1319.346" data-duration="3" data-track-index="5">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-7-bg" src="media/broll/maos-oracao-cruz.jpg" alt="" /></div>
       </section>
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
-  tl.fromTo("#base", { filter: "grayscale(0%)" }, { filter: "grayscale(100%)", duration: 0.5 }, 0.147);
-  tl.fromTo("#base", { filter: "grayscale(100%)" }, { filter: "grayscale(0%)", duration: 0.5 }, 5.647);
-  tl.fromTo("#b-confesso", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 0.147);
-  tl.to("#b-confesso", { autoAlpha: 0, duration: 0.3 }, 5.847);
-  tl.to("#b-confesso-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 14, yoyo: true }, 0.447);
-  tl.fromTo("#b-preparo-intro-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 152.312);
-  tl.to("#b-preparo-intro-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 154.912);
-  tl.fromTo("#b-essencia-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 236.106);
-  tl.to("#b-essencia-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 238.706);
-  tl.fromTo("#b-pilares .cutaway-bgs", { scale: 1 }, { scale: 1.12, duration: 7.2, ease: "none" }, 294.734);
-  tl.fromTo("#b-pilares-p0", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 295.084);
-  tl.fromTo("#b-pilares-bgimg0", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, 294.734);
-  tl.fromTo("#b-pilares-p1", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 295.934);
-  tl.set("#b-pilares-bgimg1", { autoAlpha: 0 }, 294.734);
-  tl.fromTo("#b-pilares-bgimg0", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.6 }, 295.934);
-  tl.fromTo("#b-pilares-bgimg1", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, 295.934);
-  tl.fromTo("#b-pilares-p2", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 296.784);
-  tl.set("#b-pilares-bgimg2", { autoAlpha: 0 }, 294.734);
-  tl.fromTo("#b-pilares-bgimg1", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.6 }, 296.784);
-  tl.fromTo("#b-pilares-bgimg2", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, 296.784);
-  tl.fromTo("#b-pilares-p3", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 297.634);
-  tl.set("#b-pilares-bgimg3", { autoAlpha: 0 }, 294.734);
-  tl.fromTo("#b-pilares-bgimg2", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.6 }, 297.634);
-  tl.fromTo("#b-pilares-bgimg3", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, 297.634);
-  tl.fromTo("#b-pilares-p4", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 298.484);
-  tl.set("#b-pilares-bgimg4", { autoAlpha: 0 }, 294.734);
-  tl.fromTo("#b-pilares-bgimg3", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.6 }, 298.484);
-  tl.fromTo("#b-pilares-bgimg4", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, 298.484);
-  tl.fromTo("#b-transformacao-2-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 336.454);
-  tl.to("#b-transformacao-2-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 338.854);
-  tl.fromTo("#b-feridas-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 545.828);
-  tl.to("#b-feridas-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 548.628);
-  tl.fromTo("#b-restauracao-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 693.629);
-  tl.to("#b-restauracao-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 696.029);
-  tl.fromTo("#b-transforma-2-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 812.502);
-  tl.to("#b-transforma-2-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 815.302);
-  tl.fromTo("#b-pessoas-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 932.776);
-  tl.to("#b-pessoas-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 935.376);
-  tl.fromTo("#b-vidas-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 960.386);
-  tl.to("#b-vidas-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 962.986);
-  tl.fromTo("#b-acolhida-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1066.126);
-  tl.to("#b-acolhida-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1068.726);
-  tl.fromTo("#b-excelencia-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1406.296);
-  tl.to("#b-excelencia-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1408.896);
-  tl.fromTo("#b-dependencia-2-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1429.736);
-  tl.to("#b-dependencia-2-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1432.136);
-  tl.fromTo("#b-servico-2-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1618.646);
-  tl.to("#b-servico-2-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1621.046);
-  tl.fromTo("#b-carater-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1704.286);
-  tl.to("#b-carater-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1707.086);
-  tl.fromTo("#b-chamado-preparo-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, 1328.316);
-  tl.fromTo("#b-chamado-preparo-right", { autoAlpha: 0, xPercent: 14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, 1328.316);
-  tl.fromTo("#b-chamado-preparo-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, 1328.866);
-  tl.fromTo("#b-chamado-preparo-bg-left", { scale: 1 }, { scale: 1.1, duration: 7.4, ease: "none" }, 1328.316);
-  tl.fromTo("#b-chamado-preparo-bg-right", { scale: 1 }, { scale: 1.1, duration: 7.4, ease: "none" }, 1328.316);
-  tl.fromTo("#b-cuidador-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1733.266);
-  tl.to("#b-cuidador-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1736.066);
-  tl.fromTo("#base", { filter: "grayscale(0%)" }, { filter: "grayscale(100%)", duration: 0.5 }, 882.033);
-  tl.fromTo("#base", { filter: "grayscale(100%)" }, { filter: "grayscale(0%)", duration: 0.5 }, 887.533);
-  tl.fromTo("#b-camcorder", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 882.033);
-  tl.to("#b-camcorder", { autoAlpha: 0, duration: 0.3 }, 887.733);
-  tl.to("#b-camcorder-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 14, yoyo: true }, 882.333);
-  tl.fromTo("#b-quote-abandono-bg", { scale: 1 }, { scale: 1.08, duration: 2.2, ease: "none" }, 564.838);
-  tl.fromTo("#b-quote-abandono-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 567.038);
-  tl.fromTo("#b-quote-consolacao-bg", { scale: 1 }, { scale: 1.08, duration: 2.2, ease: "none" }, 780.794);
-  tl.fromTo("#b-quote-consolacao-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 782.994);
-  tl.fromTo("#b-quote-amor-bg", { scale: 1 }, { scale: 1.08, duration: 2, ease: "none" }, 1139.256);
-  tl.fromTo("#b-quote-amor-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1141.256);
-  tl.fromTo("#b-quote-honra-bg", { scale: 1 }, { scale: 1.08, duration: 2.2, ease: "none" }, 1265.266);
-  tl.fromTo("#b-quote-honra-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1267.466);
-  tl.fromTo("#b-quote-cuidado-bg", { scale: 1 }, { scale: 1.08, duration: 2.2, ease: "none" }, 1712.336);
-  tl.fromTo("#b-quote-cuidado-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1714.536);
-  tl.fromTo("#b-broll-1-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 413.661);
-  tl.fromTo("#b-broll-2-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 1100.976);
-  tl.fromTo("#b-broll-3-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 1552.846);
+  tl.fromTo("#base", { filter: "grayscale(0%)" }, { filter: "grayscale(100%)", duration: 0.5 }, 0.097);
+  tl.fromTo("#base", { filter: "grayscale(100%)" }, { filter: "grayscale(0%)", duration: 0.5 }, 5.597);
+  tl.fromTo("#b-confesso", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 0.097);
+  tl.to("#b-confesso", { autoAlpha: 0, duration: 0.3 }, 5.797);
+  tl.to("#b-confesso-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 14, yoyo: true }, 0.397);
+  tl.fromTo("#b-despertando-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 19.915);
+  tl.to("#b-despertando-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 22.165);
+  tl.set("#b-despertando", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-despertando", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 19.715);
+  tl.to("#b-despertando", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 22.365);
+  tl.set("#b-despertando", { autoAlpha: 0 }, 22.715);
+  tl.fromTo("#b-por-onde-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 48.482);
+  tl.to("#b-por-onde-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 50.932);
+  tl.set("#b-por-onde", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-por-onde", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 48.282);
+  tl.to("#b-por-onde", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 51.132);
+  tl.set("#b-por-onde", { autoAlpha: 0 }, 51.482);
+  tl.fromTo("#b-preparar-melhor-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 99.898);
+  tl.to("#b-preparar-melhor-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 102.148);
+  tl.set("#b-preparar-melhor", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-preparar-melhor", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 99.698);
+  tl.to("#b-preparar-melhor", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 102.348);
+  tl.set("#b-preparar-melhor", { autoAlpha: 0 }, 102.698);
+  tl.fromTo("#b-preparo-intro-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 150.062);
+  tl.to("#b-preparo-intro-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 152.312);
+  tl.set("#b-preparo-intro", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-preparo-intro", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 149.862);
+  tl.to("#b-preparo-intro", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 152.512);
+  tl.set("#b-preparo-intro", { autoAlpha: 0 }, 152.862);
+  tl.fromTo("#b-profissao-chamado-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 178.972);
+  tl.to("#b-profissao-chamado-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 181.222);
+  tl.set("#b-profissao-chamado", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-profissao-chamado", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 178.772);
+  tl.to("#b-profissao-chamado", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 181.422);
+  tl.set("#b-profissao-chamado", { autoAlpha: 0 }, 181.772);
+  tl.fromTo("#b-nasce-chamado-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 448.243);
+  tl.to("#b-nasce-chamado-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 450.693);
+  tl.set("#b-nasce-chamado", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-nasce-chamado", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 448.043);
+  tl.to("#b-nasce-chamado", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 450.893);
+  tl.set("#b-nasce-chamado", { autoAlpha: 0 }, 451.243);
+  tl.fromTo("#b-vocacao-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 485.801);
+  tl.to("#b-vocacao-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 488.051);
+  tl.set("#b-vocacao", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-vocacao", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 485.601);
+  tl.to("#b-vocacao", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 488.251);
+  tl.set("#b-vocacao", { autoAlpha: 0 }, 488.601);
+  tl.fromTo("#b-compaixao-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1088.356);
+  tl.to("#b-compaixao-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1090.606);
+  tl.set("#b-compaixao", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-compaixao", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1088.156);
+  tl.to("#b-compaixao", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1090.806);
+  tl.set("#b-compaixao", { autoAlpha: 0 }, 1091.156);
+  tl.fromTo("#b-chama-prepara-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1143.336);
+  tl.to("#b-chama-prepara-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1145.586);
+  tl.set("#b-chama-prepara", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-chama-prepara", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1143.136);
+  tl.to("#b-chama-prepara", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1145.786);
+  tl.set("#b-chama-prepara", { autoAlpha: 0 }, 1146.136);
+  tl.fromTo("#b-presente-resp-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1254.846);
+  tl.to("#b-presente-resp-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1257.496);
+  tl.set("#b-presente-resp", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-presente-resp", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1254.646);
+  tl.to("#b-presente-resp", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1257.696);
+  tl.set("#b-presente-resp", { autoAlpha: 0 }, 1258.046);
+  tl.fromTo("#b-ja-preparando-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1469.696);
+  tl.to("#b-ja-preparando-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1472.146);
+  tl.set("#b-ja-preparando", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-ja-preparando", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1469.496);
+  tl.to("#b-ja-preparando", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1472.346);
+  tl.set("#b-ja-preparando", { autoAlpha: 0 }, 1472.696);
+  tl.fromTo("#b-nao-corra-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1547.486);
+  tl.to("#b-nao-corra-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1549.936);
+  tl.set("#b-nao-corra", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-nao-corra", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1547.286);
+  tl.to("#b-nao-corra", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1550.136);
+  tl.set("#b-nao-corra", { autoAlpha: 0 }, 1550.486);
+  tl.fromTo("#b-essencia-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 232.056);
+  tl.to("#b-essencia-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 234.306);
+  tl.set("#b-essencia", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-essencia", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 231.856);
+  tl.to("#b-essencia", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 234.506);
+  tl.set("#b-essencia", { autoAlpha: 0 }, 234.856);
+  tl.fromTo("#b-pilares .cutaway-bgs", { scale: 1 }, { scale: 1.12, duration: 7.2, ease: "none" }, 289.284);
+  tl.fromTo("#b-pilares-p0", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 289.634);
+  tl.fromTo("#b-pilares-bgimg0", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, 289.284);
+  tl.fromTo("#b-pilares-p1", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 290.484);
+  tl.set("#b-pilares-bgimg1", { autoAlpha: 0 }, 289.284);
+  tl.fromTo("#b-pilares-bgimg0", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.6 }, 290.484);
+  tl.fromTo("#b-pilares-bgimg1", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, 290.484);
+  tl.fromTo("#b-pilares-p2", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 291.334);
+  tl.set("#b-pilares-bgimg2", { autoAlpha: 0 }, 289.284);
+  tl.fromTo("#b-pilares-bgimg1", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.6 }, 291.334);
+  tl.fromTo("#b-pilares-bgimg2", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, 291.334);
+  tl.fromTo("#b-pilares-p3", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 292.184);
+  tl.set("#b-pilares-bgimg3", { autoAlpha: 0 }, 289.284);
+  tl.fromTo("#b-pilares-bgimg2", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.6 }, 292.184);
+  tl.fromTo("#b-pilares-bgimg3", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, 292.184);
+  tl.fromTo("#b-pilares-p4", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 293.034);
+  tl.set("#b-pilares-bgimg4", { autoAlpha: 0 }, 289.284);
+  tl.fromTo("#b-pilares-bgimg3", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.6 }, 293.034);
+  tl.fromTo("#b-pilares-bgimg4", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, 293.034);
+  tl.fromTo("#b-transformacao-2-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 330.484);
+  tl.to("#b-transformacao-2-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 332.534);
+  tl.set("#b-transformacao-2", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-transformacao-2", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 330.284);
+  tl.to("#b-transformacao-2", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 332.734);
+  tl.set("#b-transformacao-2", { autoAlpha: 0 }, 333.084);
+  tl.fromTo("#b-feridas-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 535.418);
+  tl.to("#b-feridas-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 537.868);
+  tl.set("#b-feridas", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-feridas", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 535.218);
+  tl.to("#b-feridas", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 538.068);
+  tl.set("#b-feridas", { autoAlpha: 0 }, 538.418);
+  tl.fromTo("#b-restauracao-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 680.219);
+  tl.to("#b-restauracao-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 682.269);
+  tl.set("#b-restauracao", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-restauracao", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 680.019);
+  tl.to("#b-restauracao", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 682.469);
+  tl.set("#b-restauracao", { autoAlpha: 0 }, 682.819);
+  tl.fromTo("#b-transforma-2-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 795.372);
+  tl.to("#b-transforma-2-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 797.822);
+  tl.set("#b-transforma-2", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-transforma-2", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 795.172);
+  tl.to("#b-transforma-2", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 798.022);
+  tl.set("#b-transforma-2", { autoAlpha: 0 }, 798.372);
+  tl.fromTo("#b-pessoas-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 911.926);
+  tl.to("#b-pessoas-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 914.176);
+  tl.set("#b-pessoas", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-pessoas", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 911.726);
+  tl.to("#b-pessoas", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 914.376);
+  tl.set("#b-pessoas", { autoAlpha: 0 }, 914.726);
+  tl.fromTo("#b-vidas-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 938.936);
+  tl.to("#b-vidas-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 941.186);
+  tl.set("#b-vidas", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-vidas", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 938.736);
+  tl.to("#b-vidas", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 941.386);
+  tl.set("#b-vidas", { autoAlpha: 0 }, 941.736);
+  tl.fromTo("#b-acolhida-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1042.996);
+  tl.to("#b-acolhida-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1045.246);
+  tl.set("#b-acolhida", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-acolhida", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1042.796);
+  tl.to("#b-acolhida", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1045.446);
+  tl.set("#b-acolhida", { autoAlpha: 0 }, 1045.796);
+  tl.fromTo("#b-excelencia-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1374.886);
+  tl.to("#b-excelencia-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1377.136);
+  tl.set("#b-excelencia", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-excelencia", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1374.686);
+  tl.to("#b-excelencia", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1377.336);
+  tl.set("#b-excelencia", { autoAlpha: 0 }, 1377.686);
+  tl.fromTo("#b-dependencia-2-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1397.506);
+  tl.to("#b-dependencia-2-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1399.556);
+  tl.set("#b-dependencia-2", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-dependencia-2", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1397.306);
+  tl.to("#b-dependencia-2", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1399.756);
+  tl.set("#b-dependencia-2", { autoAlpha: 0 }, 1400.106);
+  tl.fromTo("#b-servico-2-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1582.456);
+  tl.to("#b-servico-2-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1584.506);
+  tl.set("#b-servico-2", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-servico-2", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1582.256);
+  tl.to("#b-servico-2", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1584.706);
+  tl.set("#b-servico-2", { autoAlpha: 0 }, 1585.056);
+  tl.fromTo("#b-carater-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1666.776);
+  tl.to("#b-carater-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1669.226);
+  tl.set("#b-carater", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-carater", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1666.576);
+  tl.to("#b-carater", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1669.426);
+  tl.set("#b-carater", { autoAlpha: 0 }, 1669.776);
+  tl.fromTo("#b-chamado-preparo-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, 1298.926);
+  tl.fromTo("#b-chamado-preparo-right", { autoAlpha: 0, xPercent: 14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, 1298.926);
+  tl.fromTo("#b-chamado-preparo-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, 1299.476);
+  tl.fromTo("#b-chamado-preparo-bg-left", { scale: 1 }, { scale: 1.1, duration: 7.4, ease: "none" }, 1298.926);
+  tl.fromTo("#b-chamado-preparo-bg-right", { scale: 1 }, { scale: 1.1, duration: 7.4, ease: "none" }, 1298.926);
+  tl.fromTo("#b-cuidador-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1695.516);
+  tl.to("#b-cuidador-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1697.966);
+  tl.set("#b-cuidador", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-cuidador", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1695.316);
+  tl.to("#b-cuidador", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1698.166);
+  tl.set("#b-cuidador", { autoAlpha: 0 }, 1698.516);
+  tl.fromTo("#base", { filter: "grayscale(0%)" }, { filter: "grayscale(100%)", duration: 0.5 }, 862.183);
+  tl.fromTo("#base", { filter: "grayscale(100%)" }, { filter: "grayscale(0%)", duration: 0.5 }, 867.683);
+  tl.fromTo("#b-camcorder", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 862.183);
+  tl.to("#b-camcorder", { autoAlpha: 0, duration: 0.3 }, 867.883);
+  tl.to("#b-camcorder-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 14, yoyo: true }, 862.483);
+  tl.fromTo("#b-quote-abandono-bg", { scale: 1 }, { scale: 1.08, duration: 2.2, ease: "none" }, 596.15);
+  tl.fromTo("#b-quote-abandono-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 598.35);
+  tl.set("#b-quote-abandono-photo", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-quote-abandono-photo", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 596.15);
+  tl.to("#b-quote-abandono-photo", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 598);
+  tl.set("#b-quote-abandono-photo", { autoAlpha: 0 }, 598.35);
+  tl.set("#b-quote-abandono-text", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-quote-abandono-text", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 598.35);
+  tl.to("#b-quote-abandono-text", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 601.8);
+  tl.set("#b-quote-abandono-text", { autoAlpha: 0 }, 602.15);
+  tl.fromTo("#b-quote-consolacao-bg", { scale: 1 }, { scale: 1.08, duration: 2.2, ease: "none" }, 764.904);
+  tl.fromTo("#b-quote-consolacao-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 767.104);
+  tl.set("#b-quote-consolacao-photo", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-quote-consolacao-photo", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 764.904);
+  tl.to("#b-quote-consolacao-photo", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 766.754);
+  tl.set("#b-quote-consolacao-photo", { autoAlpha: 0 }, 767.104);
+  tl.set("#b-quote-consolacao-text", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-quote-consolacao-text", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 767.104);
+  tl.to("#b-quote-consolacao-text", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 771.554);
+  tl.set("#b-quote-consolacao-text", { autoAlpha: 0 }, 771.904);
+  tl.fromTo("#b-quote-amor-bg", { scale: 1 }, { scale: 1.08, duration: 2, ease: "none" }, 1113.766);
+  tl.fromTo("#b-quote-amor-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1115.766);
+  tl.set("#b-quote-amor-photo", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-quote-amor-photo", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1113.766);
+  tl.to("#b-quote-amor-photo", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1115.416);
+  tl.set("#b-quote-amor-photo", { autoAlpha: 0 }, 1115.766);
+  tl.set("#b-quote-amor-text", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-quote-amor-text", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1115.766);
+  tl.to("#b-quote-amor-text", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1118.416);
+  tl.set("#b-quote-amor-text", { autoAlpha: 0 }, 1118.766);
+  tl.fromTo("#b-quote-honra-bg", { scale: 1 }, { scale: 1.08, duration: 2.2, ease: "none" }, 1237.136);
+  tl.fromTo("#b-quote-honra-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1239.336);
+  tl.set("#b-quote-honra-photo", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-quote-honra-photo", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1237.136);
+  tl.to("#b-quote-honra-photo", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1238.986);
+  tl.set("#b-quote-honra-photo", { autoAlpha: 0 }, 1239.336);
+  tl.set("#b-quote-honra-text", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-quote-honra-text", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1239.336);
+  tl.to("#b-quote-honra-text", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1242.786);
+  tl.set("#b-quote-honra-text", { autoAlpha: 0 }, 1243.136);
+  tl.fromTo("#b-quote-cuidado-bg", { scale: 1 }, { scale: 1.08, duration: 2.2, ease: "none" }, 1674.626);
+  tl.fromTo("#b-quote-cuidado-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1676.826);
+  tl.set("#b-quote-cuidado-photo", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-quote-cuidado-photo", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1674.626);
+  tl.to("#b-quote-cuidado-photo", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1676.476);
+  tl.set("#b-quote-cuidado-photo", { autoAlpha: 0 }, 1676.826);
+  tl.set("#b-quote-cuidado-text", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-quote-cuidado-text", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1676.826);
+  tl.to("#b-quote-cuidado-text", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1680.276);
+  tl.set("#b-quote-cuidado-text", { autoAlpha: 0 }, 1680.626);
+  tl.fromTo("#b-broll-1-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 405.811);
+  tl.set("#b-broll-1", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-broll-1", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 405.811);
+  tl.to("#b-broll-1", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 408.461);
+  tl.set("#b-broll-1", { autoAlpha: 0 }, 408.811);
+  tl.fromTo("#b-broll-2-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 1076.806);
+  tl.set("#b-broll-2", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-broll-2", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1076.806);
+  tl.to("#b-broll-2", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1079.456);
+  tl.set("#b-broll-2", { autoAlpha: 0 }, 1079.806);
+  tl.fromTo("#b-broll-3-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 1518.016);
+  tl.set("#b-broll-3", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-broll-3", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1518.016);
+  tl.to("#b-broll-3", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1520.666);
+  tl.set("#b-broll-3", { autoAlpha: 0 }, 1521.016);
+  tl.fromTo("#b-v-heb218-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 559.246);
+  tl.to("#b-v-heb218-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 562.896);
+  tl.set("#b-v-heb218", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-v-heb218", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 559.046);
+  tl.to("#b-v-heb218", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 563.096);
+  tl.set("#b-v-heb218", { autoAlpha: 0 }, 563.446);
+  tl.fromTo("#b-v-heb415-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 574.614);
+  tl.to("#b-v-heb415-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 578.464);
+  tl.set("#b-v-heb415", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-v-heb415", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 574.414);
+  tl.to("#b-v-heb415", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 578.664);
+  tl.set("#b-v-heb415", { autoAlpha: 0 }, 579.014);
+  tl.fromTo("#b-v-jo1010-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1054.596);
+  tl.to("#b-v-jo1010-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1057.446);
+  tl.set("#b-v-jo1010", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-v-jo1010", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1054.396);
+  tl.to("#b-v-jo1010", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1057.646);
+  tl.set("#b-v-jo1010", { autoAlpha: 0 }, 1057.996);
+  tl.fromTo("#b-v-2tm224-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1205.136);
+  tl.to("#b-v-2tm224-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1208.786);
+  tl.set("#b-v-2tm224", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-v-2tm224", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1204.936);
+  tl.to("#b-v-2tm224", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1208.986);
+  tl.set("#b-v-2tm224", { autoAlpha: 0 }, 1209.336);
+  tl.fromTo("#b-v-jo155-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1344.796);
+  tl.to("#b-v-jo155-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1347.446);
+  tl.set("#b-v-jo155", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-v-jo155", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1344.596);
+  tl.to("#b-v-jo155", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1347.646);
+  tl.set("#b-v-jo155", { autoAlpha: 0 }, 1347.996);
+  tl.fromTo("#b-v-2tm215-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1385.176);
+  tl.to("#b-v-2tm215-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1388.026);
+  tl.set("#b-v-2tm215", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-v-2tm215", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1384.976);
+  tl.to("#b-v-2tm215", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1388.226);
+  tl.set("#b-v-2tm215", { autoAlpha: 0 }, 1388.576);
+  tl.fromTo("#b-v-jo644-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 1448.056);
+  tl.to("#b-v-jo644-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 1451.306);
+  tl.set("#b-v-jo644", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-v-jo644", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1447.856);
+  tl.to("#b-v-jo644", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1451.506);
+  tl.set("#b-v-jo644", { autoAlpha: 0 }, 1451.856);
+  tl.fromTo("#b-broll-4-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 253.874);
+  tl.set("#b-broll-4", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-broll-4", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 253.874);
+  tl.to("#b-broll-4", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 256.524);
+  tl.set("#b-broll-4", { autoAlpha: 0 }, 256.874);
+  tl.fromTo("#b-broll-5-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 710.882);
+  tl.set("#b-broll-5", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-broll-5", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 710.882);
+  tl.to("#b-broll-5", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 713.532);
+  tl.set("#b-broll-5", { autoAlpha: 0 }, 713.882);
+  tl.fromTo("#b-broll-6-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 959.736);
+  tl.set("#b-broll-6", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-broll-6", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 959.736);
+  tl.to("#b-broll-6", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 962.386);
+  tl.set("#b-broll-6", { autoAlpha: 0 }, 962.736);
+  tl.fromTo("#b-broll-7-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 1319.346);
+  tl.set("#b-broll-7", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-broll-7", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 1319.346);
+  tl.to("#b-broll-7", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 1321.996);
+  tl.set("#b-broll-7", { autoAlpha: 0 }, 1322.346);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 15.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 21.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 41.6);
@@ -396,14 +802,14 @@
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 255.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 275.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 281.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 301.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 307.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 327.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 333.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 353.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 359.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 379.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 385.3);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 405.6);
-  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 411.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 431.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 437.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 457.6);
@@ -412,10 +818,6 @@
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 489.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 509.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 515.3);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 535.6);
-  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 541.3);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 561.6);
-  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 567.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 587.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 593.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 613.6);
@@ -430,10 +832,6 @@
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 723.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 743.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 749.3);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 769.6);
-  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 775.3);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 795.6);
-  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 801.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 821.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 827.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 847.6);
@@ -452,8 +850,6 @@
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1009.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1029.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1035.3);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1055.6);
-  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1061.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1081.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1087.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1107.6);
@@ -466,8 +862,6 @@
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1191.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1211.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1217.3);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1237.6);
-  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1243.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1263.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1269.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1289.6);
@@ -484,14 +878,10 @@
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1425.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1445.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1451.3);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1471.6);
-  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1477.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1497.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1503.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1523.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1529.3);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1549.6);
-  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1555.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1575.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1581.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1601.6);
@@ -500,14 +890,10 @@
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1633.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1653.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1659.3);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1679.6);
-  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1685.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1705.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1711.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1731.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1737.3);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1757.6);
-  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1763.3);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 1783.6);
-  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 1789.3);
       window.__timelines["main"] = tl;
     </script>
   </body>

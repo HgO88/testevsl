@@ -13,7 +13,11 @@
         --accent-2: #7c9885;
       }
       body { margin: 0; background: var(--bg); color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
-      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+      /* Authored at 1920x1080 (every px size is tuned for it) but rendered at
+         1280x720 — client asked to drop to 720p for render speed. Scaling the
+         root keeps the whole layout identical, just smaller. */
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000;
+              transform: scale(0.6666667); transform-origin: top left; }
       .clip { position: absolute; inset: 0; }
       .talking-head { width: 100%; height: 100%; object-fit: cover; }
 
@@ -25,11 +29,18 @@
         display: flex; align-items: center; justify-content: center;
         padding: 0 140px; text-align: center; pointer-events: none;
       }
+      .caption-inner { max-width: 1560px; }
       .caption-line {
         margin: 0; font-family: Georgia, "Times New Roman", serif; font-style: italic;
         font-weight: 400; font-size: 104px; line-height: 1.2; letter-spacing: 0.5px;
         color: #fff;
       }
+      /* Scripture cards carry more words, so they set smaller under a reference */
+      .caption-ref {
+        margin: 0 0 34px; font-family: Arial, Helvetica, sans-serif; font-style: normal;
+        font-weight: 700; font-size: 30px; letter-spacing: 6px; color: var(--accent);
+      }
+      .caption-line.is-verse { font-size: 66px; line-height: 1.32; }
 
       /* Full-screen cutaway graphics */
       .cutaway { background: linear-gradient(160deg, #0b0e14 0%, #141a24 100%); display: grid; place-items: center; position: relative; overflow: hidden; }
@@ -92,40 +103,94 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="chunk2" data-start="0" data-width="1920" data-height="1080" data-duration="296.17">
-      <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="296.17" data-media-start="302.434" data-has-audio="true" data-track-index="0" playsinline></video>
+    <div id="root" data-composition-id="chunk2" data-start="0" data-width="1280" data-height="720" data-duration="288.53">
+      <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="288.53" data-media-start="296.984" data-has-audio="true" data-track-index="0" playsinline></video>
 
-      <div id="b-transformacao-2" class="clip caption-card" data-start="34.02" data-duration="2.8" data-track-index="5">
-        <p class="caption-line" id="b-transformacao-2-word">Transformação</p>
-      </div>
-
-      <div id="b-feridas" class="clip caption-card" data-start="243.394" data-duration="3.2" data-track-index="5">
-        <p class="caption-line" id="b-feridas-word">Deus Chama Quem Já Foi Ferido</p>
-      </div>
-
-      <section id="b-quote-abandono-photo" class="clip cutaway quote-photo" data-start="262.404" data-duration="2.2" data-track-index="5">
-        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-abandono-bg" src="media/broll/papel-parede-jesus.jpg" alt="" /></div>
-      </section>
-      <section id="b-quote-abandono-text" class="clip cutaway quote-black" data-start="264.604" data-duration="3.8" data-track-index="5">
-        <div class="quote-inner" id="b-quote-abandono-inner">
-          
-          <p class="quote-text">JESUS CONHECEU O ABANDONO, A REJEIÇÃO, A SOLIDÃO.</p>
+      <div id="b-nasce-chamado" class="clip caption-card" data-start="151.059" data-duration="3.2" data-track-index="5">
+        <div class="caption-inner" id="b-nasce-chamado-word">
+        <p class="caption-line">O Terapeuta Cristão Nasce de um Chamado</p>
         </div>
-      </section>
+      </div>
 
-      <section id="b-broll-1" class="clip cutaway quote-photo" data-start="111.227" data-duration="3" data-track-index="5">
+      <div id="b-vocacao" class="clip caption-card" data-start="188.617" data-duration="3" data-track-index="5">
+        <div class="caption-inner" id="b-vocacao-word">
+        <p class="caption-line">O Reino Começa pela Vocação</p>
+        </div>
+      </div>
+
+      <div id="b-transformacao-2" class="clip caption-card" data-start="33.3" data-duration="2.8" data-track-index="5">
+        <div class="caption-inner" id="b-transformacao-2-word">
+        <p class="caption-line">Transformação</p>
+        </div>
+      </div>
+
+      <div id="b-feridas" class="clip caption-card" data-start="238.234" data-duration="3.2" data-track-index="5">
+        <div class="caption-inner" id="b-feridas-word">
+        <p class="caption-line">Deus Chama Quem Já Foi Ferido</p>
+        </div>
+      </div>
+
+      <section id="b-broll-1" class="clip cutaway quote-photo" data-start="108.827" data-duration="3" data-track-index="5">
         <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-1-bg" src="media/broll/transferir-2.jpg" alt="" /></div>
       </section>
+
+      <div id="b-v-heb218" class="clip caption-card" data-start="262.062" data-duration="4.4" data-track-index="5">
+        <div class="caption-inner" id="b-v-heb218-word">
+        <p class="caption-ref">HEBREUS 2:18</p>
+        <p class="caption-line is-verse">Ele mesmo sofreu quando foi tentado, e é poderoso para socorrer os que são tentados.</p>
+        </div>
+      </div>
+
+      <div id="b-v-heb415" class="clip caption-card" data-start="277.43" data-duration="4.6" data-track-index="5">
+        <div class="caption-inner" id="b-v-heb415-word">
+        <p class="caption-ref">HEBREUS 4:15</p>
+        <p class="caption-line is-verse">Temos um sumo sacerdote que, como nós, em tudo foi tentado — mas sem pecado.</p>
+        </div>
+      </div>
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
-  tl.fromTo("#b-transformacao-2-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 34.02);
-  tl.to("#b-transformacao-2-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 36.42);
-  tl.fromTo("#b-feridas-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 243.394);
-  tl.to("#b-feridas-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 246.194);
-  tl.fromTo("#b-quote-abandono-bg", { scale: 1 }, { scale: 1.08, duration: 2.2, ease: "none" }, 262.404);
-  tl.fromTo("#b-quote-abandono-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 264.604);
-  tl.fromTo("#b-broll-1-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 111.227);
+  tl.fromTo("#b-nasce-chamado-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 151.259);
+  tl.to("#b-nasce-chamado-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 153.709);
+  tl.set("#b-nasce-chamado", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-nasce-chamado", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 151.059);
+  tl.to("#b-nasce-chamado", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 153.909);
+  tl.set("#b-nasce-chamado", { autoAlpha: 0 }, 154.259);
+  tl.fromTo("#b-vocacao-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 188.817);
+  tl.to("#b-vocacao-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 191.067);
+  tl.set("#b-vocacao", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-vocacao", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 188.617);
+  tl.to("#b-vocacao", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 191.267);
+  tl.set("#b-vocacao", { autoAlpha: 0 }, 191.617);
+  tl.fromTo("#b-transformacao-2-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 33.5);
+  tl.to("#b-transformacao-2-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 35.55);
+  tl.set("#b-transformacao-2", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-transformacao-2", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 33.3);
+  tl.to("#b-transformacao-2", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 35.75);
+  tl.set("#b-transformacao-2", { autoAlpha: 0 }, 36.1);
+  tl.fromTo("#b-feridas-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 238.434);
+  tl.to("#b-feridas-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 240.884);
+  tl.set("#b-feridas", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-feridas", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 238.234);
+  tl.to("#b-feridas", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 241.084);
+  tl.set("#b-feridas", { autoAlpha: 0 }, 241.434);
+  tl.fromTo("#b-broll-1-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 108.827);
+  tl.set("#b-broll-1", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-broll-1", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 108.827);
+  tl.to("#b-broll-1", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 111.477);
+  tl.set("#b-broll-1", { autoAlpha: 0 }, 111.827);
+  tl.fromTo("#b-v-heb218-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 262.262);
+  tl.to("#b-v-heb218-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 265.912);
+  tl.set("#b-v-heb218", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-v-heb218", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 262.062);
+  tl.to("#b-v-heb218", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 266.112);
+  tl.set("#b-v-heb218", { autoAlpha: 0 }, 266.462);
+  tl.fromTo("#b-v-heb415-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 277.63);
+  tl.to("#b-v-heb415-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 281.48);
+  tl.set("#b-v-heb415", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-v-heb415", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 277.43);
+  tl.to("#b-v-heb415", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 281.68);
+  tl.set("#b-v-heb415", { autoAlpha: 0 }, 282.03);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 15.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 21.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 41.6);

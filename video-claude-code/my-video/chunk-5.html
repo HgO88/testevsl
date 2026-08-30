@@ -13,7 +13,11 @@
         --accent-2: #7c9885;
       }
       body { margin: 0; background: var(--bg); color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
-      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+      /* Authored at 1920x1080 (every px size is tuned for it) but rendered at
+         1280x720 — client asked to drop to 720p for render speed. Scaling the
+         root keeps the whole layout identical, just smaller. */
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000;
+              transform: scale(0.6666667); transform-origin: top left; }
       .clip { position: absolute; inset: 0; }
       .talking-head { width: 100%; height: 100%; object-fit: cover; }
 
@@ -25,11 +29,18 @@
         display: flex; align-items: center; justify-content: center;
         padding: 0 140px; text-align: center; pointer-events: none;
       }
+      .caption-inner { max-width: 1560px; }
       .caption-line {
         margin: 0; font-family: Georgia, "Times New Roman", serif; font-style: italic;
         font-weight: 400; font-size: 104px; line-height: 1.2; letter-spacing: 0.5px;
         color: #fff;
       }
+      /* Scripture cards carry more words, so they set smaller under a reference */
+      .caption-ref {
+        margin: 0 0 34px; font-family: Arial, Helvetica, sans-serif; font-style: normal;
+        font-weight: 700; font-size: 30px; letter-spacing: 6px; color: var(--accent);
+      }
+      .caption-line.is-verse { font-size: 66px; line-height: 1.32; }
 
       /* Full-screen cutaway graphics */
       .cutaway { background: linear-gradient(160deg, #0b0e14 0%, #141a24 100%); display: grid; place-items: center; position: relative; overflow: hidden; }
@@ -92,18 +103,28 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="chunk5" data-start="0" data-width="1920" data-height="1080" data-duration="299.302">
-      <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="299.302" data-media-start="1197.209" data-has-audio="true" data-track-index="0" playsinline></video>
+    <div id="root" data-composition-id="chunk5" data-start="0" data-width="1280" data-height="720" data-duration="292.757">
+      <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="292.757" data-media-start="1171.029" data-has-audio="true" data-track-index="0" playsinline></video>
 
-      <div id="b-excelencia" class="clip caption-card" data-start="209.087" data-duration="3" data-track-index="5">
-        <p class="caption-line" id="b-excelencia-word">Excelência no Preparo</p>
+      <div id="b-presente-resp" class="clip caption-card" data-start="83.617" data-duration="3.4" data-track-index="5">
+        <div class="caption-inner" id="b-presente-resp-word">
+        <p class="caption-line">Chamado é Presente. Preparo é Responsabilidade.</p>
+        </div>
       </div>
 
-      <div id="b-dependencia-2" class="clip caption-card" data-start="232.527" data-duration="2.8" data-track-index="5">
-        <p class="caption-line" id="b-dependencia-2-word">Dependência</p>
+      <div id="b-excelencia" class="clip caption-card" data-start="203.657" data-duration="3" data-track-index="5">
+        <div class="caption-inner" id="b-excelencia-word">
+        <p class="caption-line">Excelência no Preparo</p>
+        </div>
       </div>
 
-      <section id="b-chamado-preparo" class="clip cutaway" data-start="130.957" data-duration="7.6" data-track-index="5">
+      <div id="b-dependencia-2" class="clip caption-card" data-start="226.277" data-duration="2.8" data-track-index="5">
+        <div class="caption-inner" id="b-dependencia-2-word">
+        <p class="caption-line">Dependência</p>
+        </div>
+      </div>
+
+      <section id="b-chamado-preparo" class="clip cutaway" data-start="127.747" data-duration="7.6" data-track-index="5">
         <div class="cutaway-inner compare">
           <div class="compare-side" id="b-chamado-preparo-left">
             <div class="compare-bg-wrap"><img class="compare-bg" id="b-chamado-preparo-bg-left" src="media/broll/sinais-espirito-santo.jpg" alt="" /></div>
@@ -123,29 +144,112 @@
         </div>
       </section>
 
-      <section id="b-quote-honra-photo" class="clip cutaway quote-photo" data-start="68.057" data-duration="2.2" data-track-index="5">
+      <section id="b-quote-honra-photo" class="clip cutaway quote-photo" data-start="66.107" data-duration="2.2" data-track-index="5">
         <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-honra-bg" src="media/broll/dom-profetico.jpg" alt="" /></div>
       </section>
-      <section id="b-quote-honra-text" class="clip cutaway quote-black" data-start="70.257" data-duration="3.8" data-track-index="5">
+      <section id="b-quote-honra-text" class="clip cutaway quote-black" data-start="68.307" data-duration="3.8" data-track-index="5">
         <div class="quote-inner" id="b-quote-honra-inner">
           
           <p class="quote-text">O CHAMADO ABRE A PORTA. O PREPARO FAZ VOCÊ HONRAR A DEUS NELA.</p>
         </div>
       </section>
+
+      <div id="b-v-2tm224" class="clip caption-card" data-start="33.907" data-duration="4.4" data-track-index="5">
+        <div class="caption-inner" id="b-v-2tm224-word">
+        <p class="caption-ref">2 TIMÓTEO 2:24</p>
+        <p class="caption-line is-verse">O servo do Senhor deve ser amável para com todos, e apto para ensinar.</p>
+        </div>
+      </div>
+
+      <div id="b-v-jo155" class="clip caption-card" data-start="173.567" data-duration="3.4" data-track-index="5">
+        <div class="caption-inner" id="b-v-jo155-word">
+        <p class="caption-ref">JOÃO 15:5</p>
+        <p class="caption-line is-verse">Sem mim, nada podeis fazer.</p>
+        </div>
+      </div>
+
+      <div id="b-v-2tm215" class="clip caption-card" data-start="213.947" data-duration="3.6" data-track-index="5">
+        <div class="caption-inner" id="b-v-2tm215-word">
+        <p class="caption-ref">2 TIMÓTEO 2:15</p>
+        <p class="caption-line is-verse">Procura apresentar-te a Deus como aprovado.</p>
+        </div>
+      </div>
+
+      <div id="b-v-jo644" class="clip caption-card" data-start="276.827" data-duration="4" data-track-index="5">
+        <div class="caption-inner" id="b-v-jo644-word">
+        <p class="caption-ref">JOÃO 6:44</p>
+        <p class="caption-line is-verse">Ninguém vem a mim se o Pai que me enviou não o trouxer.</p>
+        </div>
+      </div>
+
+      <section id="b-broll-7" class="clip cutaway quote-photo" data-start="148.317" data-duration="3" data-track-index="5">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-7-bg" src="media/broll/maos-oracao-cruz.jpg" alt="" /></div>
+      </section>
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
-  tl.fromTo("#b-excelencia-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 209.087);
-  tl.to("#b-excelencia-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 211.687);
-  tl.fromTo("#b-dependencia-2-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 232.527);
-  tl.to("#b-dependencia-2-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 234.927);
-  tl.fromTo("#b-chamado-preparo-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, 131.107);
-  tl.fromTo("#b-chamado-preparo-right", { autoAlpha: 0, xPercent: 14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, 131.107);
-  tl.fromTo("#b-chamado-preparo-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, 131.657);
-  tl.fromTo("#b-chamado-preparo-bg-left", { scale: 1 }, { scale: 1.1, duration: 7.4, ease: "none" }, 131.107);
-  tl.fromTo("#b-chamado-preparo-bg-right", { scale: 1 }, { scale: 1.1, duration: 7.4, ease: "none" }, 131.107);
-  tl.fromTo("#b-quote-honra-bg", { scale: 1 }, { scale: 1.08, duration: 2.2, ease: "none" }, 68.057);
-  tl.fromTo("#b-quote-honra-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 70.257);
+  tl.fromTo("#b-presente-resp-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 83.817);
+  tl.to("#b-presente-resp-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 86.467);
+  tl.set("#b-presente-resp", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-presente-resp", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 83.617);
+  tl.to("#b-presente-resp", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 86.667);
+  tl.set("#b-presente-resp", { autoAlpha: 0 }, 87.017);
+  tl.fromTo("#b-excelencia-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 203.857);
+  tl.to("#b-excelencia-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 206.107);
+  tl.set("#b-excelencia", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-excelencia", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 203.657);
+  tl.to("#b-excelencia", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 206.307);
+  tl.set("#b-excelencia", { autoAlpha: 0 }, 206.657);
+  tl.fromTo("#b-dependencia-2-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 226.477);
+  tl.to("#b-dependencia-2-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 228.527);
+  tl.set("#b-dependencia-2", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-dependencia-2", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 226.277);
+  tl.to("#b-dependencia-2", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 228.727);
+  tl.set("#b-dependencia-2", { autoAlpha: 0 }, 229.077);
+  tl.fromTo("#b-chamado-preparo-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, 127.897);
+  tl.fromTo("#b-chamado-preparo-right", { autoAlpha: 0, xPercent: 14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, 127.897);
+  tl.fromTo("#b-chamado-preparo-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, 128.447);
+  tl.fromTo("#b-chamado-preparo-bg-left", { scale: 1 }, { scale: 1.1, duration: 7.4, ease: "none" }, 127.897);
+  tl.fromTo("#b-chamado-preparo-bg-right", { scale: 1 }, { scale: 1.1, duration: 7.4, ease: "none" }, 127.897);
+  tl.fromTo("#b-quote-honra-bg", { scale: 1 }, { scale: 1.08, duration: 2.2, ease: "none" }, 66.107);
+  tl.fromTo("#b-quote-honra-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 68.307);
+  tl.set("#b-quote-honra-photo", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-quote-honra-photo", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 66.107);
+  tl.to("#b-quote-honra-photo", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 67.957);
+  tl.set("#b-quote-honra-photo", { autoAlpha: 0 }, 68.307);
+  tl.set("#b-quote-honra-text", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-quote-honra-text", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 68.307);
+  tl.to("#b-quote-honra-text", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 71.757);
+  tl.set("#b-quote-honra-text", { autoAlpha: 0 }, 72.107);
+  tl.fromTo("#b-v-2tm224-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 34.107);
+  tl.to("#b-v-2tm224-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 37.757);
+  tl.set("#b-v-2tm224", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-v-2tm224", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 33.907);
+  tl.to("#b-v-2tm224", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 37.957);
+  tl.set("#b-v-2tm224", { autoAlpha: 0 }, 38.307);
+  tl.fromTo("#b-v-jo155-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 173.767);
+  tl.to("#b-v-jo155-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 176.417);
+  tl.set("#b-v-jo155", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-v-jo155", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 173.567);
+  tl.to("#b-v-jo155", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 176.617);
+  tl.set("#b-v-jo155", { autoAlpha: 0 }, 176.967);
+  tl.fromTo("#b-v-2tm215-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 214.147);
+  tl.to("#b-v-2tm215-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 216.997);
+  tl.set("#b-v-2tm215", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-v-2tm215", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 213.947);
+  tl.to("#b-v-2tm215", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 217.197);
+  tl.set("#b-v-2tm215", { autoAlpha: 0 }, 217.547);
+  tl.fromTo("#b-v-jo644-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 277.027);
+  tl.to("#b-v-jo644-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 280.277);
+  tl.set("#b-v-jo644", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-v-jo644", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 276.827);
+  tl.to("#b-v-jo644", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 280.477);
+  tl.set("#b-v-jo644", { autoAlpha: 0 }, 280.827);
+  tl.fromTo("#b-broll-7-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 148.317);
+  tl.set("#b-broll-7", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-broll-7", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 148.317);
+  tl.to("#b-broll-7", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 150.967);
+  tl.set("#b-broll-7", { autoAlpha: 0 }, 151.317);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 15.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 21.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 41.6);
@@ -164,8 +268,6 @@
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 229.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 249.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 255.3);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 275.6);
-  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 281.3);
       window.__timelines["chunk5"] = tl;
     </script>
   </body>

@@ -27,7 +27,7 @@ for (let i = 0; i < ends.length; i++) {
 }
 
 const SOURCE_DURATION = 2012.077782; // from ffprobe, § conversation record
-const KEEP_PAUSE = 0.22; // seconds of natural breathing room left in every trimmed gap
+const KEEP_PAUSE = 0.10; // seconds of natural breathing room left in every trimmed gap (client: "cortes mais secos")
 const LEAD_TRIM = silences.length && silences[0].start < 0.3 ? silences[0].end - 0.1 : 0; // drop dead air before the first word
 
 // Build the list of "cut out" ranges (the excess middle of each pause)
@@ -114,7 +114,21 @@ const BEATS = [
   // Client reference opens on the recording HUD for its first ~6s, then snaps
   // to full colour — so this is the film's cold open, not a mid-video accent.
   { id: "b-confesso", kind: "camcorder", srcAt: 1, holdBefore: 0, dur: 6 },
+  // -- reinforcement pass 4 (client: "mais cartelas de texto") — 11 more
+  // black-card lines pulled verbatim from the transcript, filling the long
+  // stretches that had no card of their own (esp. the whole first minute) --
+  { id: "b-despertando", kind: "caption", srcAt: 22, holdBefore: 0.15, dur: 3.0, line: "Deus Está Despertando Pessoas" },
+  { id: "b-por-onde", kind: "caption", srcAt: 53, holdBefore: 0.15, dur: 3.2, line: "Mas Não Sei Por Onde Começar…" },
+  { id: "b-preparar-melhor", kind: "caption", srcAt: 110, holdBefore: 0.15, dur: 3.0, line: "Preciso Me Preparar Melhor" },
   { id: "b-preparo-intro", kind: "caption", srcAt: 163, holdBefore: 0.15, dur: 3.0, line: "Cuidar de Vida Exige Preparo" },
+  { id: "b-profissao-chamado", kind: "caption", srcAt: 196, holdBefore: 0.15, dur: 3.0, line: "Profissão ou Chamado?" },
+  { id: "b-nasce-chamado", kind: "caption", srcAt: 500, holdBefore: 0.15, dur: 3.2, line: "O Terapeuta Cristão Nasce de um Chamado" },
+  { id: "b-vocacao", kind: "caption", srcAt: 540, holdBefore: 0.15, dur: 3.0, line: "O Reino Começa pela Vocação" },
+  { id: "b-compaixao", kind: "caption", srcAt: 1250, holdBefore: 0.15, dur: 3.0, line: "Não Foi a Técnica. Foi a Compaixão." },
+  { id: "b-chama-prepara", kind: "caption", srcAt: 1310, holdBefore: 0.15, dur: 3.0, line: "Deus Chama e Depois Prepara" },
+  { id: "b-presente-resp", kind: "caption", srcAt: 1440, holdBefore: 0.15, dur: 3.4, line: "Chamado é Presente. Preparo é Responsabilidade." },
+  { id: "b-ja-preparando", kind: "caption", srcAt: 1690, holdBefore: 0.15, dur: 3.2, line: "Deus Já Está Preparando as Pessoas" },
+  { id: "b-nao-corra", kind: "caption", srcAt: 1780, holdBefore: 0.15, dur: 3.2, line: "Não Corra Atrás. Esteja Preparado." },
   { id: "b-essencia", kind: "caption", srcAt: 258, holdBefore: 0.15, dur: 3.0, line: "A Essência do Chamado" },
   // -- original 5 approved beats --
   { id: "b-pilares", kind: "cutaway", srcAt: 323, holdBefore: 0.3, dur: 7.2 },
@@ -140,7 +154,7 @@ const BEATS = [
   // using 5 of the 10 still-unused client photos (2 more stay unused: the
   // 2 with baked-in text/typography, unusable as a background under a
   // second text layer) --
-  { id: "b-quote-abandono", kind: "quote", srcAt: 620, holdBefore: 0.2, dur: 6, img: "media/broll/papel-parede-jesus.jpg", text: "JESUS CONHECEU O ABANDONO, A REJEIÇÃO, A SOLIDÃO." },
+  { id: "b-quote-abandono", kind: "quote", srcAt: 668, holdBefore: 0.2, dur: 6, img: "media/broll/papel-parede-jesus.jpg", text: "JESUS CONHECEU O ABANDONO, A REJEIÇÃO, A SOLIDÃO." },
   { id: "b-quote-consolacao", kind: "quote", srcAt: 865, holdBefore: 0.2, dur: 7, img: "media/broll/tua-graca-me-basta.jpg", kicker: "2 CORÍNTIOS 1:3-4", text: "DEUS DE TODA CONSOLAÇÃO, QUE NOS CONSOLA PARA CONSOLARMOS OS OUTROS." },
   { id: "b-quote-amor", kind: "quote", srcAt: 1280, holdBefore: 0.2, dur: 5, img: "media/broll/transferir-1.jpg", text: "SOMENTE O AMOR SUSTENTA O CHAMADO." },
   { id: "b-quote-honra", kind: "quote", srcAt: 1420, holdBefore: 0.2, dur: 6, img: "media/broll/dom-profetico.jpg", text: "O CHAMADO ABRE A PORTA. O PREPARO FAZ VOCÊ HONRAR A DEUS NELA." },
@@ -151,6 +165,21 @@ const BEATS = [
   { id: "b-broll-1", kind: "broll", srcAt: 455, holdBefore: 0.15, dur: 3, img: "media/broll/transferir-2.jpg" },
   { id: "b-broll-2", kind: "broll", srcAt: 1235, holdBefore: 0.15, dur: 3, img: "media/broll/transferir-3.jpg" },
   { id: "b-broll-3", kind: "broll", srcAt: 1745, holdBefore: 0.15, dur: 3, img: "media/broll/transferir-4.jpg" },
+  // -- reinforcement pass 5 (client: "bastante texto nas frases e tbm nos
+  // versiculos quando ele ler") — a card for each scripture he reads aloud,
+  // reference on top, verse below; plus 4 more b-roll breathers, which uses
+  // up the last 2 photos (the ones with baked-in type, fine with no overlay) --
+  { id: "b-v-heb218", kind: "caption", srcAt: 626, holdBefore: 0.15, dur: 4.4, ref: "HEBREUS 2:18", line: "Ele mesmo sofreu quando foi tentado, e é poderoso para socorrer os que são tentados." },
+  { id: "b-v-heb415", kind: "caption", srcAt: 644, holdBefore: 0.15, dur: 4.6, ref: "HEBREUS 4:15", line: "Temos um sumo sacerdote que, como nós, em tudo foi tentado — mas sem pecado." },
+  { id: "b-v-jo1010", kind: "caption", srcAt: 1208, holdBefore: 0.15, dur: 3.6, ref: "JOÃO 10:10", line: "Vim para que tenham vida, e a tenham em abundância." },
+  { id: "b-v-2tm224", kind: "caption", srcAt: 1382, holdBefore: 0.15, dur: 4.4, ref: "2 TIMÓTEO 2:24", line: "O servo do Senhor deve ser amável para com todos, e apto para ensinar." },
+  { id: "b-v-jo155", kind: "caption", srcAt: 1548, holdBefore: 0.15, dur: 3.4, ref: "JOÃO 15:5", line: "Sem mim, nada podeis fazer." },
+  { id: "b-v-2tm215", kind: "caption", srcAt: 1594, holdBefore: 0.15, dur: 3.6, ref: "2 TIMÓTEO 2:15", line: "Procura apresentar-te a Deus como aprovado." },
+  { id: "b-v-jo644", kind: "caption", srcAt: 1666, holdBefore: 0.15, dur: 4.0, ref: "JOÃO 6:44", line: "Ninguém vem a mim se o Pai que me enviou não o trouxer." },
+  { id: "b-broll-4", kind: "broll", srcAt: 285, holdBefore: 0.15, dur: 3, img: "media/broll/transferir-0.jpg" },
+  { id: "b-broll-5", kind: "broll", srcAt: 800, holdBefore: 0.15, dur: 3, img: "media/broll/cantata-pascoa-sacrificio.jpg" },
+  { id: "b-broll-6", kind: "broll", srcAt: 1100, holdBefore: 0.15, dur: 3, img: "media/broll/gloria-de-deus.jpg" },
+  { id: "b-broll-7", kind: "broll", srcAt: 1520, holdBefore: 0.15, dur: 3, img: "media/broll/maos-oracao-cruz.jpg" },
 ].map((b) => ({ ...b, newAt: sourceToNewTime(b.srcAt) + b.holdBefore }));
 
 console.log("beat positions (source -> new timeline):");
@@ -176,6 +205,25 @@ function num(n) {
 // continuous drift (which fights the punches for the same CSS property).
 // Skips any window already claimed by another beat (cutaway/camcorder/quote/
 // caption), so it never double-animates #base at the same instant.
+
+// Client: "cortes secos, transicoes suaves" — the speech cuts stay hard, but
+// every full-frame card slides in and out on a short cross-fade instead of
+// popping. 0.35s each way, clamped so it never eats more than a third of a
+// short card.
+function fadeCard(id, at, dur) {
+  const f = Math.min(0.35, dur / 3);
+  // The leading and trailing tl.set() are what lint's gsap_exit_missing_hard_kill
+  // and gsap_fullscreen_overlay_starts_visible rules require: a full-frame
+  // overlay must be explicitly hidden before its first fade and hard-killed on
+  // its clip boundary, or a non-linear seek can land on a stale visible frame.
+  return [
+    `  tl.set("#${id}", { autoAlpha: 0 }, 0);`,
+    `  tl.fromTo("#${id}", { autoAlpha: 0 }, { autoAlpha: 1, duration: ${num(f)}, ease: "power1.out" }, ${num(at)});`,
+    `  tl.to("#${id}", { autoAlpha: 0, duration: ${num(f)}, ease: "power1.in" }, ${num(at + dur - f)});`,
+    `  tl.set("#${id}", { autoAlpha: 0 }, ${num(at + dur)});`,
+  ];
+}
+
 const PUNCH_INTERVAL = 26; // seconds between snap zooms
 const PUNCH_MARGIN = 1.5; // stay clear of other beats by this much
 const ZOOM_HOLD = 5.7; // in(1.2s) + hold(4.5s) before easing back out
@@ -256,8 +304,11 @@ function chamadoPreparoHtml(b) {
 }
 
 function captionHtml(b) {
+  const ref = b.ref ? `<p class="caption-ref">${b.ref}</p>\n        ` : "";
   return `      <div id="${b.id}" class="clip caption-card" data-start="${num(b.newAt)}" data-duration="${b.dur}" data-track-index="${TRACK_OVERLAY}">
-        <p class="caption-line" id="${b.id}-word">${b.line}</p>
+        <div class="caption-inner" id="${b.id}-word">
+        ${ref}<p class="caption-line${b.ref ? " is-verse" : ""}">${b.line}</p>
+        </div>
       </div>`;
 }
 
@@ -348,12 +399,16 @@ for (const b of BEATS) {
     const photoDur = quotePhotoDur(b);
     animLines.push(`  tl.fromTo("#${b.id}-bg", { scale: 1 }, { scale: 1.08, duration: ${photoDur}, ease: "none" }, ${num(b.newAt)});`);
     animLines.push(`  tl.fromTo("#${b.id}-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, ${num(b.newAt + photoDur)});`);
+    animLines.push(...fadeCard(`${b.id}-photo`, b.newAt, photoDur));
+    animLines.push(...fadeCard(`${b.id}-text`, b.newAt + photoDur, b.dur - photoDur));
   } else if (b.kind === "broll") {
     animLines.push(`  tl.fromTo("#${b.id}-bg", { scale: 1 }, { scale: 1.1, duration: ${b.dur}, ease: "none" }, ${num(b.newAt)});`);
+    animLines.push(...fadeCard(b.id, b.newAt, b.dur));
   } else {
     // Reference style: a quiet fade + a hair of scale, never a bouncy pop.
-    animLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, ${num(b.newAt)});`);
-    animLines.push(`  tl.to("#${b.id}-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, ${num(b.newAt + b.dur - 0.4)});`);
+    animLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, ${num(b.newAt + 0.2)});`);
+    animLines.push(`  tl.to("#${b.id}-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, ${num(b.newAt + b.dur - 0.55)});`);
+    animLines.push(...fadeCard(b.id, b.newAt, b.dur));
   }
 }
 
@@ -377,7 +432,11 @@ const html = `<!doctype html>
         --accent-2: #7c9885;
       }
       body { margin: 0; background: var(--bg); color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
-      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+      /* Authored at 1920x1080 (every px size is tuned for it) but rendered at
+         1280x720 — client asked to drop to 720p for render speed. Scaling the
+         root keeps the whole layout identical, just smaller. */
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000;
+              transform: scale(0.6666667); transform-origin: top left; }
       .clip { position: absolute; inset: 0; }
       .talking-head { width: 100%; height: 100%; object-fit: cover; }
 
@@ -389,11 +448,18 @@ const html = `<!doctype html>
         display: flex; align-items: center; justify-content: center;
         padding: 0 140px; text-align: center; pointer-events: none;
       }
+      .caption-inner { max-width: 1560px; }
       .caption-line {
         margin: 0; font-family: Georgia, "Times New Roman", serif; font-style: italic;
         font-weight: 400; font-size: 104px; line-height: 1.2; letter-spacing: 0.5px;
         color: #fff;
       }
+      /* Scripture cards carry more words, so they set smaller under a reference */
+      .caption-ref {
+        margin: 0 0 34px; font-family: Arial, Helvetica, sans-serif; font-style: normal;
+        font-weight: 700; font-size: 30px; letter-spacing: 6px; color: var(--accent);
+      }
+      .caption-line.is-verse { font-size: 66px; line-height: 1.32; }
 
       /* Full-screen cutaway graphics */
       .cutaway { background: linear-gradient(160deg, #0b0e14 0%, #141a24 100%); display: grid; place-items: center; position: relative; overflow: hidden; }
@@ -456,7 +522,7 @@ const html = `<!doctype html>
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="${num(NEW_DURATION)}">
+    <div id="root" data-composition-id="main" data-start="0" data-width="1280" data-height="720" data-duration="${num(NEW_DURATION)}">
 ${mediaClips}
 
 ${overlayClips}
@@ -541,11 +607,15 @@ function chunkHtml(chunk) {
       const photoDur = quotePhotoDur(b);
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-bg", { scale: 1 }, { scale: 1.08, duration: ${photoDur}, ease: "none" }, ${num(b.newAt)});`);
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, ${num(b.newAt + photoDur)});`);
+      chunkAnimLines.push(...fadeCard(`${b.id}-photo`, b.newAt, photoDur));
+      chunkAnimLines.push(...fadeCard(`${b.id}-text`, b.newAt + photoDur, b.dur - photoDur));
     } else if (b.kind === "broll") {
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-bg", { scale: 1 }, { scale: 1.1, duration: ${b.dur}, ease: "none" }, ${num(b.newAt)});`);
+      chunkAnimLines.push(...fadeCard(b.id, b.newAt, b.dur));
     } else {
-      chunkAnimLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, ${num(b.newAt)});`);
-      chunkAnimLines.push(`  tl.to("#${b.id}-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, ${num(b.newAt + b.dur - 0.4)});`);
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, ${num(b.newAt + 0.2)});`);
+      chunkAnimLines.push(`  tl.to("#${b.id}-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, ${num(b.newAt + b.dur - 0.55)});`);
+      chunkAnimLines.push(...fadeCard(b.id, b.newAt, b.dur));
     }
   }
 
