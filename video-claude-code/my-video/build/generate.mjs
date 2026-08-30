@@ -112,7 +112,7 @@ const BEATS = [
   // -- opening/hook reinforcement (client feedback: chunk-1 is the "chamada",
   // it needs more energy — more keyword captions + a 2nd camcorder moment) --
   { id: "b-intro-chamado", kind: "caption", srcAt: 3, holdBefore: 0.15, dur: 2.4, pre: "você foi", word: "CHAMADO?" },
-  { id: "b-confesso", kind: "camcorder", srcAt: 98, holdBefore: 0.1, dur: 6.5 },
+  { id: "b-confesso", kind: "camcorder", srcAt: 98, holdBefore: 0.1, dur: 6 },
   { id: "b-preparo-intro", kind: "caption", srcAt: 163, holdBefore: 0.15, dur: 2.4, pre: "cuidar de vida exige", word: "PREPARO" },
   { id: "b-essencia", kind: "caption", srcAt: 258, holdBefore: 0.15, dur: 2.8, pre: "não podemos perder a", word: "ESSÊNCIA DO CHAMADO" },
   // -- original 5 approved beats --
@@ -133,7 +133,7 @@ const BEATS = [
   { id: "b-carater", kind: "caption", srcAt: 1912, holdBefore: 0.15, dur: 2.6, pre: "a maior ferramenta é o seu", word: "CARÁTER" },
   { id: "b-chamado-preparo", kind: "cutaway", srcAt: 1490, holdBefore: 0.3, dur: 7.6 },
   { id: "b-cuidador", kind: "caption", srcAt: 1942, holdBefore: 0.15, dur: 3.0, pre: "você é", word: "CUIDADOR DE VIDA" },
-  { id: "b-camcorder", kind: "camcorder", srcAt: 992, holdBefore: 0.2, dur: 7 },
+  { id: "b-camcorder", kind: "camcorder", srcAt: 992, holdBefore: 0.2, dur: 6 },
   // -- reinforcement pass 3 (client: "gostaria também da adição de mais img")
   // -- one full-screen quote-card per chunk that had no photo cutaway yet,
   // using 5 of the 10 still-unused client photos (2 more stay unused: the
@@ -144,6 +144,12 @@ const BEATS = [
   { id: "b-quote-amor", kind: "quote", srcAt: 1280, holdBefore: 0.2, dur: 5, img: "media/broll/transferir-1.jpg", text: "SOMENTE O AMOR SUSTENTA O CHAMADO." },
   { id: "b-quote-honra", kind: "quote", srcAt: 1420, holdBefore: 0.2, dur: 6, img: "media/broll/dom-profetico.jpg", text: "O CHAMADO ABRE A PORTA. O PREPARO FAZ VOCÊ HONRAR A DEUS NELA." },
   { id: "b-quote-cuidado", kind: "quote", srcAt: 1920, holdBefore: 0.2, dur: 6, img: "media/broll/desse-jeito.jpg", text: "VÃO ESQUECER AS TÉCNICAS. NUNCA VÃO ESQUECER QUE FORAM CUIDADAS POR VOCÊ." },
+  // -- 3 more b-roll-only breathers (client: "usar mais imgs de broll"),
+  // using the last 3 clean (no baked-in text) client photos, no quote text —
+  // just the photo breathing with its own Ken-Burns zoom --
+  { id: "b-broll-1", kind: "broll", srcAt: 455, holdBefore: 0.15, dur: 3, img: "media/broll/transferir-2.jpg" },
+  { id: "b-broll-2", kind: "broll", srcAt: 1235, holdBefore: 0.15, dur: 3, img: "media/broll/transferir-3.jpg" },
+  { id: "b-broll-3", kind: "broll", srcAt: 1745, holdBefore: 0.15, dur: 3, img: "media/broll/transferir-4.jpg" },
 ].map((b) => ({ ...b, newAt: sourceToNewTime(b.srcAt) + b.holdBefore }));
 
 console.log("beat positions (source -> new timeline):");
@@ -162,6 +168,27 @@ const TRACK_OVERLAY = 5;
 
 function num(n) {
   return Number(n.toFixed(3));
+}
+
+// Client feedback: "zoom in e zoom out depois de algumas frases" — punchy
+// snap zooms on the talking head at intervals, instead of one slow
+// continuous drift (which fights the punches for the same CSS property).
+// Skips any window already claimed by another beat (cutaway/camcorder/quote/
+// caption), so it never double-animates #base at the same instant.
+const PUNCH_INTERVAL = 26; // seconds between snap zooms
+const PUNCH_MARGIN = 1.5; // stay clear of other beats by this much
+function punchZoomLines(rangeStart, rangeEnd, beatsInRange, offset) {
+  const lines = [];
+  for (let t = rangeStart + PUNCH_INTERVAL * 0.6; t < rangeEnd - 2; t += PUNCH_INTERVAL) {
+    const clashes = beatsInRange.some((b) => t > b.newAt - PUNCH_MARGIN && t < b.newAt + b.dur + PUNCH_MARGIN);
+    if (clashes) continue;
+    const at = num(t - offset);
+    // Hold at the punched-in scale for a beat before easing back, so the two
+    // tweens don't butt up at the same instant (lint: overlapping_gsap_tweens).
+    lines.push(`  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, ${at});`);
+    lines.push(`  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, ${num(at + 1.1)});`);
+  }
+  return lines;
 }
 
 const mediaClips = `      <video id="base" class="clip talking-head" src="${BASE_VIDEO}" data-start="0" data-duration="${num(NEW_DURATION)}" data-has-audio="true" data-track-index="${TRACK_VIDEO}" playsinline></video>`;
@@ -245,15 +272,31 @@ function camcorderHtml(b) {
       </div>`;
 }
 
+// Client reference: b-roll photo plays alone first (no text, let it breathe),
+// THEN a hard cut to a solid-black card carrying the italic quote — not one
+// card with both layered together. Two separate .clip elements, back to back.
+function quotePhotoDur(b) {
+  return Math.min(2.2, num(b.dur * 0.4));
+}
+
 function quoteHtml(b) {
+  const photoDur = quotePhotoDur(b);
+  const textDur = num(b.dur - photoDur);
   const kicker = b.kicker ? `<p class="quote-kicker">${b.kicker}</p>` : "";
-  return `      <section id="${b.id}" class="clip cutaway quote-cutaway" data-start="${num(b.newAt)}" data-duration="${b.dur}" data-track-index="${TRACK_OVERLAY}">
+  return `      <section id="${b.id}-photo" class="clip cutaway quote-photo" data-start="${num(b.newAt)}" data-duration="${photoDur}" data-track-index="${TRACK_OVERLAY}">
         <div class="cutaway-bgs"><img class="cutaway-bg" id="${b.id}-bg" src="${b.img}" alt="" /></div>
-        <div class="cutaway-scrim"></div>
+      </section>
+      <section id="${b.id}-text" class="clip cutaway quote-black" data-start="${num(b.newAt + photoDur)}" data-duration="${textDur}" data-track-index="${TRACK_OVERLAY}">
         <div class="quote-inner" id="${b.id}-inner">
           ${kicker}
           <p class="quote-text">${b.text}</p>
         </div>
+      </section>`;
+}
+
+function brollHtml(b) {
+  return `      <section id="${b.id}" class="clip cutaway quote-photo" data-start="${num(b.newAt)}" data-duration="${b.dur}" data-track-index="${TRACK_OVERLAY}">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="${b.id}-bg" src="${b.img}" alt="" /></div>
       </section>`;
 }
 
@@ -262,6 +305,7 @@ function beatHtml(b) {
   if (b.id === "b-chamado-preparo") return chamadoPreparoHtml(b);
   if (b.kind === "camcorder") return camcorderHtml(b);
   if (b.kind === "quote") return quoteHtml(b);
+  if (b.kind === "broll") return brollHtml(b);
   return captionHtml(b);
 }
 
@@ -294,22 +338,22 @@ for (const b of BEATS) {
     animLines.push(`  tl.fromTo("#base", { filter: "grayscale(100%)" }, { filter: "grayscale(0%)", duration: 0.5 }, ${num(b.newAt + b.dur - 0.5)});`);
     animLines.push(`  tl.fromTo("#${b.id}", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, ${num(b.newAt)});`);
     animLines.push(`  tl.to("#${b.id}", { autoAlpha: 0, duration: 0.3 }, ${num(b.newAt + b.dur - 0.3)});`);
-    animLines.push(`  tl.to("#${b.id}-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 16, yoyo: true }, ${num(b.newAt + 0.3)});`);
+    animLines.push(`  tl.to("#${b.id}-dot", { autoAlpha: 0.15, duration: 0.35, repeat: ${Math.max(3, Math.floor((b.dur - 0.6) / 0.35) - 1)}, yoyo: true }, ${num(b.newAt + 0.3)});`);
   } else if (b.kind === "quote") {
-    animLines.push(`  tl.fromTo("#${b.id}-bg", { scale: 1 }, { scale: 1.1, duration: ${num(b.dur)}, ease: "none" }, ${num(b.newAt)});`);
-    animLines.push(`  tl.fromTo("#${b.id}-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, ${num(b.newAt + 0.2)});`);
+    const photoDur = quotePhotoDur(b);
+    animLines.push(`  tl.fromTo("#${b.id}-bg", { scale: 1 }, { scale: 1.08, duration: ${photoDur}, ease: "none" }, ${num(b.newAt)});`);
+    animLines.push(`  tl.fromTo("#${b.id}-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, ${num(b.newAt + photoDur)});`);
+  } else if (b.kind === "broll") {
+    animLines.push(`  tl.fromTo("#${b.id}-bg", { scale: 1 }, { scale: 1.1, duration: ${b.dur}, ease: "none" }, ${num(b.newAt)});`);
   } else {
     animLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, ${num(b.newAt + 0.1)});`);
     animLines.push(`  tl.fromTo("#${b.id} .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, ${num(b.newAt)});`);
   }
 }
 
-// Continuous camera-with-intent motion on the talking head (client feedback:
-// the whole video read as static). The per-chunk files (section 8) repeat
-// this once per ~5min chunk so every concatenation seam sits at scale 1; this
-// single-file version just spans the whole timeline for parity.
-animLines.push(`  tl.fromTo("#base", { scale: 1 }, { scale: 1.05, duration: ${num(NEW_DURATION / 2)}, ease: "sine.inOut" }, 0);`);
-animLines.push(`  tl.fromTo("#base", { scale: 1.05 }, { scale: 1, duration: ${num(NEW_DURATION / 2)}, ease: "sine.inOut" }, ${num(NEW_DURATION / 2)});`);
+// Punchy snap zooms on the talking head at intervals (client feedback: zoom
+// in/out after some sentences), skipping windows other beats already own.
+animLines.push(...punchZoomLines(0, NEW_DURATION, BEATS, 0));
 
 // ---- 7. Assemble index.html -------------------------------------------------
 const html = `<!doctype html>
@@ -384,12 +428,12 @@ const html = `<!doctype html>
       .cam-4k { position: absolute; bottom: 48px; left: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
       .cam-hd { position: absolute; bottom: 48px; right: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
 
-      /* Full-screen quote card (client photo + a strong line from the transcript).
-         Client reference: italic serif, bottom-left, over a black gradient —
-         not centered bold caps (that treatment stays for keyword captions). */
-      .quote-cutaway.cutaway { display: flex; align-items: flex-end; justify-content: flex-start; padding: 0 0 110px 110px; }
-      .quote-cutaway .cutaway-bg { position: absolute; inset: 0; }
-      .quote-cutaway .cutaway-scrim { background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,.55) 45%, rgba(0,0,0,.88) 65%, rgba(0,0,0,.97) 100%); }
+      /* Photo-then-black-card quote pair (client reference: b-roll photo plays
+         alone, THEN a hard cut to a solid-black card with the italic quote —
+         not layered together, and not centered bold caps — that treatment
+         stays for keyword captions). */
+      .quote-photo .cutaway-bg { position: absolute; inset: 0; }
+      .quote-black { background: #000; display: flex; align-items: flex-end; justify-content: flex-start; padding: 0 0 110px 110px; }
       .quote-inner { width: 1150px; text-align: left; }
       .quote-kicker { font-family: Georgia, "Times New Roman", serif; font-style: italic; font-size: 24px; letter-spacing: 2px; color: var(--accent-2); font-weight: 400; margin: 0 0 16px; text-shadow: 0 2px 10px rgba(0,0,0,.9); }
       .quote-text { font-family: Georgia, "Times New Roman", serif; font-style: italic; font-weight: 400; font-size: 52px; line-height: 1.35; color: var(--ink); text-align: left; margin: 0; text-shadow: 0 2px 6px rgba(0,0,0,.95), 0 0 24px rgba(0,0,0,.9); }
@@ -477,10 +521,13 @@ function chunkHtml(chunk) {
       chunkAnimLines.push(`  tl.fromTo("#base", { filter: "grayscale(100%)" }, { filter: "grayscale(0%)", duration: 0.5 }, ${num(b.newAt + b.dur - 0.5)});`);
       chunkAnimLines.push(`  tl.fromTo("#${b.id}", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, ${num(b.newAt)});`);
       chunkAnimLines.push(`  tl.to("#${b.id}", { autoAlpha: 0, duration: 0.3 }, ${num(b.newAt + b.dur - 0.3)});`);
-      chunkAnimLines.push(`  tl.to("#${b.id}-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 16, yoyo: true }, ${num(b.newAt + 0.3)});`);
+      chunkAnimLines.push(`  tl.to("#${b.id}-dot", { autoAlpha: 0.15, duration: 0.35, repeat: ${Math.max(3, Math.floor((b.dur - 0.6) / 0.35) - 1)}, yoyo: true }, ${num(b.newAt + 0.3)});`);
     } else if (b.kind === "quote") {
-      chunkAnimLines.push(`  tl.fromTo("#${b.id}-bg", { scale: 1 }, { scale: 1.1, duration: ${num(b.dur)}, ease: "none" }, ${num(b.newAt)});`);
-      chunkAnimLines.push(`  tl.fromTo("#${b.id}-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, ${num(b.newAt + 0.2)});`);
+      const photoDur = quotePhotoDur(b);
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-bg", { scale: 1 }, { scale: 1.08, duration: ${photoDur}, ease: "none" }, ${num(b.newAt)});`);
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, ${num(b.newAt + photoDur)});`);
+    } else if (b.kind === "broll") {
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-bg", { scale: 1 }, { scale: 1.1, duration: ${b.dur}, ease: "none" }, ${num(b.newAt)});`);
     } else {
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, ${num(b.newAt + 0.1)});`);
       chunkAnimLines.push(`  tl.fromTo("#${b.id} .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, ${num(b.newAt)});`);
@@ -489,15 +536,9 @@ function chunkHtml(chunk) {
 
   const chunkMediaClip = `      <video id="base" class="clip talking-head" src="${BASE_VIDEO}" data-start="0" data-duration="${dur}" data-media-start="${num(chunk.start)}" data-has-audio="true" data-track-index="${TRACK_VIDEO}" playsinline></video>`;
 
-  // Client feedback: the whole video read as too static (camera parada).
-  // Subtle continuous camera-with-intent motion on the talking head, every
-  // chunk — a slow symmetric push-in-then-back (ends back at scale 1 exactly
-  // where it started) so concatenating chunk-N into chunk-(N+1) never pops:
-  // both sides of every seam sit at scale 1. Safe to co-animate with the
-  // camcorder beat's own filter tween (different CSS property: scale vs.
-  // filter).
-  chunkAnimLines.push(`  tl.fromTo("#base", { scale: 1 }, { scale: 1.05, duration: ${num(dur / 2)}, ease: "sine.inOut" }, 0);`);
-  chunkAnimLines.push(`  tl.fromTo("#base", { scale: 1.05 }, { scale: 1, duration: ${num(dur / 2)}, ease: "sine.inOut" }, ${num(dur / 2)});`);
+  // Punchy snap zooms on the talking head at intervals (client feedback: zoom
+  // in/out after some sentences), skipping windows other beats already own.
+  chunkAnimLines.push(...punchZoomLines(0, dur, localBeats, 0));
 
   return html
     .replace(/data-composition-id="main"/, `data-composition-id="${compId}"`)

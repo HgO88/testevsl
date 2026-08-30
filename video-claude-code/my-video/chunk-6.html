@@ -70,12 +70,12 @@
       .cam-4k { position: absolute; bottom: 48px; left: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
       .cam-hd { position: absolute; bottom: 48px; right: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
 
-      /* Full-screen quote card (client photo + a strong line from the transcript).
-         Client reference: italic serif, bottom-left, over a black gradient —
-         not centered bold caps (that treatment stays for keyword captions). */
-      .quote-cutaway.cutaway { display: flex; align-items: flex-end; justify-content: flex-start; padding: 0 0 110px 110px; }
-      .quote-cutaway .cutaway-bg { position: absolute; inset: 0; }
-      .quote-cutaway .cutaway-scrim { background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,.55) 45%, rgba(0,0,0,.88) 65%, rgba(0,0,0,.97) 100%); }
+      /* Photo-then-black-card quote pair (client reference: b-roll photo plays
+         alone, THEN a hard cut to a solid-black card with the italic quote —
+         not layered together, and not centered bold caps — that treatment
+         stays for keyword captions). */
+      .quote-photo .cutaway-bg { position: absolute; inset: 0; }
+      .quote-black { background: #000; display: flex; align-items: flex-end; justify-content: flex-start; padding: 0 0 110px 110px; }
       .quote-inner { width: 1150px; text-align: left; }
       .quote-kicker { font-family: Georgia, "Times New Roman", serif; font-style: italic; font-size: 24px; letter-spacing: 2px; color: var(--accent-2); font-weight: 400; margin: 0 0 16px; text-shadow: 0 2px 10px rgba(0,0,0,.9); }
       .quote-text { font-family: Georgia, "Times New Roman", serif; font-style: italic; font-weight: 400; font-size: 52px; line-height: 1.35; color: var(--ink); text-align: left; margin: 0; text-shadow: 0 2px 6px rgba(0,0,0,.95), 0 0 24px rgba(0,0,0,.9); }
@@ -101,13 +101,18 @@
         <p class="caption-word" id="b-cuidador-word">CUIDADOR DE VIDA</p>
       </div>
 
-      <section id="b-quote-cuidado" class="clip cutaway quote-cutaway" data-start="215.825" data-duration="6" data-track-index="5">
+      <section id="b-quote-cuidado-photo" class="clip cutaway quote-photo" data-start="215.825" data-duration="2.2" data-track-index="5">
         <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-cuidado-bg" src="media/broll/desse-jeito.jpg" alt="" /></div>
-        <div class="cutaway-scrim"></div>
+      </section>
+      <section id="b-quote-cuidado-text" class="clip cutaway quote-black" data-start="218.025" data-duration="3.8" data-track-index="5">
         <div class="quote-inner" id="b-quote-cuidado-inner">
           
           <p class="quote-text">VÃO ESQUECER AS TÉCNICAS. NUNCA VÃO ESQUECER QUE FORAM CUIDADAS POR VOCÊ.</p>
         </div>
+      </section>
+
+      <section id="b-broll-3" class="clip cutaway quote-photo" data-start="56.335" data-duration="3" data-track-index="5">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-3-bg" src="media/broll/transferir-4.jpg" alt="" /></div>
       </section>
     </div>
     <script>
@@ -118,10 +123,31 @@
   tl.fromTo("#b-carater .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 207.775);
   tl.fromTo("#b-cuidador-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 236.855);
   tl.fromTo("#b-cuidador .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 236.755);
-  tl.fromTo("#b-quote-cuidado-bg", { scale: 1 }, { scale: 1.1, duration: 6, ease: "none" }, 215.825);
-  tl.fromTo("#b-quote-cuidado-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, 216.025);
-  tl.fromTo("#base", { scale: 1 }, { scale: 1.05, duration: 149.651, ease: "sine.inOut" }, 0);
-  tl.fromTo("#base", { scale: 1.05 }, { scale: 1, duration: 149.651, ease: "sine.inOut" }, 149.651);
+  tl.fromTo("#b-quote-cuidado-bg", { scale: 1 }, { scale: 1.08, duration: 2.2, ease: "none" }, 215.825);
+  tl.fromTo("#b-quote-cuidado-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 218.025);
+  tl.fromTo("#b-broll-3-bg", { scale: 1 }, { scale: 1.1, duration: 3, ease: "none" }, 56.335);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 15.6);
+  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 16.7);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 41.6);
+  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 42.7);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 67.6);
+  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 68.7);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 93.6);
+  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 94.7);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 119.6);
+  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 120.7);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 145.6);
+  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 146.7);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 171.6);
+  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 172.7);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 197.6);
+  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 198.7);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 223.6);
+  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 224.7);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 249.6);
+  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 250.7);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.13, duration: 0.32, ease: "power3.out" }, 275.6);
+  tl.to("#base", { scale: 1, duration: 0.5, ease: "power2.inOut" }, 276.7);
       window.__timelines["chunk6"] = tl;
     </script>
   </body>
