@@ -148,14 +148,18 @@ const COMPARE_IMG_LEFT = "media/broll/sinais-espirito-santo.jpg"; // CHAMADO sid
 const COMPARE_IMG_RIGHT = "media/broll/espiritualidade-crista.jpg"; // PREPARO side
 
 function pilaresHtml(b) {
+  const bgLayers = PILLARS.map((p, i) => `        <img class="cutaway-bg" id="${b.id}-bgimg${i}" src="${p.img}" alt="" />`).join("\n");
   const items = PILLARS.map(
     (p, i) => `          <div class="pillar" id="${b.id}-p${i}">
-            <div class="pillar-thumb"><img id="${b.id}-thumb${i}" src="${p.img}" alt="" /></div>
             <span class="pillar-n">${p.n}</span>
             <span class="pillar-label">${p.label}</span>
           </div>`,
   ).join("\n");
   return `      <section id="${b.id}" class="clip cutaway" data-start="${num(b.newAt)}" data-duration="${b.dur}" data-track-index="${TRACK_OVERLAY}">
+        <div class="cutaway-bgs">
+${bgLayers}
+        </div>
+        <div class="cutaway-scrim"></div>
         <div class="cutaway-inner">
           <h2 class="cutaway-title">OS 5 PILARES DA FORMAÇÃO</h2>
           <div class="pillars" id="${b.id}-list">
@@ -204,10 +208,17 @@ const overlayClips = BEATS.map((b) => {
 const animLines = [];
 for (const b of BEATS) {
   if (b.id === "b-pilares") {
+    animLines.push(`  tl.fromTo("#${b.id} .cutaway-bgs", { scale: 1 }, { scale: 1.12, duration: ${num(b.dur)}, ease: "none" }, ${num(b.newAt)});`);
     PILLARS.forEach((_, i) => {
       const at = num(b.newAt + 0.35 + i * 0.85);
       animLines.push(`  tl.fromTo("#${b.id}-p${i}", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, ${at});`);
-      animLines.push(`  tl.fromTo("#${b.id}-thumb${i}", { scale: 1.22 }, { scale: 1, duration: ${num(b.dur - (0.35 + i * 0.85) - 0.1)}, ease: "power1.out" }, ${at});`);
+      if (i === 0) {
+        animLines.push(`  tl.fromTo("#${b.id}-bgimg0", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, ${num(b.newAt)});`);
+      } else {
+        animLines.push(`  tl.set("#${b.id}-bgimg${i}", { autoAlpha: 0 }, ${num(b.newAt)});`);
+        animLines.push(`  tl.fromTo("#${b.id}-bgimg${i - 1}", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.6 }, ${at});`);
+        animLines.push(`  tl.fromTo("#${b.id}-bgimg${i}", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, ${at});`);
+      }
     });
   } else if (b.id === "b-chamado-preparo") {
     animLines.push(`  tl.fromTo("#${b.id}-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, ${num(b.newAt + 0.15)});`);
@@ -256,13 +267,14 @@ const html = `<!doctype html>
       }
 
       /* Full-screen cutaway graphics */
-      .cutaway { background: linear-gradient(160deg, #0b0e14 0%, #141a24 100%); display: grid; place-items: center; }
-      .cutaway-inner { width: 1500px; }
+      .cutaway { background: linear-gradient(160deg, #0b0e14 0%, #141a24 100%); display: grid; place-items: center; position: relative; overflow: hidden; }
+      .cutaway-bgs { position: absolute; inset: 0; z-index: 0; }
+      .cutaway-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+      .cutaway-scrim { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(11,14,20,.55) 0%, rgba(11,14,20,.8) 55%, rgba(11,14,20,.92) 100%); }
+      .cutaway-inner { width: 1500px; position: relative; z-index: 2; }
       .cutaway-title { text-align: center; font-size: 40px; letter-spacing: 4px; color: var(--accent-2); margin: 0 0 56px; font-weight: 700; }
       .pillars { display: flex; flex-direction: column; gap: 22px; }
-      .pillar { display: flex; align-items: center; gap: 28px; background: rgba(255,255,255,0.04); border-left: 6px solid var(--accent); border-radius: 8px; padding: 20px 36px; }
-      .pillar-thumb { width: 96px; height: 96px; border-radius: 10px; overflow: hidden; flex-shrink: 0; box-shadow: 0 4px 14px rgba(0,0,0,.5); }
-      .pillar-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .pillar { display: flex; align-items: center; gap: 28px; background: rgba(11,14,20,0.45); backdrop-filter: blur(2px); border-left: 6px solid var(--accent); border-radius: 8px; padding: 20px 36px; }
       .pillar-n { font-size: 44px; font-weight: 800; color: var(--accent); width: 90px; }
       .pillar-label { font-size: 44px; font-weight: 700; color: var(--ink); letter-spacing: 1px; }
 
@@ -342,10 +354,17 @@ function chunkHtml(chunk) {
   const chunkAnimLines = [];
   for (const b of localBeats) {
     if (b.id === "b-pilares") {
+      chunkAnimLines.push(`  tl.fromTo("#${b.id} .cutaway-bgs", { scale: 1 }, { scale: 1.12, duration: ${num(b.dur)}, ease: "none" }, ${num(b.newAt)});`);
       PILLARS.forEach((_, i) => {
         const at = num(b.newAt + 0.35 + i * 0.85);
         chunkAnimLines.push(`  tl.fromTo("#${b.id}-p${i}", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, ${at});`);
-        chunkAnimLines.push(`  tl.fromTo("#${b.id}-thumb${i}", { scale: 1.22 }, { scale: 1, duration: ${num(b.dur - (0.35 + i * 0.85) - 0.1)}, ease: "power1.out" }, ${at});`);
+        if (i === 0) {
+          chunkAnimLines.push(`  tl.fromTo("#${b.id}-bgimg0", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, ${num(b.newAt)});`);
+        } else {
+          chunkAnimLines.push(`  tl.set("#${b.id}-bgimg${i}", { autoAlpha: 0 }, ${num(b.newAt)});`);
+          chunkAnimLines.push(`  tl.fromTo("#${b.id}-bgimg${i - 1}", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.6 }, ${at});`);
+          chunkAnimLines.push(`  tl.fromTo("#${b.id}-bgimg${i}", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, ${at});`);
+        }
       });
     } else if (b.id === "b-chamado-preparo") {
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, ${num(b.newAt + 0.15)});`);

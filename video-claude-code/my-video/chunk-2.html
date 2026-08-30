@@ -32,13 +32,14 @@
       }
 
       /* Full-screen cutaway graphics */
-      .cutaway { background: linear-gradient(160deg, #0b0e14 0%, #141a24 100%); display: grid; place-items: center; }
-      .cutaway-inner { width: 1500px; }
+      .cutaway { background: linear-gradient(160deg, #0b0e14 0%, #141a24 100%); display: grid; place-items: center; position: relative; overflow: hidden; }
+      .cutaway-bgs { position: absolute; inset: 0; z-index: 0; }
+      .cutaway-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+      .cutaway-scrim { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(11,14,20,.55) 0%, rgba(11,14,20,.8) 55%, rgba(11,14,20,.92) 100%); }
+      .cutaway-inner { width: 1500px; position: relative; z-index: 2; }
       .cutaway-title { text-align: center; font-size: 40px; letter-spacing: 4px; color: var(--accent-2); margin: 0 0 56px; font-weight: 700; }
       .pillars { display: flex; flex-direction: column; gap: 22px; }
-      .pillar { display: flex; align-items: center; gap: 28px; background: rgba(255,255,255,0.04); border-left: 6px solid var(--accent); border-radius: 8px; padding: 20px 36px; }
-      .pillar-thumb { width: 96px; height: 96px; border-radius: 10px; overflow: hidden; flex-shrink: 0; box-shadow: 0 4px 14px rgba(0,0,0,.5); }
-      .pillar-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .pillar { display: flex; align-items: center; gap: 28px; background: rgba(11,14,20,0.45); backdrop-filter: blur(2px); border-left: 6px solid var(--accent); border-radius: 8px; padding: 20px 36px; }
       .pillar-n { font-size: 44px; font-weight: 800; color: var(--accent); width: 90px; }
       .pillar-label { font-size: 44px; font-weight: 700; color: var(--ink); letter-spacing: 1px; }
 
