@@ -59,12 +59,16 @@ foram **substituídos por trechos reais da fala**, aprovados pelo cliente:
 - **Legendas:** só palavras-chave em destaque (cor de marca + leve scale),
   fonte grande e legível, faixa inferior central, sem cobrir o rosto — nunca
   legenda verbatim contínua.
-- **B-roll:** **motion design nativo (HTML+CSS+SVG+GSAP)**, sem fotos/imagens
-  geradas — decisão tomada com o cliente depois que os 3 caminhos de mídia
-  externa se mostraram bloqueados pela rede deste ambiente (ver Notes).
-  Tipografia grande, ícones desenhados em SVG, listas/contadores animados,
-  formas geométricas com movimento sutil (não estático) para contextualizar
-  cada beat.
+- **B-roll:** motion design nativo (HTML+CSS+SVG+GSAP) como base — tipografia
+  grande, ícones em SVG, listas animadas, formas geométricas com movimento
+  sutil — **mais 7 fotos reais enviadas pelo cliente** (17 no total, ver
+  Assets), aplicadas nos 2 cortes gráficos de tela cheia (os únicos beats
+  onde o rosto do professor sai de cena): as 5 linhas de "b-pilares" ganharam
+  uma miniatura cada, e os 2 painéis de "b-chamado-preparo" ganharam foto de
+  fundo com gradiente escuro (legibilidade) e leve zoom (Ken Burns). Os beats
+  de legenda-palavra-chave (pessoas/vidas/cuidador) continuam sem foto de
+  fundo — o rosto tem que ficar visível ali. As outras 10 fotos ficam
+  disponíveis em `media/broll/` caso o cliente peça mais cortes gráficos.
 - **Design:** paleta e tipografia a definir na etapa de composição (preset
   sóbrio/acolhedor, compatível com conteúdo de fé — evitar tom corporativo
   frio).
@@ -75,6 +79,9 @@ foram **substituídos por trechos reais da fala**, aprovados pelo cliente:
   ritmo/energia de edição a espelhar.
 - Vídeo bruto de 3.58GB (Google Drive, InShot) — baixado e validado.
 - Transcrição em PDF (fornecida pelo cliente) — convertida em SRT/JSON.
+- 17 fotos temáticas (fé/cristã) enviadas pelo cliente via pasta do Google
+  Drive — `media/broll/`. 7 aplicadas nos cortes gráficos (ver
+  Customizations); 10 disponíveis sem uso ainda.
 
 ## Notes
 
@@ -89,6 +96,8 @@ foram **substituídos por trechos reais da fala**, aprovados pelo cliente:
   política de rede — `huggingface.co`/mirrors para modelos locais, e o
   domínio `heygen.com` inteiro (catálogo de fotos do `/media-use`). Decisão
   confirmada com o cliente: seguir com motion design nativo em vez de
-  esperar/depender de mídia externa.
+  esperar/depender de mídia externa. (Atualização: o cliente depois enviou
+  17 fotos próprias via Drive — não é mais um bloqueio de rede, e 7 delas já
+  foram incorporadas, ver Customizations/Assets acima.)
 - Mídia bruta e renders ficam fora do git (`.gitignore` na raiz do repo) —
   só o código da composição é versionado.
