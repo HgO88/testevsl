@@ -180,6 +180,48 @@ const BEATS = [
   { id: "b-broll-5", kind: "broll", srcAt: 800, holdBefore: 0.15, dur: 3, img: "media/broll/cantata-pascoa-sacrificio.jpg" },
   { id: "b-broll-6", kind: "broll", srcAt: 1100, holdBefore: 0.15, dur: 3, img: "media/broll/gloria-de-deus.jpg" },
   { id: "b-broll-7", kind: "broll", srcAt: 1520, holdBefore: 0.15, dur: 3, img: "media/broll/maos-oracao-cruz.jpg" },
+  // -- reinforcement pass 7 (client: "e bastante texto") — 16 more black
+  // cards, each a line he actually says, placed in the gaps the earlier
+  // passes left. With these the film carries ~45 text cards over 29 minutes. --
+  ...[
+    [232, "O Que Move o Seu Coração?"],
+    [292, "Quem é Chamado, Permanece"],
+    [300, "Participar da Obra de Restauração"],
+    [447, "O Chamado Não Elimina o Preparo"],
+    [560, "Jesus Não Chama Profissionais. Chama Servos."],
+    [585, "Um Coração Que Responde ao Chamado"],
+    [726, "É Preciso Ser Humano Para Ajudar Outro Humano"],
+    [752, "Deus Não Desperdiça as Feridas de Quem Ele Chama"],
+    [828, "Paulo Sofreu Antes de Consolar a Igreja"],
+    [960, "Feridas Tratadas Por Deus Te Qualificam"],
+    [1032, "O Terapeuta Cristão Não Trabalha com Problemas"],
+    [1275, "Somente o Amor Sustenta o Chamado"],
+    [1303, "O Chamado Não Dispensa o Preparo"],
+    [1465, "Deus Te Deu o Dom. Agora Afie as Ferramentas."],
+    [1737, "Você Não Precisa Salvar Todo Mundo"],
+    [1876, "Como Glorificar a Deus Cuidando de Pessoas"],
+  ].map(([srcAt, line], i) => ({
+    id: `b-txt-${i}`, kind: "caption", srcAt, holdBefore: 0.15,
+    dur: line.length > 34 ? 3.4 : 3.0, line,
+  })),
+  // -- reinforcement pass 6 (client: "lembra de adicionar bastante img") --
+  // 14 more b-roll breathers dropped into every remaining gap wide enough to
+  // hold one clear of the surrounding beats. Photos repeat across the film,
+  // which is fine: the reuses are minutes apart. Together with the quote
+  // cards, the two graphic cutaways and the earlier brolls this puts a photo
+  // on screen roughly once a minute across the whole 29 minutes.
+  ...[
+    [78, "tua-graca-me-basta"], [140, "pessoa-ajoelhada-deus-respira"],
+    [230, "cruz-luz"], [350, "sinais-espirito-santo"],
+    [410, "espiritualidade-crista"], [575, "josue-licoes"],
+    [710, "papel-parede-jesus"], [840, "dom-profetico"],
+    [950, "transferir-1"], [1025, "gloria-de-deus"],
+    [1155, "desse-jeito"], [1350, "transferir-2"],
+    [1640, "cruz-luz"], [1870, "transferir-3"],
+  ].map(([srcAt, img], i) => ({
+    id: `b-broll-x${i}`, kind: "broll", srcAt, holdBefore: 0.15, dur: 2.8,
+    img: `media/broll/${img}.jpg`,
+  })),
 ].map((b) => ({ ...b, newAt: sourceToNewTime(b.srcAt) + b.holdBefore }));
 
 console.log("beat positions (source -> new timeline):");

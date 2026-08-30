@@ -185,6 +185,20 @@
       <section id="b-broll-7" class="clip cutaway quote-photo" data-start="148.317" data-duration="3" data-track-index="5">
         <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-7-bg" src="media/broll/maos-oracao-cruz.jpg" alt="" /></div>
       </section>
+
+      <div id="b-txt-13" class="clip caption-card" data-start="106.217" data-duration="3.4" data-track-index="5">
+        <div class="caption-inner" id="b-txt-13-word">
+        <p class="caption-line">Deus Te Deu o Dom. Agora Afie as Ferramentas.</p>
+        </div>
+      </div>
+
+      <section id="b-broll-x11" class="clip cutaway quote-photo" data-start="4.867" data-duration="2.8" data-track-index="5">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-x11-bg" src="media/broll/transferir-2.jpg" alt="" /></div>
+      </section>
+
+      <section id="b-broll-x12" class="clip cutaway quote-photo" data-start="253.097" data-duration="2.8" data-track-index="5">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-x12-bg" src="media/broll/cruz-luz.jpg" alt="" /></div>
+      </section>
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
@@ -250,6 +264,22 @@
   tl.fromTo("#b-broll-7", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 148.317);
   tl.to("#b-broll-7", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 150.967);
   tl.set("#b-broll-7", { autoAlpha: 0 }, 151.317);
+  tl.fromTo("#b-txt-13-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, 106.417);
+  tl.to("#b-txt-13-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, 109.067);
+  tl.set("#b-txt-13", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-txt-13", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 106.217);
+  tl.to("#b-txt-13", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 109.267);
+  tl.set("#b-txt-13", { autoAlpha: 0 }, 109.617);
+  tl.fromTo("#b-broll-x11-bg", { scale: 1 }, { scale: 1.1, duration: 2.8, ease: "none" }, 4.867);
+  tl.set("#b-broll-x11", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-broll-x11", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 4.867);
+  tl.to("#b-broll-x11", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 7.317);
+  tl.set("#b-broll-x11", { autoAlpha: 0 }, 7.667);
+  tl.fromTo("#b-broll-x12-bg", { scale: 1 }, { scale: 1.1, duration: 2.8, ease: "none" }, 253.097);
+  tl.set("#b-broll-x12", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-broll-x12", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 253.097);
+  tl.to("#b-broll-x12", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 255.547);
+  tl.set("#b-broll-x12", { autoAlpha: 0 }, 255.897);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 15.6);
   tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 21.3);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 41.6);
