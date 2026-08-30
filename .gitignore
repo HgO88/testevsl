@@ -1,0 +1,20 @@
+# HyperFrames video projects — keep composition code, never raw/rendered media
+video-claude-code/**/*.mp4
+video-claude-code/**/*.mov
+video-claude-code/**/*.webm
+video-claude-code/**/*.wav
+video-claude-code/**/*.mp3
+video-claude-code/**/*.m4a
+video-claude-code/**/node_modules/
+video-claude-code/**/dist/
+video-claude-code/**/.hyperframes-cache/
+video-claude-code/**/render-output/
+video-claude-code/init.log
+video-claude-code/pid.txt
+
+# Generic large-media / editing scratch guards (repo-wide)
+*.mp4
+*.mov
+*.mkv
+*.webm
+node_modules/
