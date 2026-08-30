@@ -115,22 +115,22 @@ const BEATS = [
 console.log("beat positions (source -> new timeline):");
 for (const b of BEATS) console.log(`  ${b.id}: src ${b.srcAt}s -> new ${b.newAt.toFixed(2)}s (+${b.dur}s)`);
 
-// ---- 4. Emit video+audio clip pairs ---------------------------------------
+// ---- 4. Emit the single base clip (cuts already baked by ffmpeg concat) ----
+// 327 hard cuts were baked into edited-base.mp4 via build/make-filter.mjs +
+// an ffmpeg concat pass — placing 654 <video>/<audio> elements pointing at
+// the same 3.58GB source overloaded the browser-based check/render (protocol
+// timeout). One continuous, already-cut base file keeps the composition
+// light; the beat overlays below still land at the correct sourceToNewTime()
+// positions because edited-base.mp4's timeline *is* that mapped timeline.
+const BASE_VIDEO = "edited-base.mp4";
 const TRACK_VIDEO = 0;
-const TRACK_AUDIO = 10;
 const TRACK_OVERLAY = 5;
 
 function num(n) {
   return Number(n.toFixed(3));
 }
 
-const mediaClips = segments
-  .map((seg) => {
-    const vid = `<video id="${seg.id}" class="clip talking-head" src="${SRC_VIDEO}" data-start="${num(seg.newStart)}" data-duration="${num(seg.duration)}" data-media-start="${num(seg.sourceStart)}" data-track-index="${TRACK_VIDEO}" muted playsinline></video>`;
-    const aud = `<audio id="${seg.id}-audio" src="${SRC_VIDEO}" data-start="${num(seg.newStart)}" data-duration="${num(seg.duration)}" data-media-start="${num(seg.sourceStart)}" data-track-index="${TRACK_AUDIO}"></audio>`;
-    return `      ${vid}\n      ${aud}`;
-  })
-  .join("\n");
+const mediaClips = `      <video id="base" class="clip talking-head" src="${BASE_VIDEO}" data-start="0" data-duration="${num(NEW_DURATION)}" data-has-audio="true" data-track-index="${TRACK_VIDEO}" playsinline></video>`;
 
 // ---- 5. Emit the 5 beat overlay clips --------------------------------------
 const PILLARS = [
