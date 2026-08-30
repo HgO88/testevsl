@@ -23,3 +23,6 @@ video-claude-code/pid.txt
 *.mkv
 *.webm
 node_modules/
+
+# QA snapshot dumps (regenerated on demand by `hyperframes snapshot`)
+video-claude-code/**/snap*/
