@@ -134,6 +134,16 @@ const BEATS = [
   { id: "b-chamado-preparo", kind: "cutaway", srcAt: 1490, holdBefore: 0.3, dur: 7.6 },
   { id: "b-cuidador", kind: "caption", srcAt: 1942, holdBefore: 0.15, dur: 3.0, pre: "você é", word: "CUIDADOR DE VIDA" },
   { id: "b-camcorder", kind: "camcorder", srcAt: 992, holdBefore: 0.2, dur: 7 },
+  // -- reinforcement pass 3 (client: "gostaria também da adição de mais img")
+  // -- one full-screen quote-card per chunk that had no photo cutaway yet,
+  // using 5 of the 10 still-unused client photos (2 more stay unused: the
+  // 2 with baked-in text/typography, unusable as a background under a
+  // second text layer) --
+  { id: "b-quote-abandono", kind: "quote", srcAt: 620, holdBefore: 0.2, dur: 6, img: "media/broll/papel-parede-jesus.jpg", text: "JESUS CONHECEU O ABANDONO, A REJEIÇÃO, A SOLIDÃO." },
+  { id: "b-quote-consolacao", kind: "quote", srcAt: 865, holdBefore: 0.2, dur: 7, img: "media/broll/tua-graca-me-basta.jpg", kicker: "2 CORÍNTIOS 1:3-4", text: "DEUS DE TODA CONSOLAÇÃO, QUE NOS CONSOLA PARA CONSOLARMOS OS OUTROS." },
+  { id: "b-quote-amor", kind: "quote", srcAt: 1280, holdBefore: 0.2, dur: 5, img: "media/broll/transferir-1.jpg", text: "SOMENTE O AMOR SUSTENTA O CHAMADO." },
+  { id: "b-quote-honra", kind: "quote", srcAt: 1420, holdBefore: 0.2, dur: 6, img: "media/broll/dom-profetico.jpg", text: "O CHAMADO ABRE A PORTA. O PREPARO FAZ VOCÊ HONRAR A DEUS NELA." },
+  { id: "b-quote-cuidado", kind: "quote", srcAt: 1920, holdBefore: 0.2, dur: 6, img: "media/broll/desse-jeito.jpg", text: "VÃO ESQUECER AS TÉCNICAS. NUNCA VÃO ESQUECER QUE FORAM CUIDADAS POR VOCÊ." },
 ].map((b) => ({ ...b, newAt: sourceToNewTime(b.srcAt) + b.holdBefore }));
 
 console.log("beat positions (source -> new timeline):");
@@ -235,10 +245,23 @@ function camcorderHtml(b) {
       </div>`;
 }
 
+function quoteHtml(b) {
+  const kicker = b.kicker ? `<p class="quote-kicker">${b.kicker}</p>` : "";
+  return `      <section id="${b.id}" class="clip cutaway quote-cutaway" data-start="${num(b.newAt)}" data-duration="${b.dur}" data-track-index="${TRACK_OVERLAY}">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="${b.id}-bg" src="${b.img}" alt="" /></div>
+        <div class="cutaway-scrim"></div>
+        <div class="quote-inner" id="${b.id}-inner">
+          ${kicker}
+          <p class="quote-text">${b.text}</p>
+        </div>
+      </section>`;
+}
+
 function beatHtml(b) {
   if (b.id === "b-pilares") return pilaresHtml(b);
   if (b.id === "b-chamado-preparo") return chamadoPreparoHtml(b);
   if (b.kind === "camcorder") return camcorderHtml(b);
+  if (b.kind === "quote") return quoteHtml(b);
   return captionHtml(b);
 }
 
@@ -272,6 +295,9 @@ for (const b of BEATS) {
     animLines.push(`  tl.fromTo("#${b.id}", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, ${num(b.newAt)});`);
     animLines.push(`  tl.to("#${b.id}", { autoAlpha: 0, duration: 0.3 }, ${num(b.newAt + b.dur - 0.3)});`);
     animLines.push(`  tl.to("#${b.id}-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 16, yoyo: true }, ${num(b.newAt + 0.3)});`);
+  } else if (b.kind === "quote") {
+    animLines.push(`  tl.fromTo("#${b.id}-bg", { scale: 1 }, { scale: 1.1, duration: ${num(b.dur)}, ease: "none" }, ${num(b.newAt)});`);
+    animLines.push(`  tl.fromTo("#${b.id}-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, ${num(b.newAt + 0.2)});`);
   } else {
     animLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, ${num(b.newAt + 0.1)});`);
     animLines.push(`  tl.fromTo("#${b.id} .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, ${num(b.newAt)});`);
@@ -357,6 +383,14 @@ const html = `<!doctype html>
       .cam-rec-dot { width: 14px; height: 14px; border-radius: 50%; background: #e5484d; display: inline-block; }
       .cam-4k { position: absolute; bottom: 48px; left: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
       .cam-hd { position: absolute; bottom: 48px; right: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
+
+      /* Full-screen quote card (client photo + a strong line from the transcript) */
+      .quote-cutaway .cutaway-bg { position: absolute; inset: 0; }
+      .quote-cutaway .cutaway-scrim { background: linear-gradient(180deg, rgba(11,14,20,.35) 0%, rgba(11,14,20,.72) 45%, rgba(11,14,20,.88) 100%); }
+      .quote-inner { width: 1400px; text-align: center; background: rgba(11,14,20,.5); border-radius: 16px; padding: 48px 60px; }
+      .quote-kicker { font-size: 28px; letter-spacing: 3px; color: var(--accent-2); font-weight: 700; margin: 0 0 26px; }
+      .quote-text { font-size: 56px; font-weight: 800; line-height: 1.25; color: var(--ink); margin: 0; text-shadow: 0 4px 20px rgba(0,0,0,.6); }
+      .quote-text .hl { color: var(--accent); }
     </style>
   </head>
   <body>
@@ -441,6 +475,9 @@ function chunkHtml(chunk) {
       chunkAnimLines.push(`  tl.fromTo("#${b.id}", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, ${num(b.newAt)});`);
       chunkAnimLines.push(`  tl.to("#${b.id}", { autoAlpha: 0, duration: 0.3 }, ${num(b.newAt + b.dur - 0.3)});`);
       chunkAnimLines.push(`  tl.to("#${b.id}-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 16, yoyo: true }, ${num(b.newAt + 0.3)});`);
+    } else if (b.kind === "quote") {
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-bg", { scale: 1 }, { scale: 1.1, duration: ${num(b.dur)}, ease: "none" }, ${num(b.newAt)});`);
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, ${num(b.newAt + 0.2)});`);
     } else {
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, ${num(b.newAt + 0.1)});`);
       chunkAnimLines.push(`  tl.fromTo("#${b.id} .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, ${num(b.newAt)});`);

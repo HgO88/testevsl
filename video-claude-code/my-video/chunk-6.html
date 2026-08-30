@@ -69,6 +69,14 @@
       .cam-rec-dot { width: 14px; height: 14px; border-radius: 50%; background: #e5484d; display: inline-block; }
       .cam-4k { position: absolute; bottom: 48px; left: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
       .cam-hd { position: absolute; bottom: 48px; right: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
+
+      /* Full-screen quote card (client photo + a strong line from the transcript) */
+      .quote-cutaway .cutaway-bg { position: absolute; inset: 0; }
+      .quote-cutaway .cutaway-scrim { background: linear-gradient(180deg, rgba(11,14,20,.35) 0%, rgba(11,14,20,.72) 45%, rgba(11,14,20,.88) 100%); }
+      .quote-inner { width: 1400px; text-align: center; background: rgba(11,14,20,.5); border-radius: 16px; padding: 48px 60px; }
+      .quote-kicker { font-size: 28px; letter-spacing: 3px; color: var(--accent-2); font-weight: 700; margin: 0 0 26px; }
+      .quote-text { font-size: 56px; font-weight: 800; line-height: 1.25; color: var(--ink); margin: 0; text-shadow: 0 4px 20px rgba(0,0,0,.6); }
+      .quote-text .hl { color: var(--accent); }
     </style>
   </head>
   <body>
@@ -89,6 +97,15 @@
         <p class="caption-pre">você é</p>
         <p class="caption-word" id="b-cuidador-word">CUIDADOR DE VIDA</p>
       </div>
+
+      <section id="b-quote-cuidado" class="clip cutaway quote-cutaway" data-start="215.825" data-duration="6" data-track-index="5">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-cuidado-bg" src="media/broll/desse-jeito.jpg" alt="" /></div>
+        <div class="cutaway-scrim"></div>
+        <div class="quote-inner" id="b-quote-cuidado-inner">
+          
+          <p class="quote-text">VÃO ESQUECER AS TÉCNICAS. NUNCA VÃO ESQUECER QUE FORAM CUIDADAS POR VOCÊ.</p>
+        </div>
+      </section>
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
@@ -98,6 +115,8 @@
   tl.fromTo("#b-carater .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 207.775);
   tl.fromTo("#b-cuidador-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 236.855);
   tl.fromTo("#b-cuidador .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 236.755);
+  tl.fromTo("#b-quote-cuidado-bg", { scale: 1 }, { scale: 1.1, duration: 6, ease: "none" }, 215.825);
+  tl.fromTo("#b-quote-cuidado-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, 216.025);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.05, duration: 149.651, ease: "sine.inOut" }, 0);
   tl.fromTo("#base", { scale: 1.05 }, { scale: 1, duration: 149.651, ease: "sine.inOut" }, 149.651);
       window.__timelines["chunk6"] = tl;

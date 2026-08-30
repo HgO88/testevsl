@@ -69,6 +69,14 @@
       .cam-rec-dot { width: 14px; height: 14px; border-radius: 50%; background: #e5484d; display: inline-block; }
       .cam-4k { position: absolute; bottom: 48px; left: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
       .cam-hd { position: absolute; bottom: 48px; right: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
+
+      /* Full-screen quote card (client photo + a strong line from the transcript) */
+      .quote-cutaway .cutaway-bg { position: absolute; inset: 0; }
+      .quote-cutaway .cutaway-scrim { background: linear-gradient(180deg, rgba(11,14,20,.35) 0%, rgba(11,14,20,.72) 45%, rgba(11,14,20,.88) 100%); }
+      .quote-inner { width: 1400px; text-align: center; background: rgba(11,14,20,.5); border-radius: 16px; padding: 48px 60px; }
+      .quote-kicker { font-size: 28px; letter-spacing: 3px; color: var(--accent-2); font-weight: 700; margin: 0 0 26px; }
+      .quote-text { font-size: 56px; font-weight: 800; line-height: 1.25; color: var(--ink); margin: 0; text-shadow: 0 4px 20px rgba(0,0,0,.6); }
+      .quote-text .hl { color: var(--accent); }
     </style>
   </head>
   <body>
@@ -227,6 +235,51 @@
         <div class="cam-4k">4K 60FPS</div>
         <div class="cam-hd">HD</div>
       </div>
+
+      <section id="b-quote-abandono" class="clip cutaway quote-cutaway" data-start="564.838" data-duration="6" data-track-index="5">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-abandono-bg" src="media/broll/papel-parede-jesus.jpg" alt="" /></div>
+        <div class="cutaway-scrim"></div>
+        <div class="quote-inner" id="b-quote-abandono-inner">
+          
+          <p class="quote-text">JESUS CONHECEU O ABANDONO, A REJEIÇÃO, A SOLIDÃO.</p>
+        </div>
+      </section>
+
+      <section id="b-quote-consolacao" class="clip cutaway quote-cutaway" data-start="780.794" data-duration="7" data-track-index="5">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-consolacao-bg" src="media/broll/tua-graca-me-basta.jpg" alt="" /></div>
+        <div class="cutaway-scrim"></div>
+        <div class="quote-inner" id="b-quote-consolacao-inner">
+          <p class="quote-kicker">2 CORÍNTIOS 1:3-4</p>
+          <p class="quote-text">DEUS DE TODA CONSOLAÇÃO, QUE NOS CONSOLA PARA CONSOLARMOS OS OUTROS.</p>
+        </div>
+      </section>
+
+      <section id="b-quote-amor" class="clip cutaway quote-cutaway" data-start="1139.256" data-duration="5" data-track-index="5">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-amor-bg" src="media/broll/transferir-1.jpg" alt="" /></div>
+        <div class="cutaway-scrim"></div>
+        <div class="quote-inner" id="b-quote-amor-inner">
+          
+          <p class="quote-text">SOMENTE O AMOR SUSTENTA O CHAMADO.</p>
+        </div>
+      </section>
+
+      <section id="b-quote-honra" class="clip cutaway quote-cutaway" data-start="1265.266" data-duration="6" data-track-index="5">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-honra-bg" src="media/broll/dom-profetico.jpg" alt="" /></div>
+        <div class="cutaway-scrim"></div>
+        <div class="quote-inner" id="b-quote-honra-inner">
+          
+          <p class="quote-text">O CHAMADO ABRE A PORTA. O PREPARO FAZ VOCÊ HONRAR A DEUS NELA.</p>
+        </div>
+      </section>
+
+      <section id="b-quote-cuidado" class="clip cutaway quote-cutaway" data-start="1712.336" data-duration="6" data-track-index="5">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-cuidado-bg" src="media/broll/desse-jeito.jpg" alt="" /></div>
+        <div class="cutaway-scrim"></div>
+        <div class="quote-inner" id="b-quote-cuidado-inner">
+          
+          <p class="quote-text">VÃO ESQUECER AS TÉCNICAS. NUNCA VÃO ESQUECER QUE FORAM CUIDADAS POR VOCÊ.</p>
+        </div>
+      </section>
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
@@ -294,6 +347,16 @@
   tl.fromTo("#b-camcorder", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 882.033);
   tl.to("#b-camcorder", { autoAlpha: 0, duration: 0.3 }, 888.733);
   tl.to("#b-camcorder-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 16, yoyo: true }, 882.333);
+  tl.fromTo("#b-quote-abandono-bg", { scale: 1 }, { scale: 1.1, duration: 6, ease: "none" }, 564.838);
+  tl.fromTo("#b-quote-abandono-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, 565.038);
+  tl.fromTo("#b-quote-consolacao-bg", { scale: 1 }, { scale: 1.1, duration: 7, ease: "none" }, 780.794);
+  tl.fromTo("#b-quote-consolacao-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, 780.994);
+  tl.fromTo("#b-quote-amor-bg", { scale: 1 }, { scale: 1.1, duration: 5, ease: "none" }, 1139.256);
+  tl.fromTo("#b-quote-amor-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, 1139.456);
+  tl.fromTo("#b-quote-honra-bg", { scale: 1 }, { scale: 1.1, duration: 6, ease: "none" }, 1265.266);
+  tl.fromTo("#b-quote-honra-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, 1265.466);
+  tl.fromTo("#b-quote-cuidado-bg", { scale: 1 }, { scale: 1.1, duration: 6, ease: "none" }, 1712.336);
+  tl.fromTo("#b-quote-cuidado-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, 1712.536);
   tl.fromTo("#base", { scale: 1 }, { scale: 1.05, duration: 897.907, ease: "sine.inOut" }, 0);
   tl.fromTo("#base", { scale: 1.05 }, { scale: 1, duration: 897.907, ease: "sine.inOut" }, 897.907);
       window.__timelines["main"] = tl;
