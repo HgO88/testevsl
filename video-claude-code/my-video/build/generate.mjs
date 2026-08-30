@@ -114,7 +114,6 @@ const BEATS = [
   // Client reference opens on the recording HUD for its first ~6s, then snaps
   // to full colour — so this is the film's cold open, not a mid-video accent.
   { id: "b-confesso", kind: "camcorder", srcAt: 1, holdBefore: 0, dur: 6 },
-  { id: "b-intro-chamado", kind: "caption", srcAt: 9, holdBefore: 0.15, dur: 3.0, line: "Você foi Chamado?" },
   { id: "b-preparo-intro", kind: "caption", srcAt: 163, holdBefore: 0.15, dur: 3.0, line: "Cuidar de Vida Exige Preparo" },
   { id: "b-essencia", kind: "caption", srcAt: 258, holdBefore: 0.15, dur: 3.0, line: "A Essência do Chamado" },
   // -- original 5 approved beats --
