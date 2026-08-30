@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "npx --yes hyperframes@0.8.20 preview",
     "check": "npx --yes hyperframes@0.8.20 check",
-    "render": "npx --yes hyperframes@0.8.20 render",
+    "render": "FFMPEG_PROCESS_TIMEOUT_MS=3600000 npx --yes hyperframes@0.8.20 render --protocol-timeout 3600000",
     "publish": "npx --yes hyperframes@0.8.20 publish"
   }
 }
