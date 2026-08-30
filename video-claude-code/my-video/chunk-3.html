@@ -53,17 +53,46 @@
       .compare-line .hl { color: var(--accent); }
       .compare-result { font-size: 30px; color: #c9c2b3; margin: 0; }
       .compare-plus { font-size: 64px; font-weight: 800; color: var(--accent-2); }
+
+      /* Camcorder / recording-HUD highlight treatment (over the still-visible talking head) */
+      .camcorder-hud { pointer-events: none; font-family: "Courier New", Courier, monospace; color: #fff; }
+      .cam-corner { position: absolute; width: 34px; height: 34px; border-color: rgba(255,255,255,.85); border-style: solid; border-width: 0; }
+      .cam-corner.tl { top: 40px; left: 40px; border-top-width: 3px; border-left-width: 3px; }
+      .cam-corner.tr { top: 40px; right: 40px; border-top-width: 3px; border-right-width: 3px; }
+      .cam-corner.bl { bottom: 40px; left: 40px; border-bottom-width: 3px; border-left-width: 3px; }
+      .cam-corner.br { bottom: 40px; right: 40px; border-bottom-width: 3px; border-right-width: 3px; }
+      .cam-battery { position: absolute; top: 48px; left: 84px; }
+      .cam-battery-icon { display: inline-block; width: 34px; height: 16px; border: 2px solid #fff; border-radius: 3px; position: relative; }
+      .cam-battery-icon::before { content: ""; position: absolute; inset: 2px; right: 8px; background: #fff; }
+      .cam-battery-icon::after { content: ""; position: absolute; right: -6px; top: 4px; width: 4px; height: 8px; background: #fff; border-radius: 0 2px 2px 0; }
+      .cam-rec { position: absolute; top: 48px; right: 84px; font-size: 22px; font-weight: 700; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+      .cam-rec-dot { width: 14px; height: 14px; border-radius: 50%; background: #e5484d; display: inline-block; }
+      .cam-4k { position: absolute; bottom: 48px; left: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
+      .cam-hd { position: absolute; bottom: 48px; right: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
     </style>
   </head>
   <body>
     <div id="root" data-composition-id="chunk3" data-start="0" data-width="1920" data-height="1080" data-duration="299.302">
       <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="299.302" data-media-start="598.605" data-has-audio="true" data-track-index="0" playsinline></video>
 
-      <!-- no beats in this chunk -->
+      <div id="b-camcorder" class="clip camcorder-hud" data-start="283.429" data-duration="7" data-track-index="5">
+        <span class="cam-corner tl"></span>
+        <span class="cam-corner tr"></span>
+        <span class="cam-corner bl"></span>
+        <span class="cam-corner br"></span>
+        <div class="cam-battery"><span class="cam-battery-icon"></span></div>
+        <div class="cam-rec"><span class="cam-rec-dot" id="b-camcorder-dot"></span>REC</div>
+        <div class="cam-4k">4K 60FPS</div>
+        <div class="cam-hd">HD</div>
+      </div>
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
-
+  tl.fromTo("#base", { filter: "grayscale(0%)" }, { filter: "grayscale(100%)", duration: 0.5 }, 283.429);
+  tl.fromTo("#base", { filter: "grayscale(100%)" }, { filter: "grayscale(0%)", duration: 0.5 }, 289.929);
+  tl.fromTo("#b-camcorder", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 283.429);
+  tl.to("#b-camcorder", { autoAlpha: 0, duration: 0.3 }, 290.129);
+  tl.to("#b-camcorder-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 16, yoyo: true }, 283.729);
       window.__timelines["chunk3"] = tl;
     </script>
   </body>

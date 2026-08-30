@@ -101,15 +101,20 @@ fs.writeFileSync(
 
 console.log(`source: ${SOURCE_DURATION.toFixed(1)}s -> new timeline: ${NEW_DURATION.toFixed(1)}s (${segments.length} segments, ${merged.length} cuts removed, saved ${(SOURCE_DURATION - NEW_DURATION).toFixed(1)}s)`);
 
-// ---- 3. The 5 approved beats (source-time anchors) ------------------------
+// ---- 3. The 5 approved beats (source-time anchors), plus 1 highlight effect -
 // pessoas/vidas/cuidador = short keyword-caption overlays (talking head stays visible).
 // pilares/chamado_preparo = full-screen graphic cutaways (voice keeps playing under them).
+// camcorder = client-requested "recording HUD" filter (grayscale + REC/battery/
+// 4K/HD viewfinder overlay) on top of the still-visible talking head, placed on
+// his most personal/vulnerable line ("as maiores feridas da sua história podem
+// se tornar o lugar onde Deus fará brotar o maior ministério de cuidado").
 const BEATS = [
   { id: "b-pilares", kind: "cutaway", srcAt: 323, holdBefore: 0.3, dur: 7.2 },
   { id: "b-pessoas", kind: "caption", srcAt: 1049, holdBefore: 0.15, dur: 2.4, pre: "ele trabalha com", word: "PESSOAS" },
   { id: "b-vidas", kind: "caption", srcAt: 1079, holdBefore: 0.15, dur: 2.6, pre: "você atende", word: "VIDAS" },
   { id: "b-chamado-preparo", kind: "cutaway", srcAt: 1490, holdBefore: 0.3, dur: 7.6 },
   { id: "b-cuidador", kind: "caption", srcAt: 1942, holdBefore: 0.15, dur: 3.0, pre: "você é", word: "CUIDADOR DE VIDA" },
+  { id: "b-camcorder", kind: "camcorder", srcAt: 992, holdBefore: 0.2, dur: 7 },
 ].map((b) => ({ ...b, newAt: sourceToNewTime(b.srcAt) + b.holdBefore }));
 
 console.log("beat positions (source -> new timeline):");
@@ -198,11 +203,27 @@ function captionHtml(b) {
       </div>`;
 }
 
-const overlayClips = BEATS.map((b) => {
+function camcorderHtml(b) {
+  return `      <div id="${b.id}" class="clip camcorder-hud" data-start="${num(b.newAt)}" data-duration="${b.dur}" data-track-index="${TRACK_OVERLAY}">
+        <span class="cam-corner tl"></span>
+        <span class="cam-corner tr"></span>
+        <span class="cam-corner bl"></span>
+        <span class="cam-corner br"></span>
+        <div class="cam-battery"><span class="cam-battery-icon"></span></div>
+        <div class="cam-rec"><span class="cam-rec-dot" id="${b.id}-dot"></span>REC</div>
+        <div class="cam-4k">4K 60FPS</div>
+        <div class="cam-hd">HD</div>
+      </div>`;
+}
+
+function beatHtml(b) {
   if (b.id === "b-pilares") return pilaresHtml(b);
   if (b.id === "b-chamado-preparo") return chamadoPreparoHtml(b);
+  if (b.kind === "camcorder") return camcorderHtml(b);
   return captionHtml(b);
-}).join("\n\n");
+}
+
+const overlayClips = BEATS.map(beatHtml).join("\n\n");
 
 // ---- 6. GSAP animation lines ------------------------------------------------
 const animLines = [];
@@ -226,6 +247,12 @@ for (const b of BEATS) {
     animLines.push(`  tl.fromTo("#${b.id}-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, ${num(b.newAt + 0.7)});`);
     animLines.push(`  tl.fromTo("#${b.id}-bg-left", { scale: 1 }, { scale: 1.1, duration: ${num(b.dur - 0.2)}, ease: "none" }, ${num(b.newAt + 0.15)});`);
     animLines.push(`  tl.fromTo("#${b.id}-bg-right", { scale: 1 }, { scale: 1.1, duration: ${num(b.dur - 0.2)}, ease: "none" }, ${num(b.newAt + 0.15)});`);
+  } else if (b.kind === "camcorder") {
+    animLines.push(`  tl.fromTo("#base", { filter: "grayscale(0%)" }, { filter: "grayscale(100%)", duration: 0.5 }, ${num(b.newAt)});`);
+    animLines.push(`  tl.fromTo("#base", { filter: "grayscale(100%)" }, { filter: "grayscale(0%)", duration: 0.5 }, ${num(b.newAt + b.dur - 0.5)});`);
+    animLines.push(`  tl.fromTo("#${b.id}", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, ${num(b.newAt)});`);
+    animLines.push(`  tl.to("#${b.id}", { autoAlpha: 0, duration: 0.3 }, ${num(b.newAt + b.dur - 0.3)});`);
+    animLines.push(`  tl.to("#${b.id}-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 16, yoyo: true }, ${num(b.newAt + 0.3)});`);
   } else {
     animLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, ${num(b.newAt + 0.1)});`);
     animLines.push(`  tl.fromTo("#${b.id} .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, ${num(b.newAt)});`);
@@ -288,6 +315,22 @@ const html = `<!doctype html>
       .compare-line .hl { color: var(--accent); }
       .compare-result { font-size: 30px; color: #c9c2b3; margin: 0; }
       .compare-plus { font-size: 64px; font-weight: 800; color: var(--accent-2); }
+
+      /* Camcorder / recording-HUD highlight treatment (over the still-visible talking head) */
+      .camcorder-hud { pointer-events: none; font-family: "Courier New", Courier, monospace; color: #fff; }
+      .cam-corner { position: absolute; width: 34px; height: 34px; border-color: rgba(255,255,255,.85); border-style: solid; border-width: 0; }
+      .cam-corner.tl { top: 40px; left: 40px; border-top-width: 3px; border-left-width: 3px; }
+      .cam-corner.tr { top: 40px; right: 40px; border-top-width: 3px; border-right-width: 3px; }
+      .cam-corner.bl { bottom: 40px; left: 40px; border-bottom-width: 3px; border-left-width: 3px; }
+      .cam-corner.br { bottom: 40px; right: 40px; border-bottom-width: 3px; border-right-width: 3px; }
+      .cam-battery { position: absolute; top: 48px; left: 84px; }
+      .cam-battery-icon { display: inline-block; width: 34px; height: 16px; border: 2px solid #fff; border-radius: 3px; position: relative; }
+      .cam-battery-icon::before { content: ""; position: absolute; inset: 2px; right: 8px; background: #fff; }
+      .cam-battery-icon::after { content: ""; position: absolute; right: -6px; top: 4px; width: 4px; height: 8px; background: #fff; border-radius: 0 2px 2px 0; }
+      .cam-rec { position: absolute; top: 48px; right: 84px; font-size: 22px; font-weight: 700; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+      .cam-rec-dot { width: 14px; height: 14px; border-radius: 50%; background: #e5484d; display: inline-block; }
+      .cam-4k { position: absolute; bottom: 48px; left: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
+      .cam-hd { position: absolute; bottom: 48px; right: 84px; font-size: 20px; font-weight: 600; letter-spacing: 1px; }
     </style>
   </head>
   <body>
@@ -343,13 +386,7 @@ function chunkHtml(chunk) {
     newAt: num(b.newAt - chunk.start),
   }));
 
-  const chunkOverlays = localBeats
-    .map((b) => {
-      if (b.id === "b-pilares") return pilaresHtml(b);
-      if (b.id === "b-chamado-preparo") return chamadoPreparoHtml(b);
-      return captionHtml(b);
-    })
-    .join("\n\n");
+  const chunkOverlays = localBeats.map(beatHtml).join("\n\n");
 
   const chunkAnimLines = [];
   for (const b of localBeats) {
@@ -372,6 +409,12 @@ function chunkHtml(chunk) {
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, ${num(b.newAt + 0.7)});`);
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-bg-left", { scale: 1 }, { scale: 1.1, duration: ${num(b.dur - 0.2)}, ease: "none" }, ${num(b.newAt + 0.15)});`);
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-bg-right", { scale: 1 }, { scale: 1.1, duration: ${num(b.dur - 0.2)}, ease: "none" }, ${num(b.newAt + 0.15)});`);
+    } else if (b.kind === "camcorder") {
+      chunkAnimLines.push(`  tl.fromTo("#base", { filter: "grayscale(0%)" }, { filter: "grayscale(100%)", duration: 0.5 }, ${num(b.newAt)});`);
+      chunkAnimLines.push(`  tl.fromTo("#base", { filter: "grayscale(100%)" }, { filter: "grayscale(0%)", duration: 0.5 }, ${num(b.newAt + b.dur - 0.5)});`);
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, ${num(b.newAt)});`);
+      chunkAnimLines.push(`  tl.to("#${b.id}", { autoAlpha: 0, duration: 0.3 }, ${num(b.newAt + b.dur - 0.3)});`);
+      chunkAnimLines.push(`  tl.to("#${b.id}-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 16, yoyo: true }, ${num(b.newAt + 0.3)});`);
     } else {
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, ${num(b.newAt + 0.1)});`);
       chunkAnimLines.push(`  tl.fromTo("#${b.id} .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, ${num(b.newAt)});`);
