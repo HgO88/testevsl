@@ -133,17 +133,24 @@ function num(n) {
 const mediaClips = `      <video id="base" class="clip talking-head" src="${BASE_VIDEO}" data-start="0" data-duration="${num(NEW_DURATION)}" data-has-audio="true" data-track-index="${TRACK_VIDEO}" playsinline></video>`;
 
 // ---- 5. Emit the 5 beat overlay clips --------------------------------------
+// Real client-supplied photos (media/broll/, see BRIEF.md "Assets") slotted
+// into the two full-screen cutaways — the only beats where the talking head
+// steps aside for graphics. Keyword-caption beats keep the face on screen by
+// design, so no background photo goes there.
 const PILLARS = [
-  { n: "01", label: "CHAMADO" },
-  { n: "02", label: "TRANSFORMAÇÃO" },
-  { n: "03", label: "DEPENDÊNCIA" },
-  { n: "04", label: "PREPARO" },
-  { n: "05", label: "SERVIÇO" },
+  { n: "01", label: "CHAMADO", img: "media/broll/maos-oracao-cruz.jpg" },
+  { n: "02", label: "TRANSFORMAÇÃO", img: "media/broll/pessoa-ajoelhada-deus-respira.jpg" },
+  { n: "03", label: "DEPENDÊNCIA", img: "media/broll/cruz-luz.jpg" },
+  { n: "04", label: "PREPARO", img: "media/broll/josue-licoes.jpg" },
+  { n: "05", label: "SERVIÇO", img: "media/broll/gloria-de-deus.jpg" },
 ];
+const COMPARE_IMG_LEFT = "media/broll/sinais-espirito-santo.jpg"; // CHAMADO side
+const COMPARE_IMG_RIGHT = "media/broll/espiritualidade-crista.jpg"; // PREPARO side
 
 function pilaresHtml(b) {
   const items = PILLARS.map(
     (p, i) => `          <div class="pillar" id="${b.id}-p${i}">
+            <div class="pillar-thumb"><img id="${b.id}-thumb${i}" src="${p.img}" alt="" /></div>
             <span class="pillar-n">${p.n}</span>
             <span class="pillar-label">${p.label}</span>
           </div>`,
@@ -162,13 +169,19 @@ function chamadoPreparoHtml(b) {
   return `      <section id="${b.id}" class="clip cutaway" data-start="${num(b.newAt)}" data-duration="${b.dur}" data-track-index="${TRACK_OVERLAY}">
         <div class="cutaway-inner compare">
           <div class="compare-side" id="${b.id}-left">
-            <p class="compare-line"><span class="hl">CHAMADO</span> sem <span class="hl">PREPARO</span></p>
-            <p class="compare-result">gera insegurança</p>
+            <div class="compare-bg-wrap"><img class="compare-bg" id="${b.id}-bg-left" src="${COMPARE_IMG_LEFT}" alt="" /></div>
+            <div class="compare-text">
+              <p class="compare-line"><span class="hl">CHAMADO</span> sem <span class="hl">PREPARO</span></p>
+              <p class="compare-result">gera insegurança</p>
+            </div>
           </div>
           <div class="compare-plus" id="${b.id}-plus">+</div>
           <div class="compare-side" id="${b.id}-right">
-            <p class="compare-line"><span class="hl">PREPARO</span> sem <span class="hl">CHAMADO</span></p>
-            <p class="compare-result">gera só bom profissional</p>
+            <div class="compare-bg-wrap"><img class="compare-bg" id="${b.id}-bg-right" src="${COMPARE_IMG_RIGHT}" alt="" /></div>
+            <div class="compare-text">
+              <p class="compare-line"><span class="hl">PREPARO</span> sem <span class="hl">CHAMADO</span></p>
+              <p class="compare-result">gera só bom profissional</p>
+            </div>
           </div>
         </div>
       </section>`;
@@ -194,11 +207,14 @@ for (const b of BEATS) {
     PILLARS.forEach((_, i) => {
       const at = num(b.newAt + 0.35 + i * 0.85);
       animLines.push(`  tl.fromTo("#${b.id}-p${i}", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, ${at});`);
+      animLines.push(`  tl.fromTo("#${b.id}-thumb${i}", { scale: 1.22 }, { scale: 1, duration: ${num(b.dur - (0.35 + i * 0.85) - 0.1)}, ease: "power1.out" }, ${at});`);
     });
   } else if (b.id === "b-chamado-preparo") {
     animLines.push(`  tl.fromTo("#${b.id}-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, ${num(b.newAt + 0.15)});`);
     animLines.push(`  tl.fromTo("#${b.id}-right", { autoAlpha: 0, xPercent: 14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, ${num(b.newAt + 0.15)});`);
     animLines.push(`  tl.fromTo("#${b.id}-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, ${num(b.newAt + 0.7)});`);
+    animLines.push(`  tl.fromTo("#${b.id}-bg-left", { scale: 1 }, { scale: 1.1, duration: ${num(b.dur - 0.2)}, ease: "none" }, ${num(b.newAt + 0.15)});`);
+    animLines.push(`  tl.fromTo("#${b.id}-bg-right", { scale: 1 }, { scale: 1.1, duration: ${num(b.dur - 0.2)}, ease: "none" }, ${num(b.newAt + 0.15)});`);
   } else {
     animLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, ${num(b.newAt + 0.1)});`);
     animLines.push(`  tl.fromTo("#${b.id} .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, ${num(b.newAt)});`);
@@ -245,11 +261,17 @@ const html = `<!doctype html>
       .cutaway-title { text-align: center; font-size: 40px; letter-spacing: 4px; color: var(--accent-2); margin: 0 0 56px; font-weight: 700; }
       .pillars { display: flex; flex-direction: column; gap: 22px; }
       .pillar { display: flex; align-items: center; gap: 28px; background: rgba(255,255,255,0.04); border-left: 6px solid var(--accent); border-radius: 8px; padding: 20px 36px; }
+      .pillar-thumb { width: 96px; height: 96px; border-radius: 10px; overflow: hidden; flex-shrink: 0; box-shadow: 0 4px 14px rgba(0,0,0,.5); }
+      .pillar-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
       .pillar-n { font-size: 44px; font-weight: 800; color: var(--accent); width: 90px; }
       .pillar-label { font-size: 44px; font-weight: 700; color: var(--ink); letter-spacing: 1px; }
 
       .compare { display: flex; align-items: center; justify-content: center; gap: 70px; width: 1700px; }
-      .compare-side { flex: 1; background: rgba(255,255,255,0.04); border-radius: 12px; padding: 56px 44px; text-align: center; }
+      .compare-side { flex: 1; position: relative; border-radius: 12px; padding: 56px 44px; text-align: center; overflow: hidden; isolation: isolate; }
+      .compare-bg-wrap { position: absolute; inset: 0; z-index: 0; }
+      .compare-bg { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .compare-bg-wrap::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,14,20,.55) 0%, rgba(11,14,20,.85) 100%); }
+      .compare-text { position: relative; z-index: 1; }
       .compare-line { font-size: 40px; font-weight: 700; margin: 0 0 18px; color: var(--ink); }
       .compare-line .hl { color: var(--accent); }
       .compare-result { font-size: 30px; color: #c9c2b3; margin: 0; }
@@ -323,11 +345,14 @@ function chunkHtml(chunk) {
       PILLARS.forEach((_, i) => {
         const at = num(b.newAt + 0.35 + i * 0.85);
         chunkAnimLines.push(`  tl.fromTo("#${b.id}-p${i}", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, ${at});`);
+        chunkAnimLines.push(`  tl.fromTo("#${b.id}-thumb${i}", { scale: 1.22 }, { scale: 1, duration: ${num(b.dur - (0.35 + i * 0.85) - 0.1)}, ease: "power1.out" }, ${at});`);
       });
     } else if (b.id === "b-chamado-preparo") {
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, ${num(b.newAt + 0.15)});`);
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-right", { autoAlpha: 0, xPercent: 14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, ${num(b.newAt + 0.15)});`);
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, ${num(b.newAt + 0.7)});`);
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-bg-left", { scale: 1 }, { scale: 1.1, duration: ${num(b.dur - 0.2)}, ease: "none" }, ${num(b.newAt + 0.15)});`);
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-bg-right", { scale: 1 }, { scale: 1.1, duration: ${num(b.dur - 0.2)}, ease: "none" }, ${num(b.newAt + 0.15)});`);
     } else {
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, ${num(b.newAt + 0.1)});`);
       chunkAnimLines.push(`  tl.fromTo("#${b.id} .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, ${num(b.newAt)});`);

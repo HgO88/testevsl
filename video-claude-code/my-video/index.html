@@ -37,11 +37,17 @@
       .cutaway-title { text-align: center; font-size: 40px; letter-spacing: 4px; color: var(--accent-2); margin: 0 0 56px; font-weight: 700; }
       .pillars { display: flex; flex-direction: column; gap: 22px; }
       .pillar { display: flex; align-items: center; gap: 28px; background: rgba(255,255,255,0.04); border-left: 6px solid var(--accent); border-radius: 8px; padding: 20px 36px; }
+      .pillar-thumb { width: 96px; height: 96px; border-radius: 10px; overflow: hidden; flex-shrink: 0; box-shadow: 0 4px 14px rgba(0,0,0,.5); }
+      .pillar-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
       .pillar-n { font-size: 44px; font-weight: 800; color: var(--accent); width: 90px; }
       .pillar-label { font-size: 44px; font-weight: 700; color: var(--ink); letter-spacing: 1px; }
 
       .compare { display: flex; align-items: center; justify-content: center; gap: 70px; width: 1700px; }
-      .compare-side { flex: 1; background: rgba(255,255,255,0.04); border-radius: 12px; padding: 56px 44px; text-align: center; }
+      .compare-side { flex: 1; position: relative; border-radius: 12px; padding: 56px 44px; text-align: center; overflow: hidden; isolation: isolate; }
+      .compare-bg-wrap { position: absolute; inset: 0; z-index: 0; }
+      .compare-bg { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .compare-bg-wrap::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,14,20,.55) 0%, rgba(11,14,20,.85) 100%); }
+      .compare-text { position: relative; z-index: 1; }
       .compare-line { font-size: 40px; font-weight: 700; margin: 0 0 18px; color: var(--ink); }
       .compare-line .hl { color: var(--accent); }
       .compare-result { font-size: 30px; color: #c9c2b3; margin: 0; }
@@ -57,22 +63,27 @@
           <h2 class="cutaway-title">OS 5 PILARES DA FORMAÇÃO</h2>
           <div class="pillars" id="b-pilares-list">
           <div class="pillar" id="b-pilares-p0">
+            <div class="pillar-thumb"><img id="b-pilares-thumb0" src="media/broll/maos-oracao-cruz.jpg" alt="" /></div>
             <span class="pillar-n">01</span>
             <span class="pillar-label">CHAMADO</span>
           </div>
           <div class="pillar" id="b-pilares-p1">
+            <div class="pillar-thumb"><img id="b-pilares-thumb1" src="media/broll/pessoa-ajoelhada-deus-respira.jpg" alt="" /></div>
             <span class="pillar-n">02</span>
             <span class="pillar-label">TRANSFORMAÇÃO</span>
           </div>
           <div class="pillar" id="b-pilares-p2">
+            <div class="pillar-thumb"><img id="b-pilares-thumb2" src="media/broll/cruz-luz.jpg" alt="" /></div>
             <span class="pillar-n">03</span>
             <span class="pillar-label">DEPENDÊNCIA</span>
           </div>
           <div class="pillar" id="b-pilares-p3">
+            <div class="pillar-thumb"><img id="b-pilares-thumb3" src="media/broll/josue-licoes.jpg" alt="" /></div>
             <span class="pillar-n">04</span>
             <span class="pillar-label">PREPARO</span>
           </div>
           <div class="pillar" id="b-pilares-p4">
+            <div class="pillar-thumb"><img id="b-pilares-thumb4" src="media/broll/gloria-de-deus.jpg" alt="" /></div>
             <span class="pillar-n">05</span>
             <span class="pillar-label">SERVIÇO</span>
           </div>
@@ -93,13 +104,19 @@
       <section id="b-chamado-preparo" class="clip cutaway" data-start="1328.166" data-duration="7.6" data-track-index="5">
         <div class="cutaway-inner compare">
           <div class="compare-side" id="b-chamado-preparo-left">
-            <p class="compare-line"><span class="hl">CHAMADO</span> sem <span class="hl">PREPARO</span></p>
-            <p class="compare-result">gera insegurança</p>
+            <div class="compare-bg-wrap"><img class="compare-bg" id="b-chamado-preparo-bg-left" src="media/broll/sinais-espirito-santo.jpg" alt="" /></div>
+            <div class="compare-text">
+              <p class="compare-line"><span class="hl">CHAMADO</span> sem <span class="hl">PREPARO</span></p>
+              <p class="compare-result">gera insegurança</p>
+            </div>
           </div>
           <div class="compare-plus" id="b-chamado-preparo-plus">+</div>
           <div class="compare-side" id="b-chamado-preparo-right">
-            <p class="compare-line"><span class="hl">PREPARO</span> sem <span class="hl">CHAMADO</span></p>
-            <p class="compare-result">gera só bom profissional</p>
+            <div class="compare-bg-wrap"><img class="compare-bg" id="b-chamado-preparo-bg-right" src="media/broll/espiritualidade-crista.jpg" alt="" /></div>
+            <div class="compare-text">
+              <p class="compare-line"><span class="hl">PREPARO</span> sem <span class="hl">CHAMADO</span></p>
+              <p class="compare-result">gera só bom profissional</p>
+            </div>
           </div>
         </div>
       </section>
@@ -112,10 +129,15 @@
     <script>
       const tl = gsap.timeline({ paused: true });
   tl.fromTo("#b-pilares-p0", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 295.084);
+  tl.fromTo("#b-pilares-thumb0", { scale: 1.22 }, { scale: 1, duration: 6.75, ease: "power1.out" }, 295.084);
   tl.fromTo("#b-pilares-p1", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 295.934);
+  tl.fromTo("#b-pilares-thumb1", { scale: 1.22 }, { scale: 1, duration: 5.9, ease: "power1.out" }, 295.934);
   tl.fromTo("#b-pilares-p2", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 296.784);
+  tl.fromTo("#b-pilares-thumb2", { scale: 1.22 }, { scale: 1, duration: 5.05, ease: "power1.out" }, 296.784);
   tl.fromTo("#b-pilares-p3", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 297.634);
+  tl.fromTo("#b-pilares-thumb3", { scale: 1.22 }, { scale: 1, duration: 4.2, ease: "power1.out" }, 297.634);
   tl.fromTo("#b-pilares-p4", { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "back.out(1.5)" }, 298.484);
+  tl.fromTo("#b-pilares-thumb4", { scale: 1.22 }, { scale: 1, duration: 3.35, ease: "power1.out" }, 298.484);
   tl.fromTo("#b-pessoas-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 932.876);
   tl.fromTo("#b-pessoas .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 932.776);
   tl.fromTo("#b-vidas-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 960.486);
@@ -123,6 +145,8 @@
   tl.fromTo("#b-chamado-preparo-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, 1328.316);
   tl.fromTo("#b-chamado-preparo-right", { autoAlpha: 0, xPercent: 14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, 1328.316);
   tl.fromTo("#b-chamado-preparo-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, 1328.866);
+  tl.fromTo("#b-chamado-preparo-bg-left", { scale: 1 }, { scale: 1.1, duration: 7.4, ease: "none" }, 1328.316);
+  tl.fromTo("#b-chamado-preparo-bg-right", { scale: 1 }, { scale: 1.1, duration: 7.4, ease: "none" }, 1328.316);
   tl.fromTo("#b-cuidador-word", { autoAlpha: 0, scale: 0.85 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 1733.366);
   tl.fromTo("#b-cuidador .caption-pre", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" }, 1733.266);
       window.__timelines["main"] = tl;
