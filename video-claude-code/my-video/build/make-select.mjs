@@ -20,10 +20,13 @@ import path from "node:path";
 const cutlist = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, "cutlist.json"), "utf8"));
 const segs = cutlist.segments;
 
-// between() is inclusive on both ends, so adjacent segments sharing a boundary
-// would double-count a frame. Nudge each start forward by half a frame.
-const HALF_FRAME = 1 / 60;
-const ranges = segs.map((s) => `between(t,${(s.sourceStart + HALF_FRAME).toFixed(4)},${s.sourceEnd.toFixed(4)})`).join("+");
+// No nudging of the range ends. A half-frame guard against between()'s
+// inclusive bounds looks harmless but shifts every segment start forward, and
+// 326 of those cost 5.4s of content AND put each segment progressively later
+// than the map says — the exact drift this file exists to remove. It is also
+// unnecessary: kept segments never touch, since what separates them is the
+// removed pause.
+const ranges = segs.map((s) => `between(t,${s.sourceStart.toFixed(4)},${s.sourceEnd.toFixed(4)})`).join("+");
 
 const filter = [
   `[0:v]select='${ranges}',setpts=N/FRAME_RATE/TB[v]`,
