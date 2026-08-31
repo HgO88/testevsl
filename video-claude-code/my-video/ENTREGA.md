@@ -48,6 +48,28 @@ referência precisa caber DENTRO de um segmento contínuo do cutlist — um trec
 que atravessa corte tem envelope diferente e a correlação trava num pico falso
 (foi assim que uma medição acusou +4.5s onde o real era +32ms).
 
+## Entrada das cartelas — mapa certo, envelope errado
+
+Depois do `select`/`aselect` o mapa estava certo (cartela dentro de 72ms do
+cutlist) e o cliente ainda sentia atraso. Não era o mapa, era o **envelope**:
+
+- `data-start` da cartela = o instante da fala, e só ali começava o fade-in;
+- `holdBefore` de 0.15–0.3s empurrava tudo mais para a frente;
+- o texto interno tinha um fade próprio de 0.6s começando 0.2s depois.
+
+Somando: a frase começava a ser dita e a cartela só ficava legível 0.7–1.15s
+depois. No papel, em cima; na tela, atrasada.
+
+Corrigido em `build/generate.mjs` com `CARD_LEAD = 0.35`: o `holdBefore` saiu
+da conta (o `srcAt` já É o instante da fala) e toda cartela começa o fade
+0.35s ANTES, terminando exatamente em cima da frase. `dur` cresce o mesmo
+tanto, então a saída fica onde estava — só a entrada andou para trás. A
+transição continua suave, com os mesmos 0.35s; o que mudou foi onde ela cai.
+
+Conferência rápida, sem renderizar: para a cartela X em `chunk-N.html`, o
+`fromTo(... autoAlpha: 1 ...)` mais o `duration` têm que dar o
+`sourceToNewTime(srcAt)` impresso por `node build/generate.mjs`.
+
 ## Como reproduzir
 
 ```bash

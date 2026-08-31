@@ -108,6 +108,11 @@ console.log(`source: ${SOURCE_DURATION.toFixed(1)}s -> new timeline: ${NEW_DURAT
 // 4K/HD viewfinder overlay) on top of the still-visible talking head, placed on
 // his most personal/vulnerable line ("as maiores feridas da sua história podem
 // se tornar o lugar onde Deus fará brotar o maior ministério de cuidado").
+// How far ahead of the spoken line a card starts its fade, so it lands fully
+// visible ON the line instead of arriving after it. See the .map() at the end
+// of BEATS for why this exists.
+const CARD_LEAD = 0.35;
+
 const BEATS = [
   // -- opening/hook reinforcement (client feedback: chunk-1 is the "chamada",
   // it needs more energy — more keyword captions + a 2nd camcorder moment) --
@@ -222,7 +227,31 @@ const BEATS = [
     id: `b-broll-x${i}`, kind: "broll", srcAt, holdBefore: 0.15, dur: 2.8,
     img: `media/broll/${img}.jpg`,
   })),
-].map((b) => ({ ...b, newAt: sourceToNewTime(b.srcAt) + b.holdBefore }));
+// Client: "senti uns atrasos ainda em relação a entrada dos quadros com as
+// frases ou até mesmo na img."
+//
+// The MAP was already right — card positions measured within 72ms of the
+// cutlist after the select/aselect fix. What was late was the ENVELOPE. A
+// card's data-start WAS the spoken word, and only then did it start fading
+// in (0.35s) with its text fading in on top (0.6s, itself starting 0.2s
+// later), on top of a deliberate holdBefore of 0.15-0.3s. So the card only
+// read as "there" 0.7-1.15s after the phrase began. Perfectly on the map,
+// visibly late on screen.
+//
+// Fix, two parts:
+//   1. drop holdBefore from the formula (kept in the data as the record of
+//      what it used to be) — srcAt already IS the moment he says the line;
+//   2. give every card a LEAD so the fade STARTS before the word and lands
+//      ON it, instead of starting on it.
+// The transition itself is untouched — still a 0.35s cross-fade, client
+// asked for "transições suaves". Only where the smooth part sits relative
+// to the speech changed. dur is extended by the same lead so the card's
+// exit stays exactly where it was; only the entrance moves earlier.
+].map((b) => ({
+  ...b,
+  dur: b.dur + CARD_LEAD,
+  newAt: Math.max(0, sourceToNewTime(b.srcAt) - CARD_LEAD),
+}));
 
 console.log("beat positions (source -> new timeline):");
 for (const b of BEATS) console.log(`  ${b.id}: src ${b.srcAt}s -> new ${b.newAt.toFixed(2)}s (+${b.dur}s)`);
@@ -426,9 +455,9 @@ for (const b of BEATS) {
       }
     });
   } else if (b.id === "b-chamado-preparo") {
-    animLines.push(`  tl.fromTo("#${b.id}-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, ${num(b.newAt + 0.15)});`);
-    animLines.push(`  tl.fromTo("#${b.id}-right", { autoAlpha: 0, xPercent: 14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, ${num(b.newAt + 0.15)});`);
-    animLines.push(`  tl.fromTo("#${b.id}-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, ${num(b.newAt + 0.7)});`);
+    animLines.push(`  tl.fromTo("#${b.id}-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.45, ease: "power3.out" }, ${num(b.newAt)});`);
+    animLines.push(`  tl.fromTo("#${b.id}-right", { autoAlpha: 0, xPercent: 14 }, { autoAlpha: 1, xPercent: 0, duration: 0.45, ease: "power3.out" }, ${num(b.newAt)});`);
+    animLines.push(`  tl.fromTo("#${b.id}-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, ${num(b.newAt + 0.5)});`);
     animLines.push(`  tl.fromTo("#${b.id}-bg-left", { scale: 1 }, { scale: 1.1, duration: ${num(b.dur - 0.2)}, ease: "none" }, ${num(b.newAt + 0.15)});`);
     animLines.push(`  tl.fromTo("#${b.id}-bg-right", { scale: 1 }, { scale: 1.1, duration: ${num(b.dur - 0.2)}, ease: "none" }, ${num(b.newAt + 0.15)});`);
   } else if (b.kind === "camcorder") {
@@ -448,7 +477,7 @@ for (const b of BEATS) {
     animLines.push(...fadeCard(b.id, b.newAt, b.dur));
   } else {
     // Reference style: a quiet fade + a hair of scale, never a bouncy pop.
-    animLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, ${num(b.newAt + 0.2)});`);
+    animLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 1.03 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "power2.out" }, ${num(b.newAt)});`);
     animLines.push(`  tl.to("#${b.id}-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, ${num(b.newAt + b.dur - 0.55)});`);
     animLines.push(...fadeCard(b.id, b.newAt, b.dur));
   }
@@ -630,9 +659,9 @@ function chunkHtml(chunk) {
         }
       });
     } else if (b.id === "b-chamado-preparo") {
-      chunkAnimLines.push(`  tl.fromTo("#${b.id}-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, ${num(b.newAt + 0.15)});`);
-      chunkAnimLines.push(`  tl.fromTo("#${b.id}-right", { autoAlpha: 0, xPercent: 14 }, { autoAlpha: 1, xPercent: 0, duration: 0.6, ease: "power3.out" }, ${num(b.newAt + 0.15)});`);
-      chunkAnimLines.push(`  tl.fromTo("#${b.id}-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, ${num(b.newAt + 0.7)});`);
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.45, ease: "power3.out" }, ${num(b.newAt)});`);
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-right", { autoAlpha: 0, xPercent: 14 }, { autoAlpha: 1, xPercent: 0, duration: 0.45, ease: "power3.out" }, ${num(b.newAt)});`);
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, ${num(b.newAt + 0.5)});`);
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-bg-left", { scale: 1 }, { scale: 1.1, duration: ${num(b.dur - 0.2)}, ease: "none" }, ${num(b.newAt + 0.15)});`);
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-bg-right", { scale: 1 }, { scale: 1.1, duration: ${num(b.dur - 0.2)}, ease: "none" }, ${num(b.newAt + 0.15)});`);
     } else if (b.kind === "camcorder") {
@@ -651,7 +680,7 @@ function chunkHtml(chunk) {
       chunkAnimLines.push(`  tl.fromTo("#${b.id}-bg", { scale: 1 }, { scale: 1.1, duration: ${b.dur}, ease: "none" }, ${num(b.newAt)});`);
       chunkAnimLines.push(...fadeCard(b.id, b.newAt, b.dur));
     } else {
-      chunkAnimLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 0.6, ease: "power2.out" }, ${num(b.newAt + 0.2)});`);
+      chunkAnimLines.push(`  tl.fromTo("#${b.id}-word", { autoAlpha: 0, scale: 1.03 }, { autoAlpha: 1, scale: 1, duration: 0.35, ease: "power2.out" }, ${num(b.newAt)});`);
       chunkAnimLines.push(`  tl.to("#${b.id}-word", { autoAlpha: 0, duration: 0.4, ease: "power1.in" }, ${num(b.newAt + b.dur - 0.55)});`);
       chunkAnimLines.push(...fadeCard(b.id, b.newAt, b.dur));
     }
