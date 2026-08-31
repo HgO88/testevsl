@@ -7,7 +7,7 @@
 | Arquivo | Tamanho | Para quê |
 |---|---|---|
 | `VSL-final-1080p.mp4` | ~1,76 GB | Master. Qualidade quase sem perdas, guarde para reedições. |
-| `web/VSL-FullHD-web.mp4` | ~450 MB | **É esta que se publica.** Full HD, bitrate de web, `faststart`. |
+| `web/VSL-FullHD-web.mp4` | 675 MB | **É esta que se publica.** Full HD, bitrate de web, `faststart`. |
 | `chunk-1..6.mp4` | ~300 MB cada | Os 6 blocos do master, já juntados nos arquivos acima. |
 | `720p/` | 453 MB | Corte anterior em 720p, mantido como histórico. |
 
