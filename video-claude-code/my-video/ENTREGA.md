@@ -24,6 +24,30 @@ vez estourava memória e disco); o vídeo entregue é contínuo.
 - **2 cortes gráficos**: os 5 pilares e a comparação chamado × preparo.
 - Zoom lento que aproxima, segura durante a frase e volta.
 
+## Sincronia — o que deu errado e como verificar
+
+A primeira entrega saiu com os lábios ~2.8s fora e as cartelas até 1.8s
+adiantadas. Causa: o `concat` do ffmpeg com `inpoint`/`outpoint` cortava o
+vídeo numa borda de frame e o áudio numa borda de pacote AAC (~21ms). Um corte
+é imperceptível; 326 acumulam. E os timestamps irregulares que isso gerava
+faziam o HyperFrames extrair os frames fora de lugar em relação ao áudio.
+
+Corrigido em `build/make-select.mjs`: filtros `select`/`aselect` tiram os dois
+streams da MESMA linha de tempo decodificada, então um frame e suas amostras
+são mantidos ou descartados juntos.
+
+**Sempre meça antes de entregar.** Duas medições diferentes, não confunda:
+
+- **Lábios** — áudio do chunk renderizado vs áudio de `edited-base.mp4` no
+  mesmo instante. Tem que dar ~0ms. É o que quebrava.
+- **Cartela vs fala** — áudio da fonte vs áudio do chunk na posição que o
+  cutlist prevê. Até ~150ms passa despercebido.
+
+Método: correlação de envelope de energia (janelas de 2ms). O trecho de
+referência precisa caber DENTRO de um segmento contínuo do cutlist — um trecho
+que atravessa corte tem envelope diferente e a correlação trava num pico falso
+(foi assim que uma medição acusou +4.5s onde o real era +32ms).
+
 ## Como reproduzir
 
 ```bash
@@ -39,4 +63,4 @@ FFMPEG_PROCESS_TIMEOUT_MS=3600000 HYPERFRAMES_EXTRACT_CACHE_DIR=off \
 dois em paralelo estouram a memória do container.
 
 Se os cortes mudarem (`KEEP_PAUSE` em `build/generate.mjs`), refaça a base antes:
-`node build/make-filter.mjs && bash build/encode-base.sh`.
+`node build/make-select.mjs && bash build/encode-base.sh`.
