@@ -217,10 +217,16 @@ const BEATS = [
   // on screen roughly once a minute across the whole 29 minutes.
   ...[
     [78, "tua-graca-me-basta"], [140, "pessoa-ajoelhada-deus-respira"],
-    [230, "cruz-luz"], [350, "sinais-espirito-santo"],
+    [225, "cruz-luz"], [350, "sinais-espirito-santo"],
     [410, "espiritualidade-crista"], [575, "josue-licoes"],
     [710, "papel-parede-jesus"], [840, "dom-profetico"],
     [950, "transferir-1"], [1025, "gloria-de-deus"],
+    // 230 would have run until 209.8 on the new timeline, right over b-txt-0
+    // ("O Que Move o Seu Coração?", 208.6): the caption faded in on schedule
+    // but sat HIDDEN behind this photo, and only appeared when the photo
+    // fade-out uncovered it — 0.86s late. Measured on the render, not guessed.
+    // Backed off to 225 so the photo is gone well before the card. The
+    // no-overlap assert after BEATS is what stops this recurring.
     [1155, "desse-jeito"], [1350, "transferir-2"],
     [1640, "cruz-luz"], [1870, "transferir-3"],
   ].map(([srcAt, img], i) => ({
@@ -255,6 +261,31 @@ const BEATS = [
 
 console.log("beat positions (source -> new timeline):");
 for (const b of BEATS) console.log(`  ${b.id}: src ${b.srcAt}s -> new ${b.newAt.toFixed(2)}s (+${b.dur}s)`);
+
+// Two full-frame cards on the same seconds do not blend — the later one in the
+// DOM simply covers the earlier one, and the covered card looks LATE: it fades
+// in invisibly and only shows up when the card on top fades out. That is what
+// the b-broll-x2/b-txt-0 pair did (0.86s of a caption hidden behind a photo).
+// The beats were placed in seven separate reinforcement passes against source
+// timestamps, so a new collision is one careless srcAt away. Fail the build
+// instead of shipping it.
+{
+  const sorted = [...BEATS].sort((a, b) => a.newAt - b.newAt);
+  const clashes = [];
+  for (let i = 0; i < sorted.length; i++) {
+    for (let j = i + 1; j < sorted.length; j++) {
+      if (sorted[j].newAt >= sorted[i].newAt + sorted[i].dur) break;
+      const ov = Math.min(sorted[i].newAt + sorted[i].dur, sorted[j].newAt + sorted[j].dur) - sorted[j].newAt;
+      if (ov > 0.02) clashes.push(`${sorted[i].id} e ${sorted[j].id} se sobrepõem por ${ov.toFixed(2)}s em ${sorted[j].newAt.toFixed(2)}s`);
+    }
+  }
+  if (clashes.length) {
+    console.error("\ncartelas sobrepostas (a de baixo fica escondida e parece atrasada):");
+    for (const c of clashes) console.error(`  ${c}`);
+    process.exit(1);
+  }
+  console.log(`sem sobreposições entre as ${BEATS.length} cartelas`);
+}
 
 // ---- 4. Emit the single base clip (cuts already baked by ffmpeg concat) ----
 // 327 hard cuts were baked into edited-base.mp4 via build/make-filter.mjs +
