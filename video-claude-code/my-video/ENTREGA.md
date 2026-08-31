@@ -9,7 +9,7 @@
 | `VSL-final-1080p.mp4` | ~1,76 GB | Master. Qualidade quase sem perdas, guarde para reedições. |
 | `web/VSL-FullHD-web.mp4` | 675 MB | **É esta que se publica.** Full HD, bitrate de web, `faststart`. |
 | `chunk-1..6.mp4` | ~300 MB cada | Os 6 blocos do master, já juntados nos arquivos acima. |
-| `720p/` | 453 MB | Corte anterior em 720p, mantido como histórico. |
+| `/tmp/vsl-fhd-v2/VSL-1..8-de-8.mp4` | ~27 MB cada | As 8 partes de entrega (o canal limita 30 MB por arquivo). |
 
 Os blocos são apenas uma divisão técnica de render (o render de 29min de uma
 vez estourava memória e disco); o vídeo entregue é contínuo.
@@ -69,6 +69,29 @@ transição continua suave, com os mesmos 0.35s; o que mudou foi onde ela cai.
 Conferência rápida, sem renderizar: para a cartela X em `chunk-N.html`, o
 `fromTo(... autoAlpha: 1 ...)` mais o `duration` têm que dar o
 `sourceToNewTime(srcAt)` impresso por `node build/generate.mjs`.
+
+## Cortar em partes: nunca com o muxer `segment`
+
+O limite de 30 MB por arquivo do canal obriga a entregar em 8 partes, que o
+cliente junta no CapCut. O jeito óbvio — `-f segment -segment_time N -c copy` —
+**introduz atraso**: cada parte sai com timestamp de início próprio. Medido:
+vídeo começando em 0.066s e áudio em 0.045s, ou seja 66ms de deslocamento e
+21ms de descasamento A/V *dentro* do arquivo. Junte 8 assim e reaparece como
+atraso, depois de todo o trabalho de sincronizar o master.
+
+`build`/entrega encoda cada parte separada a partir do master, cortando em
+quadro exato (6588 quadros nas 7 primeiras, 6582 na última — 7×6588+6582 =
+52698, o total do master) com `-avoid_negative_ts make_zero -muxdelay 0
+-muxpreload 0`. Confira sempre: `start_time` dos dois streams tem que ser
+`0.000000` em toda parte.
+
+Sobre o encode: ABR de um passe com teto, porque o tamanho tem que ser
+previsível quando o limite é por arquivo. 2 passes foi tentado e não vale — o
+passe 1 com `-f null` fecha com menos frames que o passe 2, o x264 descarta as
+estatísticas e cai em QP constante, e ainda por cima duas partes passaram de
+30 MB. O ganho de imagem vem do `preset slow` (a entrega anterior estava em
+`veryfast`), e aparece primeiro nas bordas do texto branco serifado sobre
+preto.
 
 ## Como reproduzir
 
