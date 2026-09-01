@@ -732,14 +732,16 @@ function chunkHtml(chunk) {
   // BEATS moveria as fronteiras e o bloco deixaria de casar com os outros
   // cinco na hora de juntar. Aqui só a emissão muda; a divisão fica igual.
   //
-  // Os versículos (cartela com `ref`) ficam: são um pedido à parte do cliente
-  // ("bastante texto nos versículos quando ele ler"), não legenda de apoio.
+  // Tira TODA cartela de texto, versículo incluído. Primeiro eu tinha poupado
+  // os versículos por serem um pedido à parte do cliente ("bastante texto nos
+  // versículos quando ele ler"); o cliente pediu para tirar esses também na
+  // comparação. Sobram fotos, cartão de citação, HUD de câmera e zoom.
   const SEM_FRASES = process.env.SEM_FRASES === "1";
   const localBeats = BEATS.filter(
     (b) =>
       b.newAt >= chunk.start - 0.01 &&
       b.newAt < chunk.end - 0.01 &&
-      !(SEM_FRASES && b.kind === "caption" && !b.ref),
+      !(SEM_FRASES && b.kind === "caption"),
   ).map((b) => ({
     ...b,
     newAt: num(b.newAt - chunk.start),
