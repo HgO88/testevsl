@@ -30,9 +30,39 @@ const SOURCE_DURATION = 2012.077782; // from ffprobe, § conversation record
 const KEEP_PAUSE = 0.10; // seconds of natural breathing room left in every trimmed gap (client: "cortes mais secos")
 const LEAD_TRIM = silences.length && silences[0].start < 0.3 ? silences[0].end - 0.1 : 0; // drop dead air before the first word
 
+// Trechos inteiros que saem do filme, em tempo da FONTE. Diferente das pausas
+// acima: aqui sai fala, não silêncio. Cada borda foi escolhida numa pausa real
+// medida com silencedetect a -32dB, para o corte cair entre frases e não no
+// meio de uma.
+//
+// O cliente já tinha cortado o bloco dos 5 pilares na mão, no CapCut — dava
+// para ver na correlação de áudio: 129,5s a menos, começando entre 315 e 320
+// do master. Aqui ele entra no cutlist, então tudo que vem depois (cartelas,
+// fotos, zooms, blocos de render) se reposiciona sozinho em vez de depender de
+// uma remontagem manual.
+const DROP_RANGES = [
+  // "E é exatamente sobre isso que nós vamos conversar nessa nossa primeira
+  // aula." — é uma VSL, não a aula 1 de um módulo.
+  [311.85, 317.58],
+  // A apresentação corrida dos 5 pilares ("Eu quero te apresentar os 5
+  // pilares..." até "...ajudando pessoas."), mais o "Bem, agora eu vou começar
+  // falando sobre o primeiro pilar. Nessa aula nós vamos falar desses 5
+  // pilares..." e a frase órfã "O primeiro pilar é CHAMADO, não esqueça
+  // disso." Ele enumera os cinco e logo em seguida desenvolve os mesmos cinco
+  // — o bloco é redundante. Conferido na transcrição inteira: depois de 506.87
+  // não sobra nenhuma menção a "pilar", então não fica referência pendurada.
+  // Retoma em "O terapeuta cristão não nasce de uma profissão."
+  [349.73, 506.87],
+  // "Comente como foi essa aula, e eu te espero na nossa próxima aula." — CTA
+  // de módulo de curso. O filme passa a fechar em "...para que assim ele use
+  // você como testemunho."
+  [2005.18, SOURCE_DURATION],
+];
+
 // Build the list of "cut out" ranges (the excess middle of each pause)
 const cutRanges = [];
 if (LEAD_TRIM > 0) cutRanges.push([0, Math.max(0, LEAD_TRIM)]);
+for (const [a, b] of DROP_RANGES) cutRanges.push([a, b]);
 for (const s of silences) {
   const dur = s.end - s.start;
   if (dur <= KEEP_PAUSE) continue; // too short to bother trimming
@@ -127,7 +157,7 @@ const BEATS = [
   { id: "b-preparar-melhor", kind: "caption", srcAt: 110, holdBefore: 0.15, dur: 3.0, line: "Preciso Me Preparar Melhor" },
   { id: "b-preparo-intro", kind: "caption", srcAt: 163, holdBefore: 0.15, dur: 3.0, line: "Cuidar de Vida Exige Preparo" },
   { id: "b-profissao-chamado", kind: "caption", srcAt: 196, holdBefore: 0.15, dur: 3.0, line: "Profissão ou Chamado?" },
-  { id: "b-nasce-chamado", kind: "caption", srcAt: 500, holdBefore: 0.15, dur: 3.2, line: "O Terapeuta Cristão Nasce de um Chamado" },
+  { id: "b-nasce-chamado", kind: "caption", srcAt: 511.5, holdBefore: 0.15, dur: 3.2, line: "O Terapeuta Cristão Nasce de um Chamado" },
   { id: "b-vocacao", kind: "caption", srcAt: 540, holdBefore: 0.15, dur: 3.0, line: "O Reino Começa pela Vocação" },
   { id: "b-compaixao", kind: "caption", srcAt: 1250, holdBefore: 0.15, dur: 3.0, line: "Não Foi a Técnica. Foi a Compaixão." },
   { id: "b-chama-prepara", kind: "caption", srcAt: 1310, holdBefore: 0.15, dur: 3.0, line: "Deus Chama e Depois Prepara" },
@@ -136,11 +166,13 @@ const BEATS = [
   { id: "b-nao-corra", kind: "caption", srcAt: 1780, holdBefore: 0.15, dur: 3.2, line: "Não Corra Atrás. Esteja Preparado." },
   { id: "b-essencia", kind: "caption", srcAt: 258, holdBefore: 0.15, dur: 3.0, line: "A Essência do Chamado" },
   // -- original 5 approved beats --
-  { id: "b-pilares", kind: "cutaway", srcAt: 323, holdBefore: 0.3, dur: 7.2 },
+  // b-pilares (o grafico de tela cheia listando os 5 pilares, srcAt 323) saiu
+  // junto com DROP_RANGES: ele existia para ilustrar a enumeracao que agora
+  // nao esta mais no filme. pilaresHtml() fica no arquivo caso o cliente peca
+  // o bloco de volta.
   // -- reinforcement pass 2 (client: same energy across the whole video, not
   // just the opening) — 2-3 more keyword captions per chunk that had little
   // or no caption of its own --
-  { id: "b-transformacao-2", kind: "caption", srcAt: 368, holdBefore: 0.15, dur: 2.8, line: "Transformação" },
   { id: "b-feridas", kind: "caption", srcAt: 600, holdBefore: 0.15, dur: 3.2, line: "Deus Chama Quem Já Foi Ferido" },
   { id: "b-restauracao", kind: "caption", srcAt: 765, holdBefore: 0.15, dur: 2.8, line: "Restauração" },
   { id: "b-transforma-2", kind: "caption", srcAt: 905, holdBefore: 0.15, dur: 3.2, line: "Deus Me Consola, Deus Me Transforma" },
@@ -167,7 +199,6 @@ const BEATS = [
   // -- 3 more b-roll-only breathers (client: "usar mais imgs de broll"),
   // using the last 3 clean (no baked-in text) client photos, no quote text —
   // just the photo breathing with its own Ken-Burns zoom --
-  { id: "b-broll-1", kind: "broll", srcAt: 455, holdBefore: 0.15, dur: 3, img: "media/broll/transferir-2.jpg" },
   { id: "b-broll-2", kind: "broll", srcAt: 1235, holdBefore: 0.15, dur: 3, img: "media/broll/transferir-3.jpg" },
   { id: "b-broll-3", kind: "broll", srcAt: 1745, holdBefore: 0.15, dur: 3, img: "media/broll/transferir-4.jpg" },
   // -- reinforcement pass 5 (client: "bastante texto nas frases e tbm nos
@@ -192,7 +223,6 @@ const BEATS = [
     [232, "O Que Move o Seu Coração?"],
     [292, "Quem é Chamado, Permanece"],
     [300, "Participar da Obra de Restauração"],
-    [447, "O Chamado Não Elimina o Preparo"],
     [560, "Jesus Não Chama Profissionais. Chama Servos."],
     [585, "Um Coração Que Responde ao Chamado"],
     [726, "É Preciso Ser Humano Para Ajudar Outro Humano"],
@@ -217,16 +247,19 @@ const BEATS = [
   // on screen roughly once a minute across the whole 29 minutes.
   ...[
     [78, "tua-graca-me-basta"], [140, "pessoa-ajoelhada-deus-respira"],
-    [225, "cruz-luz"], [350, "sinais-espirito-santo"],
-    [410, "espiritualidade-crista"], [575, "josue-licoes"],
-    [710, "papel-parede-jesus"], [840, "dom-profetico"],
-    [950, "transferir-1"], [1025, "gloria-de-deus"],
     // 230 would have run until 209.8 on the new timeline, right over b-txt-0
     // ("O Que Move o Seu Coração?", 208.6): the caption faded in on schedule
     // but sat HIDDEN behind this photo, and only appeared when the photo
     // fade-out uncovered it — 0.86s late. Measured on the render, not guessed.
     // Backed off to 225 so the photo is gone well before the card. The
     // no-overlap assert after BEATS is what stops this recurring.
+    [225, "cruz-luz"],
+    // 350 ("sinais-espirito-santo") e 410 ("espiritualidade-crista") caíam
+    // dentro do bloco dos 5 pilares e saíram com ele. As duas fotos seguem em
+    // uso como fundo dos painéis de b-chamado-preparo.
+    [575, "josue-licoes"],
+    [710, "papel-parede-jesus"], [840, "dom-profetico"],
+    [950, "transferir-1"], [1025, "gloria-de-deus"],
     [1155, "desse-jeito"], [1350, "transferir-2"],
     [1640, "cruz-luz"], [1870, "transferir-3"],
   ].map(([srcAt, img], i) => ({
@@ -261,6 +294,19 @@ const BEATS = [
 
 console.log("beat positions (source -> new timeline):");
 for (const b of BEATS) console.log(`  ${b.id}: src ${b.srcAt}s -> new ${b.newAt.toFixed(2)}s (+${b.dur}s)`);
+
+// Uma cartela ancorada num srcAt que caiu dentro de um DROP_RANGE não some
+// junto: sourceToNewTime() cai no fallback "segmento mais próximo" e ela
+// reaparece colada na emenda, citando uma frase que ninguém mais fala. Sem
+// aviso nenhum. Falhe o build.
+{
+  const orphans = BEATS.filter((b) => DROP_RANGES.some(([a, z]) => b.srcAt >= a && b.srcAt < z));
+  if (orphans.length) {
+    console.error("\ncartelas ancoradas em fala que foi cortada (DROP_RANGES):");
+    for (const b of orphans) console.error(`  ${b.id} (srcAt ${b.srcAt}s)`);
+    process.exit(1);
+  }
+}
 
 // Two full-frame cards on the same seconds do not blend — the later one in the
 // DOM simply covers the earlier one, and the covered card looks LATE: it fades

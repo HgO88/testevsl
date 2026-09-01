@@ -1,6 +1,6 @@
 # Entrega — VSL "Terapia com Alma" (Aula 1)
 
-29m16s · 1920x1080 · 30fps · voz original do professor do início ao fim.
+26m43s · 1920x1080 · 30fps · voz original do professor do início ao fim.
 
 ## Arquivos (em `renders/`, fora do git)
 
@@ -16,12 +16,17 @@ vez estourava memória e disco); o vídeo entregue é contínuo.
 
 ## O que tem no vídeo
 
-- **Cortes**: 327 pausas removidas do bruto — 33m32 → 29m16.
+- **Cortes**: 307 cortes removidos do bruto — 33m32 → 26m43. Além das pausas,
+  três trechos de fala inteiros saíram (ver `DROP_RANGES` em `build/generate.mjs`):
+  a frase "nessa nossa primeira aula", a apresentação corrida dos 5 pilares, e o
+  "comente como foi essa aula, te espero na próxima" do final — é uma VSL, não a
+  aula 1 de um módulo.
 - **Abertura**: 6s com filtro de câmera (P&B + HUD de gravação), depois corta para cor.
-- **~45 cartelas de texto** em tela preta, itálico serifado — frases ditas por ele.
+- **~40 cartelas de texto** em tela preta, itálico serifado — frases ditas por ele.
 - **7 cartelas de versículo** (Hb 2:18, Hb 4:15, Jo 10:10, 2Tm 2:24, Jo 15:5, 2Tm 2:15, Jo 6:44).
 - **~28 aparições das 17 fotos** do cliente, ~1 por minuto.
-- **2 cortes gráficos**: os 5 pilares e a comparação chamado × preparo.
+- **1 corte gráfico**: a comparação chamado × preparo. (O gráfico dos 5 pilares
+  saiu junto com a fala que ele ilustrava; `pilaresHtml()` continua no código.)
 - Zoom lento que aproxima, segura durante a frase e volta.
 
 ## Sincronia — o que deu errado e como verificar
@@ -70,26 +75,27 @@ Conferência rápida, sem renderizar: para a cartela X em `chunk-N.html`, o
 `fromTo(... autoAlpha: 1 ...)` mais o `duration` têm que dar o
 `sourceToNewTime(srcAt)` impresso por `node build/generate.mjs`.
 
-## Cortar em partes: nunca com o muxer `segment`
+## Cortar em partes
 
 O limite de 30 MB por arquivo do canal obriga a entregar em 8 partes, que o
-cliente junta no CapCut. O jeito óbvio — `-f segment -segment_time N -c copy` —
-**introduz atraso**: cada parte sai com timestamp de início próprio. Medido:
-vídeo começando em 0.066s e áudio em 0.045s, ou seja 66ms de deslocamento e
-21ms de descasamento A/V *dentro* do arquivo. Junte 8 assim e reaparece como
-atraso, depois de todo o trabalho de sincronizar o master.
+cliente junta no CapCut. `build/split-entrega.sh` encoda cada parte separada a
+partir do master, em quadro exato (as 7 primeiras iguais, o resto na última),
+com `-avoid_negative_ts make_zero -muxdelay 0 -muxpreload 0`.
 
-`build`/entrega encoda cada parte separada a partir do master, cortando em
-quadro exato (6588 quadros nas 7 primeiras, 6582 na última — 7×6588+6582 =
-52698, o total do master) com `-avoid_negative_ts make_zero -muxdelay 0
--muxpreload 0`. Confira sempre: `start_time` dos dois streams tem que ser
-`0.000000` em toda parte.
+Confira sempre a soma dos quadros das partes contra `nb_frames` do master —
+essa é a verificação que pega quadro perdido ou duplicado nas emendas. NÃO use
+o `start_time` para isso: os 0.066s no vídeo e 0.045s no áudio que aparecem em
+toda parte são o atraso de B-frames do próprio x264, não um erro de corte.
+Isso foi diagnosticado errado uma vez — culpei o muxer `segment`, refiz tudo
+encodando parte a parte, e o `start_time` continuou igual. São sub-quadro
+(0.021s entre os dois streams, 0.6 de um quadro a 30fps) e não acumulam entre
+arquivos.
 
 Sobre o encode: ABR de um passe com teto, porque o tamanho tem que ser
 previsível quando o limite é por arquivo. 2 passes foi tentado e não vale — o
 passe 1 com `-f null` fecha com menos frames que o passe 2, o x264 descarta as
 estatísticas e cai em QP constante, e ainda por cima duas partes passaram de
-30 MB. O ganho de imagem vem do `preset slow` (a entrega anterior estava em
+30 MB. O ganho de imagem vem do `preset slow` (uma entrega anterior estava em
 `veryfast`), e aparece primeiro nas bordas do texto branco serifado sobre
 preto.
 
@@ -107,5 +113,11 @@ FFMPEG_PROCESS_TIMEOUT_MS=3600000 HYPERFRAMES_EXTRACT_CACHE_DIR=off \
 `-w 3` é ~3x mais rápido que o padrão de 1 worker. Renderize um bloco por vez:
 dois em paralelo estouram a memória do container.
 
-Se os cortes mudarem (`KEEP_PAUSE` em `build/generate.mjs`), refaça a base antes:
+Se os cortes mudarem — `KEEP_PAUSE` ou `DROP_RANGES` em `build/generate.mjs` —
+refaça a base ANTES de renderizar:
 `node build/make-select.mjs && bash build/encode-base.sh`.
+
+`generate.mjs` falha o build em dois casos que antes passavam calados: cartela
+ancorada em fala que caiu num `DROP_RANGE` (ela reapareceria colada na emenda,
+citando frase que ninguém fala) e duas cartelas de tela cheia sobrepostas (a de
+baixo fica escondida e parece atrasada).

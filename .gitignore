@@ -26,3 +26,6 @@ node_modules/
 
 # QA snapshot dumps (regenerated on demand by `hyperframes snapshot`)
 video-claude-code/**/snap*/
+
+# python bytecode do build/measure-sync.py
+__pycache__/
