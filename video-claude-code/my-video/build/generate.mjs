@@ -143,6 +143,17 @@ console.log(`source: ${SOURCE_DURATION.toFixed(1)}s -> new timeline: ${NEW_DURAT
 // of BEATS for why this exists.
 const CARD_LEAD = 0.35;
 
+// Os srcAt vêm de uma transcrição por PARÁGRAFO, não por palavra —
+// `build/check-anchors.mjs` interpola a posição da frase pelos caracteres e
+// isso carrega uns ±3s de erro. Como a cartela agora cai EXATAMENTE em cima do
+// srcAt, esse erro aparece na tela nos dois sentidos, e os dois não custam a
+// mesma coisa: cartela meio segundo atrasada passa despercebida, meio segundo
+// adiantada estraga a frase — o espectador lê antes de ouvir. O cliente pegou
+// exatamente isso em "Preciso Me Preparar Melhor", que estava 1.6s cedo.
+// Então: meio passo para depois, de graça, para o ruído do método cair sempre
+// no lado que não incomoda.
+const ANCHOR_BIAS = 0.4;
+
 const BEATS = [
   // -- opening/hook reinforcement (client feedback: chunk-1 is the "chamada",
   // it needs more energy — more keyword captions + a 2nd camcorder moment) --
@@ -152,19 +163,19 @@ const BEATS = [
   // -- reinforcement pass 4 (client: "mais cartelas de texto") — 11 more
   // black-card lines pulled verbatim from the transcript, filling the long
   // stretches that had no card of their own (esp. the whole first minute) --
-  { id: "b-despertando", kind: "caption", srcAt: 22, holdBefore: 0.15, dur: 3.0, line: "Deus Está Despertando Pessoas" },
-  { id: "b-por-onde", kind: "caption", srcAt: 53, holdBefore: 0.15, dur: 3.2, line: "Mas Não Sei Por Onde Começar…" },
-  { id: "b-preparar-melhor", kind: "caption", srcAt: 110, holdBefore: 0.15, dur: 3.0, line: "Preciso Me Preparar Melhor" },
-  { id: "b-preparo-intro", kind: "caption", srcAt: 163, holdBefore: 0.15, dur: 3.0, line: "Cuidar de Vida Exige Preparo" },
-  { id: "b-profissao-chamado", kind: "caption", srcAt: 196, holdBefore: 0.15, dur: 3.0, line: "Profissão ou Chamado?" },
+  { id: "b-despertando", kind: "caption", srcAt: 14.26, holdBefore: 0.15, dur: 3.0, line: "Deus Está Despertando Pessoas" },
+  { id: "b-por-onde", kind: "caption", srcAt: 55.40, holdBefore: 0.15, dur: 3.2, line: "Mas Não Sei Por Onde Começar…" },
+  { id: "b-preparar-melhor", kind: "caption", srcAt: 111.61, holdBefore: 0.15, dur: 3.0, line: "Preciso Me Preparar Melhor" },
+  { id: "b-preparo-intro", kind: "caption", srcAt: 160.87, holdBefore: 0.15, dur: 3.0, line: "Cuidar de Vida Exige Preparo" },
+  { id: "b-profissao-chamado", kind: "caption", srcAt: 191.79, holdBefore: 0.15, dur: 3.0, line: "Profissão ou Chamado?" },
   { id: "b-nasce-chamado", kind: "caption", srcAt: 511.5, holdBefore: 0.15, dur: 3.2, line: "O Terapeuta Cristão Nasce de um Chamado" },
   { id: "b-vocacao", kind: "caption", srcAt: 540, holdBefore: 0.15, dur: 3.0, line: "O Reino Começa pela Vocação" },
-  { id: "b-compaixao", kind: "caption", srcAt: 1250, holdBefore: 0.15, dur: 3.0, line: "Não Foi a Técnica. Foi a Compaixão." },
-  { id: "b-chama-prepara", kind: "caption", srcAt: 1310, holdBefore: 0.15, dur: 3.0, line: "Deus Chama e Depois Prepara" },
+  { id: "b-compaixao", kind: "caption", srcAt: 1254.32, holdBefore: 0.15, dur: 3.0, line: "Não Foi a Técnica. Foi a Compaixão." },
+  { id: "b-chama-prepara", kind: "caption", srcAt: 1332.04, holdBefore: 0.15, dur: 3.0, line: "Deus Chama e Depois Prepara" },
   { id: "b-presente-resp", kind: "caption", srcAt: 1440, holdBefore: 0.15, dur: 3.4, line: "Chamado é Presente. Preparo é Responsabilidade." },
   { id: "b-ja-preparando", kind: "caption", srcAt: 1690, holdBefore: 0.15, dur: 3.2, line: "Deus Já Está Preparando as Pessoas" },
   { id: "b-nao-corra", kind: "caption", srcAt: 1780, holdBefore: 0.15, dur: 3.2, line: "Não Corra Atrás. Esteja Preparado." },
-  { id: "b-essencia", kind: "caption", srcAt: 258, holdBefore: 0.15, dur: 3.0, line: "A Essência do Chamado" },
+  { id: "b-essencia", kind: "caption", srcAt: 256.38, holdBefore: 0.15, dur: 3.0, line: "A Essência do Chamado" },
   // -- original 5 approved beats --
   // b-pilares (o grafico de tela cheia listando os 5 pilares, srcAt 323) saiu
   // junto com DROP_RANGES: ele existia para ilustrar a enumeracao que agora
@@ -175,14 +186,14 @@ const BEATS = [
   // or no caption of its own --
   { id: "b-feridas", kind: "caption", srcAt: 600, holdBefore: 0.15, dur: 3.2, line: "Deus Chama Quem Já Foi Ferido" },
   { id: "b-restauracao", kind: "caption", srcAt: 765, holdBefore: 0.15, dur: 2.8, line: "Restauração" },
-  { id: "b-transforma-2", kind: "caption", srcAt: 905, holdBefore: 0.15, dur: 3.2, line: "Deus Me Consola, Deus Me Transforma" },
-  { id: "b-pessoas", kind: "caption", srcAt: 1049, holdBefore: 0.15, dur: 3.0, line: "Ele Trabalha com Pessoas" },
-  { id: "b-vidas", kind: "caption", srcAt: 1079, holdBefore: 0.15, dur: 3.0, line: "Você Atende Vidas" },
-  { id: "b-acolhida", kind: "caption", srcAt: 1195, holdBefore: 0.15, dur: 3.0, line: "Vidas a Serem Acolhidas" },
-  { id: "b-excelencia", kind: "caption", srcAt: 1580, holdBefore: 0.15, dur: 3.0, line: "Excelência no Preparo" },
+  { id: "b-transforma-2", kind: "caption", srcAt: 919.92, holdBefore: 0.15, dur: 3.2, line: "Deus Me Consola, Deus Me Transforma" },
+  { id: "b-pessoas", kind: "caption", srcAt: 1059.60, holdBefore: 0.15, dur: 3.0, line: "Ele Trabalha com Pessoas" },
+  { id: "b-vidas", kind: "caption", srcAt: 1076.01, holdBefore: 0.15, dur: 3.0, line: "Você Atende Vidas" },
+  { id: "b-acolhida", kind: "caption", srcAt: 1166.32, holdBefore: 0.15, dur: 3.0, line: "Vidas a Serem Acolhidas" },
+  { id: "b-excelencia", kind: "caption", srcAt: 1572.15, holdBefore: 0.15, dur: 3.0, line: "Excelência no Preparo" },
   { id: "b-dependencia-2", kind: "caption", srcAt: 1608, holdBefore: 0.15, dur: 2.8, line: "Dependência" },
   { id: "b-servico-2", kind: "caption", srcAt: 1820, holdBefore: 0.15, dur: 2.8, line: "Serviço" },
-  { id: "b-carater", kind: "caption", srcAt: 1912, holdBefore: 0.15, dur: 3.2, line: "A Maior Ferramenta é o Seu Caráter" },
+  { id: "b-carater", kind: "caption", srcAt: 1922.61, holdBefore: 0.15, dur: 3.2, line: "A Maior Ferramenta é o Seu Caráter" },
   { id: "b-chamado-preparo", kind: "cutaway", srcAt: 1490, holdBefore: 0.3, dur: 7.6 },
   { id: "b-cuidador", kind: "caption", srcAt: 1942, holdBefore: 0.15, dur: 3.2, line: "Você é Cuidador de Vida" },
   { id: "b-camcorder", kind: "camcorder", srcAt: 992, holdBefore: 0.2, dur: 6 },
@@ -195,7 +206,7 @@ const BEATS = [
   { id: "b-quote-consolacao", kind: "quote", srcAt: 865, holdBefore: 0.2, dur: 7, img: "media/broll/tua-graca-me-basta.jpg", kicker: "2 CORÍNTIOS 1:3-4", text: "DEUS DE TODA CONSOLAÇÃO, QUE NOS CONSOLA PARA CONSOLARMOS OS OUTROS." },
   { id: "b-quote-amor", kind: "quote", srcAt: 1280, holdBefore: 0.2, dur: 5, img: "media/broll/transferir-1.jpg", text: "SOMENTE O AMOR SUSTENTA O CHAMADO." },
   { id: "b-quote-honra", kind: "quote", srcAt: 1420, holdBefore: 0.2, dur: 6, img: "media/broll/dom-profetico.jpg", text: "O CHAMADO ABRE A PORTA. O PREPARO FAZ VOCÊ HONRAR A DEUS NELA." },
-  { id: "b-quote-cuidado", kind: "quote", srcAt: 1920, holdBefore: 0.2, dur: 6, img: "media/broll/desse-jeito.jpg", text: "VÃO ESQUECER AS TÉCNICAS. NUNCA VÃO ESQUECER QUE FORAM CUIDADAS POR VOCÊ." },
+  { id: "b-quote-cuidado", kind: "quote", srcAt: 1905, holdBefore: 0.2, dur: 6, img: "media/broll/desse-jeito.jpg", text: "VÃO ESQUECER AS TÉCNICAS. NUNCA VÃO ESQUECER QUE FORAM CUIDADAS POR VOCÊ." },
   // -- 3 more b-roll-only breathers (client: "usar mais imgs de broll"),
   // using the last 3 clean (no baked-in text) client photos, no quote text —
   // just the photo breathing with its own Ken-Burns zoom --
@@ -205,13 +216,13 @@ const BEATS = [
   // versiculos quando ele ler") — a card for each scripture he reads aloud,
   // reference on top, verse below; plus 4 more b-roll breathers, which uses
   // up the last 2 photos (the ones with baked-in type, fine with no overlay) --
-  { id: "b-v-heb218", kind: "caption", srcAt: 626, holdBefore: 0.15, dur: 4.4, ref: "HEBREUS 2:18", line: "Ele mesmo sofreu quando foi tentado, e é poderoso para socorrer os que são tentados." },
+  { id: "b-v-heb218", kind: "caption", srcAt: 621.85, holdBefore: 0.15, dur: 4.4, ref: "HEBREUS 2:18", line: "Ele mesmo sofreu quando foi tentado, e é poderoso para socorrer os que são tentados." },
   { id: "b-v-heb415", kind: "caption", srcAt: 644, holdBefore: 0.15, dur: 4.6, ref: "HEBREUS 4:15", line: "Temos um sumo sacerdote que, como nós, em tudo foi tentado — mas sem pecado." },
-  { id: "b-v-jo1010", kind: "caption", srcAt: 1208, holdBefore: 0.15, dur: 3.6, ref: "JOÃO 10:10", line: "Vim para que tenham vida, e a tenham em abundância." },
-  { id: "b-v-2tm224", kind: "caption", srcAt: 1382, holdBefore: 0.15, dur: 4.4, ref: "2 TIMÓTEO 2:24", line: "O servo do Senhor deve ser amável para com todos, e apto para ensinar." },
-  { id: "b-v-jo155", kind: "caption", srcAt: 1548, holdBefore: 0.15, dur: 3.4, ref: "JOÃO 15:5", line: "Sem mim, nada podeis fazer." },
-  { id: "b-v-2tm215", kind: "caption", srcAt: 1594, holdBefore: 0.15, dur: 3.6, ref: "2 TIMÓTEO 2:15", line: "Procura apresentar-te a Deus como aprovado." },
-  { id: "b-v-jo644", kind: "caption", srcAt: 1666, holdBefore: 0.15, dur: 4.0, ref: "JOÃO 6:44", line: "Ninguém vem a mim se o Pai que me enviou não o trouxer." },
+  { id: "b-v-jo1010", kind: "caption", srcAt: 1199.93, holdBefore: 0.15, dur: 3.6, ref: "JOÃO 10:10", line: "Vim para que tenham vida, e a tenham em abundância." },
+  { id: "b-v-2tm224", kind: "caption", srcAt: 1373.53, holdBefore: 0.15, dur: 4.4, ref: "2 TIMÓTEO 2:24", line: "O servo do Senhor deve ser amável para com todos, e apto para ensinar." },
+  { id: "b-v-jo155", kind: "caption", srcAt: 1557.16, holdBefore: 0.15, dur: 3.4, ref: "JOÃO 15:5", line: "Sem mim, nada podeis fazer." },
+  { id: "b-v-2tm215", kind: "caption", srcAt: 1578.86, holdBefore: 0.15, dur: 3.6, ref: "2 TIMÓTEO 2:15", line: "Procura apresentar-te a Deus como aprovado." },
+  { id: "b-v-jo644", kind: "caption", srcAt: 1667.81, holdBefore: 0.15, dur: 4.0, ref: "JOÃO 6:44", line: "Ninguém vem a mim se o Pai que me enviou não o trouxer." },
   { id: "b-broll-4", kind: "broll", srcAt: 285, holdBefore: 0.15, dur: 3, img: "media/broll/transferir-0.jpg" },
   { id: "b-broll-5", kind: "broll", srcAt: 800, holdBefore: 0.15, dur: 3, img: "media/broll/cantata-pascoa-sacrificio.jpg" },
   { id: "b-broll-6", kind: "broll", srcAt: 1100, holdBefore: 0.15, dur: 3, img: "media/broll/gloria-de-deus.jpg" },
@@ -220,21 +231,21 @@ const BEATS = [
   // cards, each a line he actually says, placed in the gaps the earlier
   // passes left. With these the film carries ~45 text cards over 29 minutes. --
   ...[
-    [232, "O Que Move o Seu Coração?"],
-    [292, "Quem é Chamado, Permanece"],
-    [300, "Participar da Obra de Restauração"],
+    [221.06, "O Que Move o Seu Coração?"],
+    [274.20, "Quem é Chamado, Permanece"],
+    [305.05, "Participar da Obra de Restauração"],
     [560, "Jesus Não Chama Profissionais. Chama Servos."],
-    [585, "Um Coração Que Responde ao Chamado"],
-    [726, "É Preciso Ser Humano Para Ajudar Outro Humano"],
-    [752, "Deus Não Desperdiça as Feridas de Quem Ele Chama"],
-    [828, "Paulo Sofreu Antes de Consolar a Igreja"],
-    [960, "Feridas Tratadas Por Deus Te Qualificam"],
-    [1032, "O Terapeuta Cristão Não Trabalha com Problemas"],
-    [1275, "Somente o Amor Sustenta o Chamado"],
-    [1303, "O Chamado Não Dispensa o Preparo"],
+    [574.35, "Um Coração Que Responde ao Chamado"],
+    [736.15, "É Preciso Ser Humano Para Ajudar Outro Humano"],
+    [748.00, "Deus Não Desperdiça as Feridas de Quem Ele Chama"],
+    [826.84, "Paulo Sofreu Antes de Consolar a Igreja"],
+    [969.12, "Feridas Tratadas Por Deus Te Qualificam"],
+    [1045.89, "O Terapeuta Cristão Não Trabalha com Problemas"],
+    [1271.28, "Somente o Amor Sustenta o Chamado"],
+    [1301.66, "O Chamado Não Dispensa o Preparo"],
     [1465, "Deus Te Deu o Dom. Agora Afie as Ferramentas."],
-    [1737, "Você Não Precisa Salvar Todo Mundo"],
-    [1876, "Como Glorificar a Deus Cuidando de Pessoas"],
+    [1735.83, "Você Não Precisa Salvar Todo Mundo"],
+    [1874.15, "Como Glorificar a Deus Cuidando de Pessoas"],
   ].map(([srcAt, line], i) => ({
     id: `b-txt-${i}`, kind: "caption", srcAt, holdBefore: 0.15,
     dur: line.length > 34 ? 3.4 : 3.0, line,
@@ -253,11 +264,11 @@ const BEATS = [
     // fade-out uncovered it — 0.86s late. Measured on the render, not guessed.
     // Backed off to 225 so the photo is gone well before the card. The
     // no-overlap assert after BEATS is what stops this recurring.
-    [225, "cruz-luz"],
+    [229, "cruz-luz"],
     // 350 ("sinais-espirito-santo") e 410 ("espiritualidade-crista") caíam
     // dentro do bloco dos 5 pilares e saíram com ele. As duas fotos seguem em
     // uso como fundo dos painéis de b-chamado-preparo.
-    [575, "josue-licoes"],
+    [580, "josue-licoes"],
     [710, "papel-parede-jesus"], [840, "dom-profetico"],
     [950, "transferir-1"], [1025, "gloria-de-deus"],
     [1155, "desse-jeito"], [1350, "transferir-2"],
@@ -289,7 +300,7 @@ const BEATS = [
 ].map((b) => ({
   ...b,
   dur: b.dur + CARD_LEAD,
-  newAt: Math.max(0, sourceToNewTime(b.srcAt) - CARD_LEAD),
+  newAt: Math.max(0, sourceToNewTime(b.srcAt) + ANCHOR_BIAS - CARD_LEAD),
 }));
 
 console.log("beat positions (source -> new timeline):");
