@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Terapia com Alma — chunk 6</title>
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+      :root {
+        --bg: #0b0e14;
+        --ink: #f5f1e8;
+        --accent: #d4a24e;
+        --accent-2: #7c9885;
+      }
+      body { margin: 0; background: var(--bg); color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+      .clip { position: absolute; inset: 0; }
+      .talking-head { width: 100%; height: 100%; object-fit: cover; }
+
+      /* Highlight card — client-supplied reference: pure black frame, one line
+         of large white italic serif, centered. Replaces the earlier gold
+         bold-caps lower-third. */
+      .caption-card {
+        background: #000;
+        display: flex; align-items: center; justify-content: center;
+        padding: 0 140px; text-align: center; pointer-events: none;
+      }
+      .caption-inner { max-width: 1560px; }
+      .caption-line {
+        margin: 0; font-family: Georgia, "Times New Roman", serif; font-style: italic;
+        font-weight: 400; font-size: 104px; line-height: 1.2; letter-spacing: 0.5px;
+        color: #fff;
+      }
+      /* Scripture cards carry more words, so they set smaller under a reference */
+      .caption-ref {
+        margin: 0 0 34px; font-family: Arial, Helvetica, sans-serif; font-style: normal;
+        font-weight: 700; font-size: 30px; letter-spacing: 6px; color: var(--accent);
+      }
+      .caption-line.is-verse { font-size: 66px; line-height: 1.32; }
+
+      /* Full-screen cutaway graphics */
+      .cutaway { background: linear-gradient(160deg, #0b0e14 0%, #141a24 100%); display: grid; place-items: center; position: relative; overflow: hidden; }
+      .cutaway-bgs { position: absolute; inset: 0; z-index: 0; }
+      .cutaway-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+      .cutaway-scrim { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(11,14,20,.55) 0%, rgba(11,14,20,.8) 55%, rgba(11,14,20,.92) 100%); }
+      .cutaway-inner { width: 1500px; position: relative; z-index: 2; }
+      .cutaway-title { text-align: center; font-size: 40px; letter-spacing: 4px; color: var(--accent-2); margin: 0 0 56px; font-weight: 700; }
+      .pillars { display: flex; flex-direction: column; gap: 22px; }
+      .pillar { display: flex; align-items: center; gap: 28px; background: rgba(11,14,20,0.45); backdrop-filter: blur(2px); border-left: 6px solid var(--accent); border-radius: 8px; padding: 20px 36px; }
+      .pillar-n { font-size: 44px; font-weight: 800; color: var(--accent); width: 90px; }
+      .pillar-label { font-size: 44px; font-weight: 700; color: var(--ink); letter-spacing: 1px; }
+
+      .compare { display: flex; align-items: center; justify-content: center; gap: 70px; width: 1700px; }
+      .compare-side { flex: 1; position: relative; border-radius: 12px; padding: 56px 44px; text-align: center; overflow: hidden; isolation: isolate; }
+      .compare-bg-wrap { position: absolute; inset: 0; z-index: 0; }
+      .compare-bg { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .compare-bg-wrap::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,14,20,.55) 0%, rgba(11,14,20,.85) 100%); }
+      .compare-text { position: relative; z-index: 1; }
+      .compare-line { font-size: 40px; font-weight: 700; margin: 0 0 18px; color: var(--ink); }
+      .compare-line .hl { color: var(--accent); }
+      .compare-result { font-size: 30px; color: #c9c2b3; margin: 0; }
+      .compare-plus { font-size: 64px; font-weight: 800; color: var(--accent-2); }
+
+      /* Camcorder / recording-HUD highlight treatment (over the still-visible talking head) */
+      .camcorder-hud { pointer-events: none; font-family: "Courier New", Courier, monospace; color: #fff; }
+      /* Sizes are the client reference's (854x480) scaled x2.25 to 1080p — at
+         the original px values the HUD was invisibly small on a 1080p frame. */
+      .cam-corner { position: absolute; width: 84px; height: 84px; border-color: rgba(255,255,255,.95); border-style: solid; border-width: 0; }
+      .cam-corner.tl { top: 46px; left: 46px; border-top-width: 6px; border-left-width: 6px; }
+      .cam-corner.tr { top: 46px; right: 46px; border-top-width: 6px; border-right-width: 6px; }
+      .cam-corner.bl { bottom: 46px; left: 46px; border-bottom-width: 6px; border-left-width: 6px; }
+      .cam-corner.br { bottom: 46px; right: 46px; border-bottom-width: 6px; border-right-width: 6px; }
+      /* Center focus reticle, as in the reference */
+      .cam-focus { position: absolute; left: 50%; top: 47%; transform: translate(-50%, -50%); width: 400px; height: 260px; }
+      .cam-focus span { position: absolute; width: 52px; height: 52px; border-color: rgba(255,255,255,.9); border-style: solid; border-width: 0; }
+      .cam-focus .f-tl { top: 0; left: 0; border-top-width: 5px; border-left-width: 5px; }
+      .cam-focus .f-tr { top: 0; right: 0; border-top-width: 5px; border-right-width: 5px; }
+      .cam-focus .f-bl { bottom: 0; left: 0; border-bottom-width: 5px; border-left-width: 5px; }
+      .cam-focus .f-br { bottom: 0; right: 0; border-bottom-width: 5px; border-right-width: 5px; }
+      .cam-battery { position: absolute; top: 58px; left: 156px; }
+      .cam-battery-icon { display: inline-block; width: 62px; height: 30px; border: 4px solid #fff; border-radius: 5px; position: relative; }
+      .cam-battery-icon::before { content: ""; position: absolute; inset: 4px; right: 15px; background: #fff; }
+      .cam-battery-icon::after { content: ""; position: absolute; right: -11px; top: 7px; width: 8px; height: 14px; background: #fff; border-radius: 0 3px 3px 0; }
+      .cam-rec { position: absolute; top: 58px; right: 156px; font-size: 38px; font-weight: 700; letter-spacing: 2px; display: flex; align-items: center; gap: 14px; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+      .cam-rec-dot { width: 24px; height: 24px; border-radius: 50%; background: #e5484d; display: inline-block; }
+      .cam-4k { position: absolute; bottom: 58px; left: 156px; font-size: 30px; font-weight: 600; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+      .cam-hd { position: absolute; bottom: 58px; right: 156px; font-size: 30px; font-weight: 600; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+
+      /* Photo-then-black-card quote pair (client reference: b-roll photo plays
+         alone, THEN a hard cut to a solid-black card with the italic quote —
+         not layered together, and not centered bold caps — that treatment
+         stays for keyword captions). */
+      .quote-photo .cutaway-bg { position: absolute; inset: 0; }
+      .quote-black { background: #000; display: flex; align-items: flex-end; justify-content: flex-start; padding: 0 0 110px 110px; }
+      .quote-inner { width: 1150px; text-align: left; }
+      .quote-kicker { font-family: Georgia, "Times New Roman", serif; font-style: italic; font-size: 24px; letter-spacing: 2px; color: var(--accent-2); font-weight: 400; margin: 0 0 16px; text-shadow: 0 2px 10px rgba(0,0,0,.9); }
+      .quote-text { font-family: Georgia, "Times New Roman", serif; font-style: italic; font-weight: 400; font-size: 52px; line-height: 1.35; color: var(--ink); text-align: left; margin: 0; text-shadow: 0 2px 6px rgba(0,0,0,.95), 0 0 24px rgba(0,0,0,.9); }
+      .quote-text .hl { color: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="chunk6sf" data-start="0" data-width="1920" data-height="1080" data-duration="267.215">
+      <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="267.215" data-media-start="1336.074" data-has-audio="true" data-track-index="0" playsinline></video>
+
+      <section id="b-broll-3" class="clip cutaway quote-photo" data-start="40.575" data-duration="3.35" data-track-index="5">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-3-bg" src="media/broll/transferir-4.jpg" alt="" /></div>
+      </section>
+
+      <section id="b-broll-x11" class="clip cutaway quote-photo" data-start="146.585" data-duration="3.15" data-track-index="5">
+        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-x11-bg" src="media/broll/transferir-3.jpg" alt="" /></div>
+      </section>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#b-broll-3-bg", { scale: 1 }, { scale: 1.1, duration: 3.35, ease: "none" }, 40.575);
+  tl.set("#b-broll-3", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-broll-3", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 40.575);
+  tl.to("#b-broll-3", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 43.575);
+  tl.set("#b-broll-3", { autoAlpha: 0 }, 43.925);
+  tl.fromTo("#b-broll-x11-bg", { scale: 1 }, { scale: 1.1, duration: 3.15, ease: "none" }, 146.585);
+  tl.set("#b-broll-x11", { autoAlpha: 0 }, 0);
+  tl.fromTo("#b-broll-x11", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 146.585);
+  tl.to("#b-broll-x11", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 149.385);
+  tl.set("#b-broll-x11", { autoAlpha: 0 }, 149.735);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 15.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 21.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 67.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 73.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 93.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 99.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 119.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 125.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 171.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 177.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 197.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 203.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 223.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 229.3);
+  tl.fromTo("#base", { scale: 1 }, { scale: 1.09, duration: 1.2, ease: "power2.inOut" }, 249.6);
+  tl.to("#base", { scale: 1, duration: 1.2, ease: "power2.inOut" }, 255.3);
+      window.__timelines["chunk6sf"] = tl;
+    </script>
+  </body>
+</html>
