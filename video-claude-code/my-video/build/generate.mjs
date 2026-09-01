@@ -195,7 +195,9 @@ const BEATS = [
   { id: "b-carater", kind: "caption", srcAt: 1922.53, holdBefore: 0.15, dur: 3.2, line: "A Maior Ferramenta é o Seu Caráter" },
   { id: "b-chamado-preparo", kind: "cutaway", srcAt: 1490, holdBefore: 0.3, dur: 7.6 },
   { id: "b-cuidador", kind: "caption", srcAt: 1942.00, holdBefore: 0.15, dur: 3.2, line: "Você é Cuidador de Vida" },
-  { id: "b-camcorder", kind: "camcorder", srcAt: 992, holdBefore: 0.2, dur: 6 },
+  // b-camcorder (segundo momento com filtro de camera, srcAt 992) removido a
+  // pedido do cliente: o P&B no meio do filme nao caiu bem. O da ABERTURA
+  // (b-confesso) fica -- e a referencia que ele mandou e ja foi aprovada.
   // -- reinforcement pass 3 (client: "gostaria também da adição de mais img")
   // -- one full-screen quote-card per chunk that had no photo cutaway yet,
   // using 5 of the 10 still-unused client photos (2 more stay unused: the
