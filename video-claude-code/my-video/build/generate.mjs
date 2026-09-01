@@ -167,7 +167,6 @@ const BEATS = [
   { id: "b-por-onde", kind: "caption", srcAt: 53.78, holdBefore: 0.15, dur: 3.2, line: "Mas Não Sei Por Onde Começar…" },
   { id: "b-preparar-melhor", kind: "caption", srcAt: 111.68, holdBefore: 0.15, dur: 3.0, line: "Preciso Me Preparar Melhor" },
   { id: "b-preparo-intro", kind: "caption", srcAt: 161.78, holdBefore: 0.15, dur: 3.0, line: "Cuidar de Vida Exige Preparo" },
-  { id: "b-profissao-chamado", kind: "caption", srcAt: 186.84, holdBefore: 0.15, dur: 3.0, line: "Profissão ou Chamado?" },
   { id: "b-nasce-chamado", kind: "caption", srcAt: 511.50, holdBefore: 0.15, dur: 3.2, line: "O Terapeuta Cristão Nasce de um Chamado" },
   { id: "b-vocacao", kind: "caption", srcAt: 528.06, holdBefore: 0.15, dur: 3.0, line: "O Reino Começa pela Vocação" },
   { id: "b-compaixao", kind: "caption", srcAt: 1252.27, holdBefore: 0.15, dur: 3.0, line: "Não Foi a Técnica. Foi a Compaixão." },
