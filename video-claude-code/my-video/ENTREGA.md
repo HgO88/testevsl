@@ -99,6 +99,35 @@ estatísticas e cai em QP constante, e ainda por cima duas partes passaram de
 `veryfast`), e aparece primeiro nas bordas do texto branco serifado sobre
 preto.
 
+## Ancoragem das cartelas — onde está o teto
+
+`build/anchors.json` guarda, para cada cartela, o trecho exato da transcrição
+onde a frase começa; `build/anchor-times.mjs` converte isso em `srcAt`
+distribuindo os caracteres do parágrafo sobre o seu tempo de FALA (parágrafo
+menos as pausas do silencedetect).
+
+**O teto de precisão é ~2s e vem do dado de entrada, não do cálculo.** A
+transcrição é por parágrafo e os timestamps estão arredondados no segundo.
+Medindo cada início de parágrafo contra a pausa real mais próxima do áudio: erro
+médio 1.88s, máximo 7.24s (o parágrafo que "começa" em 780 começa de fato em
+787.24). Toda âncora herda o erro do parágrafo em que cai — por isso acertar uma
+cartela pode desencaixar as vizinhas.
+
+Dois caminhos foram tentados e **não** funcionam neste ambiente:
+
+- **ASR palavra a palavra.** `hyperframes transcribe` baixa modelo do
+  HuggingFace e o do whisper original vem do Azure; a política de rede devolve
+  403 nos dois. Sem isso não há timestamp por palavra.
+- **Alinhar as 236 frases às 327 pausas por programação dinâmica**, ignorando
+  os timestamps da transcrição. Parece a solução certa e não é: validado contra
+  6 cartelas já aprovadas pelo cliente, o alinhamento movia todas, de 16s a
+  108s, com erro crescendo monotonicamente. Descartado.
+
+Então o conserto de uma cartela fora do lugar é manual e pontual: o cliente diz
+qual e para que lado, e a entrada em `anchors.json` vira um número fixo (como
+`b-nasce-chamado` já é). Guarde as aprovações do cliente — foram elas que
+pegaram o alinhamento global antes de ele ser entregue.
+
 ## Como reproduzir
 
 ```bash
