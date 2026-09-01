@@ -102,36 +102,6 @@
     <div id="root" data-composition-id="chunk5" data-start="0" data-width="1920" data-height="1080" data-duration="267.215">
       <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="267.215" data-media-start="1068.86" data-has-audio="true" data-track-index="0" playsinline></video>
 
-      <section id="b-chamado-preparo" class="clip cutaway" data-start="83.36" data-duration="7.949999999999999" data-track-index="5">
-        <div class="cutaway-inner compare">
-          <div class="compare-side" id="b-chamado-preparo-left">
-            <div class="compare-bg-wrap"><img class="compare-bg" id="b-chamado-preparo-bg-left" src="media/broll/sinais-espirito-santo.jpg" alt="" /></div>
-            <div class="compare-text">
-              <p class="compare-line"><span class="hl">CHAMADO</span> sem <span class="hl">PREPARO</span></p>
-              <p class="compare-result">gera insegurança</p>
-            </div>
-          </div>
-          <div class="compare-plus" id="b-chamado-preparo-plus">+</div>
-          <div class="compare-side" id="b-chamado-preparo-right">
-            <div class="compare-bg-wrap"><img class="compare-bg" id="b-chamado-preparo-bg-right" src="media/broll/espiritualidade-crista.jpg" alt="" /></div>
-            <div class="compare-text">
-              <p class="compare-line"><span class="hl">PREPARO</span> sem <span class="hl">CHAMADO</span></p>
-              <p class="compare-result">gera só bom profissional</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="b-quote-honra-photo" class="clip cutaway quote-photo" data-start="21.82" data-duration="2.2" data-track-index="5">
-        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-honra-bg" src="media/broll/dom-profetico.jpg" alt="" /></div>
-      </section>
-      <section id="b-quote-honra-text" class="clip cutaway quote-black" data-start="24.02" data-duration="4.15" data-track-index="5">
-        <div class="quote-inner" id="b-quote-honra-inner">
-          
-          <p class="quote-text">O CHAMADO ABRE A PORTA. O PREPARO FAZ VOCÊ HONRAR A DEUS NELA.</p>
-        </div>
-      </section>
-
       <section id="b-broll-7" class="clip cutaway quote-photo" data-start="104.08" data-duration="3.35" data-track-index="5">
         <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-7-bg" src="media/broll/maos-oracao-cruz.jpg" alt="" /></div>
       </section>
@@ -142,21 +112,6 @@
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
-  tl.fromTo("#b-chamado-preparo-left", { autoAlpha: 0, xPercent: -14 }, { autoAlpha: 1, xPercent: 0, duration: 0.45, ease: "power3.out" }, 83.36);
-  tl.fromTo("#b-chamado-preparo-right", { autoAlpha: 0, xPercent: 14 }, { autoAlpha: 1, xPercent: 0, duration: 0.45, ease: "power3.out" }, 83.36);
-  tl.fromTo("#b-chamado-preparo-plus", { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(1.6)" }, 83.86);
-  tl.fromTo("#b-chamado-preparo-bg-left", { scale: 1 }, { scale: 1.1, duration: 7.75, ease: "none" }, 83.51);
-  tl.fromTo("#b-chamado-preparo-bg-right", { scale: 1 }, { scale: 1.1, duration: 7.75, ease: "none" }, 83.51);
-  tl.fromTo("#b-quote-honra-bg", { scale: 1 }, { scale: 1.08, duration: 2.2, ease: "none" }, 21.82);
-  tl.fromTo("#b-quote-honra-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 24.02);
-  tl.set("#b-quote-honra-photo", { autoAlpha: 0 }, 0);
-  tl.fromTo("#b-quote-honra-photo", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 21.82);
-  tl.to("#b-quote-honra-photo", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 23.67);
-  tl.set("#b-quote-honra-photo", { autoAlpha: 0 }, 24.02);
-  tl.set("#b-quote-honra-text", { autoAlpha: 0 }, 0);
-  tl.fromTo("#b-quote-honra-text", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 24.02);
-  tl.to("#b-quote-honra-text", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 27.82);
-  tl.set("#b-quote-honra-text", { autoAlpha: 0 }, 28.17);
   tl.fromTo("#b-broll-7-bg", { scale: 1 }, { scale: 1.1, duration: 3.35, ease: "none" }, 104.08);
   tl.set("#b-broll-7", { autoAlpha: 0 }, 0);
   tl.fromTo("#b-broll-7", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 104.08);

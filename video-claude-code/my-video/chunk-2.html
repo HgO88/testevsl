@@ -102,16 +102,6 @@
     <div id="root" data-composition-id="chunk2" data-start="0" data-width="1920" data-height="1080" data-duration="267.215">
       <video id="base" class="clip talking-head" src="edited-base.mp4" data-start="0" data-duration="267.215" data-media-start="267.215" data-has-audio="true" data-track-index="0" playsinline></video>
 
-      <section id="b-quote-abandono-photo" class="clip cutaway quote-photo" data-start="182.478" data-duration="2.2" data-track-index="5">
-        <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-abandono-bg" src="media/broll/papel-parede-jesus.jpg" alt="" /></div>
-      </section>
-      <section id="b-quote-abandono-text" class="clip cutaway quote-black" data-start="184.678" data-duration="4.15" data-track-index="5">
-        <div class="quote-inner" id="b-quote-abandono-inner">
-          
-          <p class="quote-text">JESUS CONHECEU O ABANDONO, A REJEIÇÃO, A SOLIDÃO.</p>
-        </div>
-      </section>
-
       <section id="b-broll-x3" class="clip cutaway quote-photo" data-start="105.038" data-duration="3.15" data-track-index="5">
         <div class="cutaway-bgs"><img class="cutaway-bg" id="b-broll-x3-bg" src="media/broll/josue-licoes.jpg" alt="" /></div>
       </section>
@@ -122,16 +112,6 @@
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
-  tl.fromTo("#b-quote-abandono-bg", { scale: 1 }, { scale: 1.08, duration: 2.2, ease: "none" }, 182.478);
-  tl.fromTo("#b-quote-abandono-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 184.678);
-  tl.set("#b-quote-abandono-photo", { autoAlpha: 0 }, 0);
-  tl.fromTo("#b-quote-abandono-photo", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 182.478);
-  tl.to("#b-quote-abandono-photo", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 184.328);
-  tl.set("#b-quote-abandono-photo", { autoAlpha: 0 }, 184.678);
-  tl.set("#b-quote-abandono-text", { autoAlpha: 0 }, 0);
-  tl.fromTo("#b-quote-abandono-text", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 184.678);
-  tl.to("#b-quote-abandono-text", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 188.478);
-  tl.set("#b-quote-abandono-text", { autoAlpha: 0 }, 188.828);
   tl.fromTo("#b-broll-x3-bg", { scale: 1 }, { scale: 1.1, duration: 3.15, ease: "none" }, 105.038);
   tl.set("#b-broll-x3", { autoAlpha: 0 }, 0);
   tl.fromTo("#b-broll-x3", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 105.038);

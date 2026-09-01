@@ -732,16 +732,17 @@ function chunkHtml(chunk) {
   // BEATS moveria as fronteiras e o bloco deixaria de casar com os outros
   // cinco na hora de juntar. Aqui só a emissão muda; a divisão fica igual.
   //
-  // Tira TODA cartela de texto, versículo incluído. Primeiro eu tinha poupado
-  // os versículos por serem um pedido à parte do cliente ("bastante texto nos
-  // versículos quando ele ler"); o cliente pediu para tirar esses também na
-  // comparação. Sobram fotos, cartão de citação, HUD de câmera e zoom.
+  // Sobram só as FOTOS de b-roll (e o HUD de câmera, que é tratamento da
+  // imagem dele, não um cartão por cima). Saem cartelas de texto, versículos,
+  // cartão de citação e corte gráfico — tudo que põe texto na tela. Chegamos
+  // aqui em três passos, cada um pedido pelo cliente: primeiro as cartelas de
+  // apoio, depois os versículos, depois a citação.
   const SEM_FRASES = process.env.SEM_FRASES === "1";
   const localBeats = BEATS.filter(
     (b) =>
       b.newAt >= chunk.start - 0.01 &&
       b.newAt < chunk.end - 0.01 &&
-      !(SEM_FRASES && b.kind === "caption"),
+      !(SEM_FRASES && ["caption", "quote", "cutaway"].includes(b.kind)),
   ).map((b) => ({
     ...b,
     newAt: num(b.newAt - chunk.start),
