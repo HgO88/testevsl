@@ -89,7 +89,8 @@ function atSpeechFraction(seg, frac) {
 }
 
 function locate(line, srcAt) {
-  const words = norm(line).split(" ").filter((w) => w.length > 3);
+  const all = norm(line).split(" ");
+  const words = all.filter((w) => w.length > 3);
   if (words.length < MIN_WORDS) return { few: true, words: words.length };
   let best = null;
   for (const seg of segs) {
@@ -106,7 +107,14 @@ function locate(line, srcAt) {
         // saiu como "dentro do limite". A posicao boa e a da primeira palavra
         // significativa que de fato casou.
         const off = slice.findIndex((w) => words.includes(w));
-        const at0 = i + (off < 0 ? 0 : off);
+        let at0 = i + (off < 0 ? 0 : off);
+        // `words` só tem as palavras longas o bastante para pontuar, então a
+        // primeira delas pode não ser a primeira palavra DITA da frase: em
+        // "Mas Não Sei Por Onde Começar" a primeira significativa é "onde", e
+        // ancorar ali joga a cartela ~1.1s depois do "mas". Anda para trás
+        // enquanto as palavras anteriores também pertencerem à linha da
+        // cartela, para pegar o começo real da frase.
+        while (at0 > 0 && all.includes(hay[at0 - 1])) at0--;
         const frac = seg.norm.length ? hay.slice(0, at0).join(" ").length / seg.norm.length : 0;
         best = { score, at: atSpeechFraction(seg, frac) };
       }
@@ -115,15 +123,24 @@ function locate(line, srcAt) {
   return best;
 }
 
-// Encosta na pausa mais próxima, para o srcAt cair no começo de uma frase e
-// não no meio dela. Longe de qualquer pausa, mantém a estimativa.
+// Encosta na pausa mais próxima SÓ se ela estiver muito perto.
+//
+// A tolerância era 2.0s e estava piorando as duas cartelas que o cliente
+// reportou: nem toda pausa é começo de frase (muitas são vírgula), e a pausa
+// mais próxima pode estar de qualquer um dos dois lados. Em "Mas Não Sei Por
+// Onde Começar" ela puxou para 55.40, 1.6s DEPOIS do início da fala; em
+// "Cuidar de Vida Exige Preparo" puxou para 160.87, 0.9s ANTES. A
+// interpolação crua deu 53.78 e 161.78, que são os valores certos conferidos
+// à mão. Então: só encosta quando a pausa praticamente coincide, senão
+// confia na interpolação.
+const SNAP_MAX = 0.6;
 function snap(t) {
   let best = t, d = Infinity;
   for (const s of speechStarts) {
     const dd = Math.abs(s - t);
     if (dd < d) { d = dd; best = s; }
   }
-  return d <= 2.0 ? best : t;
+  return d <= SNAP_MAX ? best : t;
 }
 
 const src = fs.readFileSync(path.join(__dirname, "generate.mjs"), "utf8");
