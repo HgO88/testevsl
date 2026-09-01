@@ -126,20 +126,6 @@
         </div>
       </div>
 
-      <div id="b-camcorder" class="clip camcorder-hud" data-start="181.297" data-duration="6.35" data-track-index="5">
-        <span class="cam-corner tl"></span>
-        <span class="cam-corner tr"></span>
-        <span class="cam-corner bl"></span>
-        <span class="cam-corner br"></span>
-        <div class="cam-focus">
-          <span class="f-tl"></span><span class="f-tr"></span><span class="f-bl"></span><span class="f-br"></span>
-        </div>
-        <div class="cam-battery"><span class="cam-battery-icon"></span></div>
-        <div class="cam-rec"><span class="cam-rec-dot" id="b-camcorder-dot"></span>REC</div>
-        <div class="cam-4k">4K 60FPS</div>
-        <div class="cam-hd">HD</div>
-      </div>
-
       <section id="b-quote-consolacao-photo" class="clip cutaway quote-photo" data-start="84.018" data-duration="2.2" data-track-index="5">
         <div class="cutaway-bgs"><img class="cutaway-bg" id="b-quote-consolacao-bg" src="media/broll/tua-graca-me-basta.jpg" alt="" /></div>
       </section>
@@ -210,11 +196,6 @@
   tl.fromTo("#b-vidas", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 254.14);
   tl.to("#b-vidas", { autoAlpha: 0, duration: 0.35, ease: "power1.in" }, 257.14);
   tl.set("#b-vidas", { autoAlpha: 0 }, 257.49);
-  tl.fromTo("#base", { filter: "grayscale(0%)" }, { filter: "grayscale(100%)", duration: 0.5 }, 181.297);
-  tl.fromTo("#base", { filter: "grayscale(100%)" }, { filter: "grayscale(0%)", duration: 0.5 }, 187.147);
-  tl.fromTo("#b-camcorder", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 181.297);
-  tl.to("#b-camcorder", { autoAlpha: 0, duration: 0.3 }, 187.347);
-  tl.to("#b-camcorder-dot", { autoAlpha: 0.15, duration: 0.35, repeat: 15, yoyo: true }, 181.597);
   tl.fromTo("#b-quote-consolacao-bg", { scale: 1 }, { scale: 1.08, duration: 2.2, ease: "none" }, 84.018);
   tl.fromTo("#b-quote-consolacao-inner", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out" }, 86.218);
   tl.set("#b-quote-consolacao-photo", { autoAlpha: 0 }, 0);
