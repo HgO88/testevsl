@@ -723,7 +723,24 @@ fs.writeFileSync(path.join(PROJECT, "build", "chunks.json"), JSON.stringify(chun
 function chunkHtml(chunk) {
   const compId = `chunk${chunk.index}`;
   const dur = num(chunk.end - chunk.start);
-  const localBeats = BEATS.filter((b) => b.newAt >= chunk.start - 0.01 && b.newAt < chunk.end - 0.01).map((b) => ({
+  // SEM_FRASES=1 tira as cartelas de texto e deixa só ele falando, com as
+  // fotos e o zoom. Serve para comparar um trecho com e sem legenda quando o
+  // cliente acha que elas estão atrapalhando mais do que ajudando.
+  //
+  // O filtro é DEPOIS de BEATS, de propósito: as fronteiras dos 6 blocos são
+  // calculadas para não cair em cima de uma cartela, então tirar cartelas de
+  // BEATS moveria as fronteiras e o bloco deixaria de casar com os outros
+  // cinco na hora de juntar. Aqui só a emissão muda; a divisão fica igual.
+  //
+  // Os versículos (cartela com `ref`) ficam: são um pedido à parte do cliente
+  // ("bastante texto nos versículos quando ele ler"), não legenda de apoio.
+  const SEM_FRASES = process.env.SEM_FRASES === "1";
+  const localBeats = BEATS.filter(
+    (b) =>
+      b.newAt >= chunk.start - 0.01 &&
+      b.newAt < chunk.end - 0.01 &&
+      !(SEM_FRASES && b.kind === "caption" && !b.ref),
+  ).map((b) => ({
     ...b,
     newAt: num(b.newAt - chunk.start),
   }));
