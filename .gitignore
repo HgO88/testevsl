@@ -29,3 +29,9 @@ video-claude-code/**/snap*/
 
 # python bytecode do build/measure-sync.py
 __pycache__/
+
+# Projeto Letícia Bolos — mídia bruta/renders fora do git
+leticia-bolos/**/*.wav
+leticia-bolos/**/*.mp3
+leticia-bolos/**/*.m4a
+leticia-bolos/**/renders/
