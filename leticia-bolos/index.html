@@ -249,11 +249,9 @@
       <div class="shot"><div class="frame" data-layout-allow-overflow id="f4">
         <video id="v4" class="clip" src="media/clips/VID-20260917-WA0076.mp4" data-start="3.55" data-duration="1.18" data-media-start="13.05" data-track-index="0" muted playsinline></video>
       </div></div>
-      <div class="shot"><div class="frame" data-layout-allow-overflow id="f5">
-        <video id="v5" class="clip" src="media/clips/VID-20260917-WA0023.mp4" data-start="4.48" data-duration="1.18" data-media-start="9.75" data-track-index="0" muted playsinline></video>
-      </div></div>
+      <!-- the praça: crowd at the red tent replaces the spinning strawberry cake (client request) -->
       <div class="shot"><div class="frame" data-layout-allow-overflow id="f6">
-        <video id="v6" class="clip" src="media/clips/VID-20260917-WA0067.mp4" data-start="5.41" data-duration="1.48" data-media-start="3.75" data-track-index="0" muted playsinline></video>
+        <video id="v6" class="clip" src="media/clips/VID-20260917-WA0067.mp4" data-start="4.48" data-duration="2.41" data-media-start="0.25" data-track-index="0" muted playsinline></video>
       </div></div>
       <div class="shot"><div class="frame" data-layout-allow-overflow id="f7">
         <video id="v7" class="clip" src="media/clips/VID-20260917-WA0074.mp4" data-start="6.64" data-duration="1.18" data-media-start="0.25" data-track-index="0" muted playsinline></video>
@@ -356,7 +354,7 @@
       const XF = 0.25; // dissolve length, incoming shot starts this much before the cut
       const shots = [
         ["#f1", 0, 1.33], ["#f2", 1.33, 1.23], ["#f3", 2.56, 1.24], ["#f4", 3.8, 0.93],
-        ["#f5", 4.73, 0.93], ["#f6", 5.66, 1.23], ["#f7", 6.89, 0.93], ["#f8", 7.82, 1.86],
+        ["#f6", 4.73, 2.16], ["#f7", 6.89, 0.93], ["#f8", 7.82, 1.86],
         ["#f9", 9.68, 0.93], ["#f10", 10.61, 0.92], ["#f11", 11.53, 2.66],
       ];
       shots.forEach(([id, cut, dur], i) => {
@@ -370,7 +368,7 @@
         }
       });
       // section changes (into the praça, into the close) glide up instead of a plain dissolve
-      [["#f6", 5.66], ["#f11", 11.53]].forEach(([id, cut]) => {
+      [["#f6", 4.73], ["#f11", 11.53]].forEach(([id, cut]) => {
         tl.fromTo(id, { y: 140 }, { y: 0, duration: 0.6, ease: "power2.out" }, cut - XF);
       });
 
