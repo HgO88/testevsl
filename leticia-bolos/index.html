@@ -113,9 +113,31 @@
       #hoje .yl {
         font-size: 190px;
       }
+      .dia-wrap {
+        position: absolute;
+        top: 1050px;
+        left: 0;
+        width: 1080px;
+        display: flex;
+        justify-content: center;
+      }
+      #dia {
+        display: block;
+        background: #ffd400;
+        border-radius: 26px;
+        padding: 18px 40px 14px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: 72px;
+        line-height: 1;
+        color: #1a0e05;
+        letter-spacing: -1px;
+        box-shadow: 0 12px 0 #c98f00, 0 20px 32px rgba(0, 0, 0, 0.4);
+        white-space: nowrap;
+      }
       #festival {
         position: absolute;
-        top: 1070px;
+        top: 1215px;
         left: 0;
         width: 1080px;
         text-align: center;
@@ -231,13 +253,13 @@
         <video id="v5" class="clip" src="media/clips/VID-20260917-WA0023.mp4" data-start="4.48" data-duration="1.18" data-media-start="9.75" data-track-index="0" muted playsinline></video>
       </div></div>
       <div class="shot"><div class="frame" data-layout-allow-overflow id="f6">
-        <video id="v6" class="clip" src="media/clips/VID-20260917-WA0067.mp4" data-start="5.41" data-duration="1.79" data-media-start="3.75" data-track-index="0" muted playsinline></video>
+        <video id="v6" class="clip" src="media/clips/VID-20260917-WA0067.mp4" data-start="5.41" data-duration="1.48" data-media-start="3.75" data-track-index="0" muted playsinline></video>
       </div></div>
       <div class="shot"><div class="frame" data-layout-allow-overflow id="f7">
-        <video id="v7" class="clip" src="media/clips/VID-20260917-WA0074.mp4" data-start="6.95" data-duration="1.49" data-media-start="0.25" data-track-index="0" muted playsinline></video>
+        <video id="v7" class="clip" src="media/clips/VID-20260917-WA0074.mp4" data-start="6.64" data-duration="1.18" data-media-start="0.25" data-track-index="0" muted playsinline></video>
       </div></div>
       <div class="shot"><div class="frame" data-layout-allow-overflow id="f8">
-        <video id="v8" class="clip" src="media/clips/VID-20260917-WA0073.mp4" data-start="8.19" data-duration="1.49" data-media-start="7.75" data-track-index="0" muted playsinline></video>
+        <video id="v8" class="clip" src="media/clips/VID-20260917-WA0073.mp4" data-start="7.57" data-duration="2.11" data-media-start="7" data-track-index="0" muted playsinline></video>
       </div></div>
       <div class="shot"><div class="frame" data-layout-allow-overflow id="f9">
         <video id="v9" class="clip" src="media/clips/VID-20260917-WA0073.mp4" data-start="9.43" data-duration="1.18" data-media-start="21.75" data-track-index="0" muted playsinline></video>
@@ -257,16 +279,17 @@
         <svg class="doodle" id="spark-a" viewBox="0 0 100 100" style="left:860px;top:700px;width:120px;height:120px">
           <path d="M20 70 L8 92" /><path d="M48 58 L50 30" /><path d="M74 70 L94 52" />
         </svg>
-        <svg class="doodle dark" id="arrow" viewBox="0 0 200 160" style="left:300px;top:1000px;width:170px;height:136px">
+        <svg class="doodle dark" id="arrow" viewBox="0 0 200 160" style="left:120px;top:1110px;width:150px;height:120px">
           <path d="M150 10 C 60 20, 40 70, 70 130" /><path d="M48 110 L70 132 L92 108" />
         </svg>
+        <div class="dia-wrap"><span id="dia">DOMINGO · 11 DE OUT</span></div>
         <div id="festival" data-split>Festival de Fatias</div>
-        <svg class="doodle dark" id="spark-b" viewBox="0 0 100 100" style="left:110px;top:1150px;width:110px;height:110px">
+        <svg class="doodle dark" id="spark-b" viewBox="0 0 100 100" style="left:860px;top:1300px;width:110px;height:110px">
           <path d="M10 30 L34 40" /><path d="M8 62 L36 60" /><path d="M18 92 L40 78" />
         </svg>
       </section>
 
-      <section id="s-praca" class="clip" data-start="5.66" data-duration="2.78" data-track-index="2" style="position:absolute;inset:0">
+      <section id="s-praca" class="clip" data-start="5.66" data-duration="2.29" data-track-index="2" style="position:absolute;inset:0">
         <div class="title-wrap" id="praca">
           <div class="outline"><span class="yl" data-split>Praça do</span><span class="yl" data-split>Eng do meio</span></div>
         </div>
@@ -278,7 +301,7 @@
         </svg>
       </section>
 
-      <section id="s-hora" class="clip" data-start="8.44" data-duration="2.17" data-track-index="3" style="position:absolute;inset:0">
+      <section id="s-hora" class="clip" data-start="7.9" data-duration="2.71" data-track-index="3" style="position:absolute;inset:0">
         <div class="pill-wrap"><span id="pill">Às 14:30h</span></div>
       </section>
 
@@ -333,7 +356,7 @@
       const XF = 0.25; // dissolve length, incoming shot starts this much before the cut
       const shots = [
         ["#f1", 0, 1.33], ["#f2", 1.33, 1.23], ["#f3", 2.56, 1.24], ["#f4", 3.8, 0.93],
-        ["#f5", 4.73, 0.93], ["#f6", 5.66, 1.54], ["#f7", 7.2, 1.24], ["#f8", 8.44, 1.24],
+        ["#f5", 4.73, 0.93], ["#f6", 5.66, 1.23], ["#f7", 6.89, 0.93], ["#f8", 7.82, 1.86],
         ["#f9", 9.68, 0.93], ["#f10", 10.61, 0.92], ["#f11", 11.53, 2.66],
       ];
       shots.forEach(([id, cut, dur], i) => {
@@ -360,25 +383,27 @@
       tl.fromTo("#spark-a path", { strokeDasharray: 60, strokeDashoffset: 60 }, { strokeDashoffset: 0, duration: 0.18, stagger: 0.05, ease: "power2.out" }, 0.55);
       tl.fromTo("#spark-a", { scale: 0.6, transformOrigin: "0% 100%" }, { scale: 1, duration: 0.3, ease: "back.out(3)" }, 0.55);
 
-      // "Festival de Fatias" — handwritten type-on (1.30–1.95) + arrow draw
-      tl.fromTo("#arrow path", { strokeDasharray: 260, strokeDashoffset: 260 }, { strokeDashoffset: 0, duration: 0.28, stagger: 0.12, ease: "power2.inOut" }, 1.08);
-      tl.fromTo("#festival .ch", { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.08, stagger: 0.036, ease: "power1.out" }, 1.3);
-      tl.fromTo("#spark-b path", { strokeDasharray: 60, strokeDashoffset: 60 }, { strokeDashoffset: 0, duration: 0.18, stagger: 0.05 }, 1.95);
+      // date pill lands right after the voice finishes "é hoje" (~1.8s)
+      tl.fromTo("#dia", { scale: 0, rotation: 6 }, { scale: 1, rotation: 2, duration: 0.36, ease: "back.out(2.2)" }, 1.8);
+      // "Festival de Fatias" — handwritten type-on as the voice starts the next phrase (~2.15s) + arrow draw
+      tl.fromTo("#arrow path", { strokeDasharray: 260, strokeDashoffset: 260 }, { strokeDashoffset: 0, duration: 0.28, stagger: 0.12, ease: "power2.inOut" }, 2.0);
+      tl.fromTo("#festival .ch", { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.08, stagger: 0.036, ease: "power1.out" }, 2.2);
+      tl.fromTo("#spark-b path", { strokeDasharray: 60, strokeDashoffset: 60 }, { strokeDashoffset: 0, duration: 0.18, stagger: 0.05 }, 2.85);
 
       // exit: the title drifts toward camera and dissolves with the footage
-      tl.to("#s-hoje .title-wrap, #festival, #arrow, #spark-a, #spark-b", { scale: 1.12, autoAlpha: 0, filter: "blur(6px)", duration: 0.3, ease: "sine.in" }, 3.5);
+      tl.to("#s-hoje .title-wrap, #dia, #festival, #arrow, #spark-a, #spark-b", { scale: 1.12, autoAlpha: 0, filter: "blur(6px)", duration: 0.3, ease: "sine.in" }, 3.5);
 
       // ---- "Praça do / Eng do meio" — letters pop (5.70–6.95) ----
       tl.fromTo("#praca .ch", { scale: 0, y: 36, rotation: 10 }, { scale: 1, y: 0, rotation: 0, duration: 0.3, ease: "back.out(2.4)", stagger: 0.062 }, 5.72);
       tl.fromTo("#spark-c path, #spark-d path", { strokeDasharray: 60, strokeDashoffset: 60 }, { strokeDashoffset: 0, duration: 0.18, stagger: 0.05 }, 6.85);
-      [B(23), B(27) - 0.31].forEach((t) => {
+      [B(20), B(23)].forEach((t) => {
         tl.fromTo("#praca", { scale: 1.08 }, { scale: 1, duration: 0.25, ease: "power3.out", immediateRender: false }, t);
       });
-      tl.to("#praca", { y: -40, autoAlpha: 0, duration: 0.3, ease: "sine.in" }, 8.14);
+      tl.to("#praca", { y: -40, autoAlpha: 0, duration: 0.3, ease: "sine.in" }, 7.62);
 
-      // ---- "Às 14:30h" — pill slams in and pulses on the beat ----
-      tl.fromTo("#pill", { scale: 0, rotation: -8 }, { scale: 1, rotation: -3, duration: 0.36, ease: "back.out(2.2)" }, 8.44);
-      for (let k = 29; k <= 33; k++) {
+      // ---- "Às 14:30h" — pill lands with the voice (~7.95s) and pulses on the beat ----
+      tl.fromTo("#pill", { scale: 0, rotation: -8 }, { scale: 1, rotation: -3, duration: 0.36, ease: "back.out(2.2)" }, 7.95);
+      for (let k = 27; k <= 33; k++) {
         tl.fromTo("#pill", { scale: 1.09 }, { scale: 1, duration: 0.26, ease: "power2.out", immediateRender: false }, B(k));
       }
       tl.to("#pill", { y: -30, autoAlpha: 0, duration: 0.3, ease: "sine.in" }, 10.31);
