@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Letícia's Bolos — É hoje!</title>
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Lilita One";
+        src: url("assets/fonts/lilita-one.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: "Lilita One";
+        src: url("assets/fonts/lilita-one-ext.woff2") format("woff2");
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+      }
+      @font-face {
+        font-family: "Pangolin";
+        src: url("assets/fonts/pangolin.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Poppins";
+        font-weight: 800;
+        src: url("assets/fonts/poppins-800.woff2") format("woff2");
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #120604;
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #120604;
+      }
+
+      /* ---------- footage ---------- */
+      .shot {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .shot video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .frame {
+        position: absolute;
+        inset: 0;
+        will-change: transform, filter;
+      }
+
+      /* ---------- finishing layers ---------- */
+      #vignette {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(ellipse 80% 65% at 50% 48%, rgba(0, 0, 0, 0) 55%, rgba(20, 6, 2, 0.55) 100%);
+      }
+      #warm {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(180deg, rgba(255, 160, 60, 0.06), rgba(255, 60, 40, 0.05));
+        mix-blend-mode: soft-light;
+      }
+      #flash {
+        position: absolute;
+        inset: 0;
+        background: #fff7e0;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* ---------- typography (copied from the original ad) ---------- */
+      .title-wrap {
+        position: absolute;
+        left: 0;
+        width: 1080px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        pointer-events: none;
+      }
+      .outline {
+        display: block;
+        filter: drop-shadow(5px 0 0 #fff) drop-shadow(-5px 0 0 #fff) drop-shadow(0 5px 0 #fff) drop-shadow(0 -5px 0 #fff)
+          drop-shadow(0 12px 10px rgba(30, 10, 0, 0.45));
+      }
+      .yl {
+        display: block;
+        font-family: "Lilita One", sans-serif;
+        color: #ffe11b;
+        -webkit-text-stroke: 11px #26150a;
+        paint-order: stroke fill;
+        line-height: 1.02;
+        text-align: center;
+        white-space: nowrap;
+      }
+      .yl .ch {
+        display: inline-block;
+        transform-origin: 50% 80%;
+      }
+      .yl .sp {
+        display: inline-block;
+        width: 0.26em;
+      }
+      #hoje {
+        top: 820px;
+      }
+      #hoje .yl {
+        font-size: 190px;
+      }
+      #festival {
+        position: absolute;
+        top: 1070px;
+        left: 0;
+        width: 1080px;
+        text-align: center;
+        font-family: "Pangolin", cursive;
+        font-size: 92px;
+        color: #fff;
+        text-shadow: 0 4px 0 rgba(40, 15, 5, 0.85), 0 0 22px rgba(40, 15, 5, 0.55);
+        white-space: nowrap;
+      }
+      #festival .ch {
+        display: inline-block;
+      }
+      #praca {
+        top: 1270px;
+      }
+      #praca .yl {
+        font-size: 150px;
+      }
+      .pill-wrap {
+        position: absolute;
+        top: 1360px;
+        left: 0;
+        width: 1080px;
+        display: flex;
+        justify-content: center;
+      }
+      #pill {
+        display: block;
+        background: #ffd400;
+        border-radius: 34px;
+        padding: 26px 56px 22px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: 118px;
+        line-height: 1;
+        color: #1a0e05;
+        letter-spacing: -2px;
+        box-shadow: 0 16px 0 #c98f00, 0 26px 40px rgba(0, 0, 0, 0.4);
+        white-space: nowrap;
+      }
+
+      /* doodles */
+      svg.doodle {
+        position: absolute;
+        overflow: visible;
+        pointer-events: none;
+      }
+      svg.doodle path {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 9;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      svg.doodle.dark path {
+        filter: drop-shadow(0 3px 0 rgba(40, 15, 5, 0.6));
+      }
+
+      /* ---------- brand close ---------- */
+      #brand {
+        top: 300px;
+      }
+      #brand .yl {
+        font-size: 176px;
+      }
+      #brand .yl.small {
+        font-size: 210px;
+      }
+      #brand-sub {
+        position: absolute;
+        top: 1500px;
+        left: 0;
+        width: 1080px;
+        display: flex;
+        justify-content: center;
+      }
+      #brand-sub span {
+        display: block;
+        background: #ffd400;
+        color: #1a0e05;
+        font-family: "Poppins", sans-serif;
+        font-weight: 800;
+        font-size: 54px;
+        padding: 18px 40px 14px;
+        border-radius: 999px;
+        box-shadow: 0 10px 0 #c98f00;
+        white-space: nowrap;
+      }
+      .confetti {
+        position: absolute;
+        width: 22px;
+        height: 34px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="14.19" data-width="1080" data-height="1920">
+      <!-- ================= FOOTAGE (track 0) ================= -->
+      <div class="shot"><div class="frame" data-layout-allow-overflow id="f1">
+        <video id="v1" class="clip" src="media/clips/VID-20260917-WA0063.mp4" data-start="0" data-duration="1.33" data-media-start="0.5" data-track-index="0" muted playsinline></video>
+      </div></div>
+      <div class="shot"><div class="frame" data-layout-allow-overflow id="f2">
+        <video id="v2" class="clip" src="media/clips/VID-20260917-WA0070.mp4" data-start="1.33" data-duration="1.23" data-media-start="6.0" data-track-index="0" muted playsinline></video>
+      </div></div>
+      <div class="shot"><div class="frame" data-layout-allow-overflow id="f3">
+        <video id="v3" class="clip" src="media/clips/VID-20260917-WA0077.mp4" data-start="2.56" data-duration="1.24" data-media-start="18.0" data-track-index="0" muted playsinline></video>
+      </div></div>
+      <div class="shot"><div class="frame" data-layout-allow-overflow id="f4">
+        <video id="v4" class="clip" src="media/clips/VID-20260917-WA0076.mp4" data-start="3.8" data-duration="0.93" data-media-start="16.5" data-track-index="0" muted playsinline></video>
+      </div></div>
+      <div class="shot"><div class="frame" data-layout-allow-overflow id="f5">
+        <video id="v5" class="clip" src="media/clips/VID-20260917-WA0023.mp4" data-start="4.73" data-duration="0.93" data-media-start="10.0" data-track-index="0" muted playsinline></video>
+      </div></div>
+      <div class="shot"><div class="frame" data-layout-allow-overflow id="f6">
+        <video id="v6" class="clip" src="media/clips/VID-20260917-WA0067.mp4" data-start="5.66" data-duration="1.54" data-media-start="4.0" data-track-index="0" muted playsinline></video>
+      </div></div>
+      <div class="shot"><div class="frame" data-layout-allow-overflow id="f7">
+        <video id="v7" class="clip" src="media/clips/VID-20260917-WA0074.mp4" data-start="7.2" data-duration="1.24" data-media-start="0.5" data-track-index="0" muted playsinline></video>
+      </div></div>
+      <div class="shot"><div class="frame" data-layout-allow-overflow id="f8">
+        <video id="v8" class="clip" src="media/clips/VID-20260917-WA0073.mp4" data-start="8.44" data-duration="1.24" data-media-start="8.0" data-track-index="0" muted playsinline></video>
+      </div></div>
+      <div class="shot"><div class="frame" data-layout-allow-overflow id="f9">
+        <video id="v9" class="clip" src="media/clips/VID-20260917-WA0073.mp4" data-start="9.68" data-duration="0.93" data-media-start="22.0" data-track-index="0" muted playsinline></video>
+      </div></div>
+      <div class="shot"><div class="frame" data-layout-allow-overflow id="f10">
+        <video id="v10" class="clip" src="media/clips/VID-20260917-WA0072.mp4" data-start="10.61" data-duration="0.92" data-media-start="8.3" data-track-index="0" muted playsinline></video>
+      </div></div>
+      <div class="shot"><div class="frame" data-layout-allow-overflow id="f11" style="transform-origin:50% 62%">
+        <video id="v11" class="clip" src="media/clips/leticia-acenando.mp4" data-start="11.53" data-duration="2.66" data-media-start="0.5" data-track-index="0" muted playsinline></video>
+      </div></div>
+
+      <div id="warm"></div>
+      <div id="vignette"></div>
+
+      <!-- ================= TEXT (track 1+) ================= -->
+      <section id="s-hoje" class="clip" data-start="0" data-duration="3.8" data-track-index="1" style="position:absolute;inset:0">
+        <div class="title-wrap" id="hoje"><div class="outline"><span class="yl" data-split>É HOJE!</span></div></div>
+        <svg class="doodle" id="spark-a" viewBox="0 0 100 100" style="left:860px;top:700px;width:120px;height:120px">
+          <path d="M20 70 L8 92" /><path d="M48 58 L50 30" /><path d="M74 70 L94 52" />
+        </svg>
+        <svg class="doodle dark" id="arrow" viewBox="0 0 200 160" style="left:300px;top:1000px;width:170px;height:136px">
+          <path d="M150 10 C 60 20, 40 70, 70 130" /><path d="M48 110 L70 132 L92 108" />
+        </svg>
+        <div id="festival" data-split>Festival de Fatias</div>
+        <svg class="doodle dark" id="spark-b" viewBox="0 0 100 100" style="left:110px;top:1150px;width:110px;height:110px">
+          <path d="M10 30 L34 40" /><path d="M8 62 L36 60" /><path d="M18 92 L40 78" />
+        </svg>
+      </section>
+
+      <section id="s-praca" class="clip" data-start="5.66" data-duration="2.78" data-track-index="2" style="position:absolute;inset:0">
+        <div class="title-wrap" id="praca">
+          <div class="outline"><span class="yl" data-split>Praça do</span><span class="yl" data-split>Eng do meio</span></div>
+        </div>
+        <svg class="doodle dark" id="spark-c" viewBox="0 0 100 100" style="left:820px;top:1160px;width:110px;height:110px">
+          <path d="M20 70 L8 92" /><path d="M48 58 L50 30" /><path d="M74 70 L94 52" />
+        </svg>
+        <svg class="doodle dark" id="spark-d" viewBox="0 0 100 100" style="left:90px;top:1520px;width:110px;height:110px">
+          <path d="M10 30 L34 40" /><path d="M8 62 L36 60" /><path d="M18 92 L40 78" />
+        </svg>
+      </section>
+
+      <section id="s-hora" class="clip" data-start="8.44" data-duration="2.17" data-track-index="3" style="position:absolute;inset:0">
+        <div class="pill-wrap"><span id="pill">Às 14:30h</span></div>
+      </section>
+
+      <section id="s-brand" class="clip" data-start="11.53" data-duration="2.66" data-track-index="4" style="position:absolute;inset:0">
+        <div id="confetti-layer" style="position:absolute;inset:0"></div>
+        <div class="title-wrap" id="brand">
+          <div class="outline"><span class="yl" data-split>Letícia’s</span><span class="yl small" data-split>Bolos</span></div>
+        </div>
+        <div id="brand-sub"><span>Festival de Fatias · hoje 14:30h</span></div>
+      </section>
+
+      <div id="flash" data-layout-allow-occlusion></div>
+    </div>
+
+    <script>
+      // ---- split text into letter spans (static DOM, built before the timeline) ----
+      document.querySelectorAll("[data-split]").forEach((el) => {
+        const text = el.textContent;
+        el.textContent = "";
+        for (const c of text) {
+          const s = document.createElement("span");
+          if (c === " ") {
+            s.className = "sp";
+            s.innerHTML = "&nbsp;";
+          } else {
+            s.className = "ch";
+            s.textContent = c;
+          }
+          el.appendChild(s);
+        }
+      });
+
+      // ---- seeded confetti ----
+      let seed = 7;
+      const rnd = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
+      const colors = ["#ffd400", "#ff3b3b", "#ffffff", "#ff8fb1", "#7a3b12"];
+      const layer = document.getElementById("confetti-layer");
+      const confetti = [];
+      for (let i = 0; i < 46; i++) {
+        const d = document.createElement("div");
+        d.className = "confetti";
+        d.style.background = colors[i % colors.length];
+        d.style.left = 40 + rnd() * 1000 + "px";
+        d.style.top = "-80px";
+        layer.appendChild(d);
+        confetti.push({ el: d, fall: 1500 + rnd() * 600, delay: rnd() * 0.9, rot: 360 + rnd() * 540, drift: (rnd() - 0.5) * 220 });
+      }
+
+      const B = (k) => 0.09 + 0.3093 * k; // beat grid measured from the original audio
+      const tl = gsap.timeline({ paused: true });
+
+      // ---- footage: punch-in at every cut + slow push ----
+      const shots = [
+        ["#f1", 0, 1.33], ["#f2", 1.33, 1.23], ["#f3", 2.56, 1.24], ["#f4", 3.8, 0.93],
+        ["#f5", 4.73, 0.93], ["#f6", 5.66, 1.54], ["#f7", 7.2, 1.24], ["#f8", 8.44, 1.24],
+        ["#f9", 9.68, 0.93], ["#f10", 10.61, 0.92], ["#f11", 11.53, 2.66],
+      ];
+      shots.forEach(([id, start, dur], i) => {
+        const end = id === "#f11" ? 1.0 : 1.04;
+        const from = id === "#f11" ? 1.32 : 1.22;
+        tl.fromTo(id, { scale: from }, { scale: 1.1, duration: 0.32, ease: "expo.out" }, start);
+        tl.to(id, { scale: end, duration: Math.max(0.1, dur - 0.32), ease: "none" }, start + 0.32);
+      });
+
+      // whip transitions: blur + vertical slam into the crowd and into the close
+      [[5.66, "#f5", "#f6"], [11.53, "#f10", "#f11"], [3.8, "#f3", "#f4"]].forEach(([t, out, inn]) => {
+        tl.to(out, { y: -260, filter: "blur(18px)", duration: 0.12, ease: "power4.in" }, t - 0.12);
+        tl.fromTo(inn, { y: 300, filter: "blur(18px)" }, { y: 0, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, t);
+      });
+
+      // white flashes on the big hits
+      [1.33, 2.56, 8.44, 9.68].forEach((t) => {
+        tl.fromTo("#flash", { opacity: 0.75 }, { opacity: 0, duration: 0.22, ease: "power2.out", immediateRender: false }, t);
+      });
+
+      // ---- "É HOJE!" — letters pop one by one (0.10–0.55 as in the original) ----
+      tl.fromTo("#hoje .ch", { scale: 0, y: 40, rotation: -14 }, { scale: 1, y: 0, rotation: 0, duration: 0.32, ease: "back.out(2.6)", stagger: 0.075 }, 0.1);
+      // beat bumps
+      [B(4), B(8)].forEach((t) => {
+        tl.fromTo("#hoje", { scale: 1.12 }, { scale: 1, duration: 0.25, ease: "power3.out", immediateRender: false }, t);
+      });
+      tl.fromTo("#hoje", { x: 0 }, { keyframes: { x: [10, -12, 8, -5, 0] }, duration: 0.24, ease: "none" }, B(4));
+      tl.fromTo("#spark-a path", { strokeDasharray: 60, strokeDashoffset: 60 }, { strokeDashoffset: 0, duration: 0.18, stagger: 0.05, ease: "power2.out" }, 0.55);
+      tl.fromTo("#spark-a", { scale: 0.6, transformOrigin: "0% 100%" }, { scale: 1, duration: 0.3, ease: "back.out(3)" }, 0.55);
+
+      // "Festival de Fatias" — handwritten type-on (1.30–1.95) + arrow draw
+      tl.fromTo("#arrow path", { strokeDasharray: 260, strokeDashoffset: 260 }, { strokeDashoffset: 0, duration: 0.28, stagger: 0.12, ease: "power2.inOut" }, 1.08);
+      tl.fromTo("#festival .ch", { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.08, stagger: 0.036, ease: "power1.out" }, 1.3);
+      tl.fromTo("#spark-b path", { strokeDasharray: 60, strokeDashoffset: 60 }, { strokeDashoffset: 0, duration: 0.18, stagger: 0.05 }, 1.95);
+
+      // exit: everything punches out into the whip at 3.8
+      tl.to("#s-hoje .title-wrap, #festival, #arrow, #spark-a, #spark-b", { scale: 1.5, autoAlpha: 0, filter: "blur(10px)", duration: 0.16, ease: "power3.in" }, 3.64);
+
+      // ---- "Praça do / Eng do meio" — letters pop (5.70–6.95) ----
+      tl.fromTo("#praca .ch", { scale: 0, y: 36, rotation: 10 }, { scale: 1, y: 0, rotation: 0, duration: 0.3, ease: "back.out(2.4)", stagger: 0.062 }, 5.72);
+      tl.fromTo("#spark-c path, #spark-d path", { strokeDasharray: 60, strokeDashoffset: 60 }, { strokeDashoffset: 0, duration: 0.18, stagger: 0.05 }, 6.85);
+      [B(23), B(27) - 0.31].forEach((t) => {
+        tl.fromTo("#praca", { scale: 1.08 }, { scale: 1, duration: 0.25, ease: "power3.out", immediateRender: false }, t);
+      });
+      tl.to("#praca", { y: -40, autoAlpha: 0, scale: 0.9, duration: 0.14, ease: "power3.in" }, 8.3);
+
+      // ---- "Às 14:30h" — pill slams in and pulses on the beat ----
+      tl.fromTo("#pill", { scale: 0, rotation: -8 }, { scale: 1, rotation: -3, duration: 0.36, ease: "back.out(2.2)" }, 8.44);
+      for (let k = 29; k <= 33; k++) {
+        tl.fromTo("#pill", { scale: 1.09 }, { scale: 1, duration: 0.26, ease: "power2.out", immediateRender: false }, B(k));
+      }
+      tl.to("#pill", { scale: 0, rotation: 6, duration: 0.14, ease: "back.in(2)" }, 10.47);
+
+      // ---- close: Letícia's Bolos + confetti ----
+      tl.fromTo("#brand .ch", { scale: 0, y: -60, rotation: -12 }, { scale: 1, y: 0, rotation: 0, duration: 0.34, ease: "back.out(2.6)", stagger: 0.055 }, 11.62);
+      tl.fromTo("#brand-sub span", { y: 140, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.4, ease: "back.out(1.8)" }, 12.45);
+      [B(41), B(43), B(45)].forEach((t) => {
+        tl.fromTo("#brand", { scale: 1.07 }, { scale: 1, duration: 0.25, ease: "power3.out", immediateRender: false }, t);
+      });
+      confetti.forEach((c) => {
+        tl.fromTo(c.el, { y: 0, x: 0, rotation: 0 }, { y: c.fall, x: c.drift, rotation: c.rot, duration: 1.9, ease: "power1.in" }, 11.62 + c.delay);
+      });
+
+      window.__timelines["main"] = tl;
+    </script>
+
+    <!-- original audio: voice + beat, untouched -->
+    <audio id="vo" src="media/audio.m4a" data-start="0" data-duration="14.19" data-track-index="10" data-volume="1"></audio>
+  </body>
+</html>
