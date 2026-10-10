@@ -151,14 +151,14 @@
         display: inline-block;
       }
       #praca {
-        top: 1270px;
+        top: 1080px;
       }
       #praca .yl {
         font-size: 150px;
       }
       .pill-wrap {
         position: absolute;
-        top: 1360px;
+        top: 1430px;
         left: 0;
         width: 1080px;
         display: flex;
@@ -291,15 +291,15 @@
         <div class="title-wrap" id="praca">
           <div class="outline"><span class="yl" data-split>Praça do</span><span class="yl" data-split>Eng do meio</span></div>
         </div>
-        <svg class="doodle dark" id="spark-c" viewBox="0 0 100 100" style="left:820px;top:1160px;width:110px;height:110px">
+        <svg class="doodle dark" id="spark-c" viewBox="0 0 100 100" style="left:820px;top:970px;width:110px;height:110px">
           <path d="M20 70 L8 92" /><path d="M48 58 L50 30" /><path d="M74 70 L94 52" />
         </svg>
-        <svg class="doodle dark" id="spark-d" viewBox="0 0 100 100" style="left:90px;top:1520px;width:110px;height:110px">
+        <svg class="doodle dark" id="spark-d" viewBox="0 0 100 100" style="left:90px;top:1330px;width:110px;height:110px">
           <path d="M10 30 L34 40" /><path d="M8 62 L36 60" /><path d="M18 92 L40 78" />
         </svg>
       </section>
 
-      <section id="s-hora" class="clip" data-start="7.9" data-duration="2.71" data-track-index="3" style="position:absolute;inset:0">
+      <section id="s-hora" class="clip" data-start="6.35" data-duration="4.26" data-track-index="3" style="position:absolute;inset:0">
         <div class="pill-wrap"><span id="pill">Às 14:30h</span></div>
       </section>
 
@@ -400,8 +400,9 @@
       tl.to("#praca", { y: -40, autoAlpha: 0, duration: 0.3, ease: "sine.in" }, 7.62);
 
       // ---- "Às 14:30h" — pill lands with the voice (~7.95s) and pulses on the beat ----
-      tl.fromTo("#pill", { scale: 0, rotation: -8 }, { scale: 1, rotation: -3, duration: 0.36, ease: "back.out(2.2)" }, 7.95);
-      for (let k = 27; k <= 33; k++) {
+      // voice says "às 14:30" right after "...engenho do meio" (~6.4s), so the pill lands under the place name
+      tl.fromTo("#pill", { scale: 0, rotation: -8 }, { scale: 1, rotation: -3, duration: 0.36, ease: "back.out(2.2)" }, 6.4);
+      for (let k = 22; k <= 33; k++) {
         tl.fromTo("#pill", { scale: 1.09 }, { scale: 1, duration: 0.26, ease: "power2.out", immediateRender: false }, B(k));
       }
       tl.to("#pill", { y: -30, autoAlpha: 0, duration: 0.3, ease: "sine.in" }, 10.31);
