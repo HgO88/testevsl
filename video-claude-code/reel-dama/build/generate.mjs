@@ -1,16 +1,19 @@
-// Gera index.html: legenda cinetica no estilo do Reel de referencia sobre o bruto.
-// Uso: node build/generate.mjs
+// Gera index.html: legenda no estilo do Reel de referencia, versao elegante pedida
+// pelo cliente (branco/vermelho/preto, Montserrat + Cormorant, SFX discretos).
+// Uso: node build/generate.mjs          (primeiros 19.5s, teste)
+//      DUR=64.2 node build/generate.mjs (video inteiro)
 import { readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 
 const ROOT = new URL("..", import.meta.url).pathname;
-const DUR = 64.2;
+const DUR = +(process.env.DUR || 19.5);
 const words = JSON.parse(readFileSync(ROOT + "media/words.json", "utf8"));
 
 // Cada grupo: linha pequena (lead) + palavra-chave grande (big).
 // lead/big sao procurados na transcricao a partir de `from`, na ordem.
-// style: caps | ital | serif | type (letra a letra) ; bar: sim | nao
-const PLAN = [
+// style: caps | ital | serif | type (letra a letra) ; bar: "nao" sublinha a palavra em vermelho
+// (punch/shake/sim ficaram do estilo anterior e hoje sao ignorados)
+const PLAN_ALL = [
   { from: 0.0, lead: "hoje eu quero falar com", big: "você", style: "ital", sfx: "whoosh" },
   { from: 1.2, lead: "que pensa em dizer", big: "não", style: "caps", bar: "nao", sfx: "impacto", punch: 0.06 },
   { from: 3.0, lead: "mas na hora você diz", big: "sim", style: "caps", bar: "sim", sfx: "ding" },
@@ -49,8 +52,9 @@ const PLAN = [
   { from: 60.3, lead: "está por trás dessa sua", big: "dificuldade", style: "ital", sfx: "swish" },
   { from: 62.4, lead: "de se colocar em", big: "primeiro lugar.", style: "ital", sfx: "whoosh", punch: 0.06 },
 ];
+const PLAN = PLAN_ALL.filter((g) => g.from < DUR - 0.5);
 // cortes de cena do bruto (ffmpeg scene > 0.25)
-const CUTS = [4.933, 14.6, 19.5, 25.533, 30.067, 40.633, 45.3, 55.1];
+const CUTS = [4.933, 14.6, 19.5, 25.533, 30.067, 40.633, 45.3, 55.1].filter((c) => c < DUR - 0.1);
 
 const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
 let cursor = 0;
@@ -88,14 +92,16 @@ groups.forEach((g, i) => (g.end = i + 1 < groups.length ? groups[i + 1].start - 
 
 // ---- SFX ----
 const wavDur = (f) => +execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", ROOT + f]).toString();
-const VOL = { pop: 0.3, whoosh: 0.5, "whoosh-curto": 0.5, swish: 0.5, ding: 0.4, glitter: 0.35, impacto: 0.55, shutter: 0.5, tecla: 0.3, riser: 0.35, click: 0.4 };
+// so dois sons, baixos: um sopro suave em cada destaque e um grave curto no NAO.
+// (sem "ding", pop, tecla ou obturador — o cliente achou alto/extravagante)
+const VOL = { whoosh: 0.14, impacto: 0.16 };
 const sfx = [];
 const addSfx = (name, at) => sfx.push({ name, at: Math.max(0, +at.toFixed(3)) });
 for (const g of groups) {
-  if (g.lead.length) addSfx("pop", g.lead[0].at - 0.03);
-  if (g.sfx) addSfx(g.sfx, g.at - (g.sfx.startsWith("whoosh") || g.sfx === "swish" ? 0.15 : 0.02));
+  if (g.style === "type") continue;
+  if (g.bar === "nao") addSfx("impacto", g.at - 0.02);
+  else addSfx("whoosh", g.at - 0.2);
 }
-for (const c of CUTS) addSfx("shutter", c - 0.04);
 
 // ---- typewriter: um tempo por letra, espalhado pelas palavras da fala ----
 function typeChars(g) {
@@ -119,11 +125,10 @@ const capHtml = groups.map((g) => {
   if (g.style === "type") {
     g.chars = typeChars(g);
     big = g.chars.map((c, i) => `<span class="ch" id="${g.id}-c${i}">${c.ch === " " ? "&nbsp;" : esc(c.ch)}</span>`).join("");
-    g.chars.filter((c, i) => c.ch !== " " && i % 2 === 0).forEach((c) => addSfx("tecla", c.at));
   } else big = esc(g.style === "caps" ? g.big.toUpperCase() : g.big);
   return `      <div class="grp" id="${g.id}">
         <div class="lead">${lead}</div>
-        <div class="bigwrap ${g.bar ? "has-bar bar-" + g.bar : ""}" id="${g.id}-wrap">${g.bar ? `<div class="bar" id="${g.id}-bar"></div>` : ""}<div class="big s-${g.style}" id="${g.id}-big" data-text="${esc(g.big)}">${big}</div></div>
+        <div class="bigwrap" id="${g.id}-wrap"><div class="big s-${g.style}" id="${g.id}-big" data-text="${esc(g.big)}">${big}</div>${g.bar === "nao" ? `<div class="uline" id="${g.id}-uline"></div>` : ""}</div>
       </div>`;
 }).join("\n");
 
@@ -138,7 +143,7 @@ const sfxHtml = sfx.map((s, i) => {
 }).join("\n");
 
 const timing = groups.map(({ id, style, at, end, start, punch, shake, lead, chars, bar }) =>
-  ({ id, style, at: +at.toFixed(3), end: +end.toFixed(3), start: +start.toFixed(3), punch, shake, bar: !!bar, lead: lead.map((w) => +w.at.toFixed(3)), chars: chars?.map((c) => c.at) }));
+  ({ id, style, at: +at.toFixed(3), end: +end.toFixed(3), start: +start.toFixed(3), punch, shake, bar: bar === "nao", lead: lead.map((w) => +w.at.toFixed(3)), chars: chars?.map((c) => c.at) }));
 
 const html = `<!doctype html>
 <html lang="pt-BR">
@@ -160,17 +165,13 @@ const html = `<!doctype html>
         text-shadow: 0 0 2px rgba(0, 0, 0, 0.7), 0 2px 4px rgba(0, 0, 0, 0.55), 0 4px 18px rgba(0, 0, 0, 0.6); }
       .w { display: inline-block; opacity: 0; }
       .bigwrap { position: relative; display: block; width: max-content; max-width: 960px; }
-      .big { position: relative; display: block; opacity: 0; line-height: 0.95; white-space: nowrap;
-        text-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4); }
-      .s-caps { font-family: Montserrat, sans-serif; font-weight: 900; letter-spacing: -0.03em; }
-      .s-ital { font-family: Montserrat, sans-serif; font-weight: 900; font-style: italic; letter-spacing: -0.035em; }
-      .s-serif, .s-type { font-family: "Playfair Display", serif; font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+      .big { position: relative; display: block; opacity: 0; line-height: 1; white-space: nowrap; font-family: "Cormorant Garamond", serif; color: #fff;
+        text-shadow: 0 0 2px rgba(0, 0, 0, 0.55), 0 4px 22px rgba(0, 0, 0, 0.55); }
+      .s-caps { font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+      .s-ital, .s-serif, .s-type { font-style: italic; font-weight: 500; letter-spacing: -0.005em; }
       .s-type { opacity: 1; }
       .ch { display: inline-block; opacity: 0; }
-      .has-bar .big { padding: 0.06em 0.2em 0.02em; text-shadow: none; }
-      .bar { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 6px; }
-      .bar-sim .bar { background: #e8417a; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); }
-      .bar-nao .bar { background: #d7263d; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); }
+      .uline { position: absolute; left: 6%; bottom: -6px; width: 88%; height: 6px; border-radius: 3px; background: #c8102e; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); }
     </style>
   </head>
   <body>
@@ -187,12 +188,11 @@ ${sfxHtml}
     <script>
       const G = ${JSON.stringify(timing)};
       const CUTS = ${JSON.stringify(CUTS)};
-      const MAX = { caps: 230, ital: 175, serif: 165, type: 120 };
+      const MAX = { caps: 150, ital: 170, serif: 170, type: 105 };
       const FIT = 940;
       function fontSpec(style, px) {
-        if (style === "caps") return "900 " + px + "px Montserrat";
-        if (style === "ital") return "italic 900 " + px + "px Montserrat";
-        return "italic 400 " + px + "px 'Playfair Display'";
+        if (style === "caps") return "600 " + px + "px 'Cormorant Garamond'";
+        return "italic 500 " + px + "px 'Cormorant Garamond'";
       }
       function build() {
         const ctx = document.createElement("canvas").getContext("2d");
@@ -200,8 +200,8 @@ ${sfxHtml}
           const el = document.getElementById(g.id + "-big");
           const text = g.style === "caps" ? el.dataset.text.toUpperCase() : el.dataset.text;
           ctx.font = fontSpec(g.style, 100);
-          const pad = g.bar ? 0.4 : 0;
-          const w = ctx.measureText(text).width / 100 + pad;
+          const spacing = g.style === "caps" ? 0.06 * text.length : 0;
+          const w = ctx.measureText(text).width / 100 + spacing;
           el.style.fontSize = Math.floor(Math.min(MAX[g.style], FIT / w)) + "px";
         });
 
@@ -210,65 +210,42 @@ ${sfxHtml}
         G.forEach((g) => {
           const grp = "#" + g.id, big = grp + "-big";
           tl.set(grp, { opacity: 1 }, g.start - 0.01);
-          // linha pequena: palavra a palavra, no tempo da fala
+          // linha pequena: palavra a palavra, no tempo da fala (fade curto, sobe pouco)
           g.lead.forEach((at, i) => {
-            tl.set(grp + "-w" + i, { opacity: 1, y: 28 }, at);
-            tl.to(grp + "-w" + i, { y: 0, duration: 0.14, ease: "power4.out" }, at);
+            tl.fromTo(grp + "-w" + i, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.18, ease: "power2.out" }, at);
           });
-          // palavra-chave
-          const t = g.at - 0.04;
-          if (g.bar) {
-            tl.fromTo(grp + "-bar", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.16, ease: "power4.out" }, t - 0.06);
-          }
+          // palavra-chave: entra suave, com leve desfoque que se resolve
+          const t = g.at - 0.06;
           if (g.style === "type") {
             g.chars.forEach((at, i) => {
-              tl.set(grp + "-c" + i, { opacity: 1, y: 10 }, at);
-              tl.to(grp + "-c" + i, { y: 0, duration: 0.1, ease: "power3.out" }, at);
+              tl.fromTo(grp + "-c" + i, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, at);
             });
-          } else if (g.style === "caps") {
-            tl.set(big, { opacity: 1 }, t);
-            tl.fromTo(big, { scale: 1.45, filter: "blur(12px)" }, { scale: 1, filter: "blur(0px)", duration: 0.2, ease: "expo.out" }, t);
-          } else if (g.style === "ital") {
-            tl.set(big, { opacity: 1 }, t);
-            tl.fromTo(big, { scale: 0.6, y: 40, filter: "blur(14px)" }, { scale: 1, y: 0, filter: "blur(0px)", duration: 0.22, ease: "power4.out" }, t);
           } else {
-            tl.fromTo(big, { opacity: 0, y: 24, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.3, ease: "power3.out" }, t);
+            tl.fromTo(big, { opacity: 0, y: 16, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.38, ease: "power2.out" }, t);
           }
-          if (g.shake) {
-            [10, -8, 6, -4, 0].forEach((x, i) => tl.to(grp + "-wrap", { x, duration: F, ease: "none" }, t + 0.2 + i * F));
+          if (g.bar) {
+            tl.fromTo(grp + "-uline", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.4, ease: "power2.inOut" }, t + 0.2);
           }
-          // saida rapida
+          // saida: fade curto
           if (g.end < ${DUR} - 0.05) {
-            tl.to(grp, { opacity: 0, y: -26, filter: "blur(8px)", duration: 0.09, ease: "power2.in" }, g.end - 0.09);
+            tl.to(grp, { opacity: 0, duration: 0.14, ease: "power1.in" }, g.end - 0.14);
           }
         });
 
-        // camera: cada trecho entre cortes tem um enquadramento base (alterna aberto/fechado,
-        // como o jump zoom da referencia); punch-in nas palavras de impacto; blur rapido no corte
+        // camera: so uma aproximacao lenta e discreta em cada trecho entre cortes
         const SEG = [0].concat(CUTS);
         SEG.forEach((s0, i) => {
           const s1 = i + 1 < SEG.length ? SEG[i + 1] : ${DUR};
-          const base = i % 2 ? 1.1 : 1.0;
-          if (i === 0) tl.fromTo("#cam", { scale: base, transformOrigin: "50% 32%" }, { scale: base, duration: 0.01 }, 0);
-          else {
-            tl.set("#cam", { scale: base + 0.06 }, s0);
-            tl.to("#cam", { scale: base, duration: 0.45, ease: "power3.out" }, s0);
-            tl.fromTo("#cam", { filter: "blur(10px)" }, { filter: "blur(0px)", duration: 0.12, ease: "power2.out", immediateRender: false }, s0);
-          }
-          G.filter((g) => g.punch && g.at > s0 + 0.5 && g.at < s1 - 0.3).forEach((g) => {
-            const back = Math.min(g.at + 0.55, s1 - 0.7);
-            tl.to("#cam", { scale: base + g.punch, duration: 0.14, ease: "power4.out" }, g.at - 0.04);
-            if (back > g.at + 0.2) tl.to("#cam", { scale: base, duration: Math.min(0.6, s1 - back - 0.05), ease: "power2.inOut" }, back);
-          });
+          if (i === 0) tl.fromTo("#cam", { scale: 1, transformOrigin: "50% 32%" }, { scale: 1.03, duration: s1 - s0, ease: "none" }, s0);
+          else tl.fromTo("#cam", { scale: 1 }, { scale: 1.03, duration: s1 - s0, ease: "none", immediateRender: false }, s0);
         });
         window.__timelines["main"] = tl;
         if (window.__hfForceTimelineRebind) window.__hfForceTimelineRebind();
       }
       Promise.all([
-        document.fonts.load("900 100px Montserrat"),
-        document.fonts.load("italic 900 100px Montserrat"),
         document.fonts.load("500 50px Montserrat"),
-        document.fonts.load("italic 400 100px 'Playfair Display'"),
+        document.fonts.load("600 100px 'Cormorant Garamond'"),
+        document.fonts.load("italic 500 100px 'Cormorant Garamond'"),
       ]).then(build);
     </script>
   </body>

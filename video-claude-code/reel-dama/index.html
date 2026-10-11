@@ -18,277 +18,91 @@
         text-shadow: 0 0 2px rgba(0, 0, 0, 0.7), 0 2px 4px rgba(0, 0, 0, 0.55), 0 4px 18px rgba(0, 0, 0, 0.6); }
       .w { display: inline-block; opacity: 0; }
       .bigwrap { position: relative; display: block; width: max-content; max-width: 960px; }
-      .big { position: relative; display: block; opacity: 0; line-height: 0.95; white-space: nowrap;
-        text-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4); }
-      .s-caps { font-family: Montserrat, sans-serif; font-weight: 900; letter-spacing: -0.03em; }
-      .s-ital { font-family: Montserrat, sans-serif; font-weight: 900; font-style: italic; letter-spacing: -0.035em; }
-      .s-serif, .s-type { font-family: "Playfair Display", serif; font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+      .big { position: relative; display: block; opacity: 0; line-height: 1; white-space: nowrap; font-family: "Cormorant Garamond", serif; color: #fff;
+        text-shadow: 0 0 2px rgba(0, 0, 0, 0.55), 0 4px 22px rgba(0, 0, 0, 0.55); }
+      .s-caps { font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+      .s-ital, .s-serif, .s-type { font-style: italic; font-weight: 500; letter-spacing: -0.005em; }
       .s-type { opacity: 1; }
       .ch { display: inline-block; opacity: 0; }
-      .has-bar .big { padding: 0.06em 0.2em 0.02em; text-shadow: none; }
-      .bar { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 6px; }
-      .bar-sim .bar { background: #e8417a; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); }
-      .bar-nao .bar { background: #d7263d; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); }
+      .uline { position: absolute; left: 6%; bottom: -6px; width: 88%; height: 6px; border-radius: 3px; background: #c8102e; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="64.2" data-width="1080" data-height="1920">
+    <div id="root" data-composition-id="main" data-start="0" data-duration="19.5" data-width="1080" data-height="1920">
       <div id="cam">
-        <video id="footage" class="clip" src="assets/bruto.mp4" data-start="0" data-duration="64.2" data-track-index="0" muted playsinline></video>
+        <video id="footage" class="clip" src="assets/bruto.mp4" data-start="0" data-duration="19.5" data-track-index="0" muted playsinline></video>
       </div>
       <div id="caps">
       <div class="grp" id="g0">
         <div class="lead"><span class="w" id="g0-w0">hoje</span> <span class="w" id="g0-w1">eu</span> <span class="w" id="g0-w2">quero</span> <span class="w" id="g0-w3">falar</span> <span class="w" id="g0-w4">com</span></div>
-        <div class="bigwrap " id="g0-wrap"><div class="big s-ital" id="g0-big" data-text="você">você</div></div>
+        <div class="bigwrap" id="g0-wrap"><div class="big s-ital" id="g0-big" data-text="você">você</div></div>
       </div>
       <div class="grp" id="g1">
         <div class="lead"><span class="w" id="g1-w0">que</span> <span class="w" id="g1-w1">pensa</span> <span class="w" id="g1-w2">em</span> <span class="w" id="g1-w3">dizer</span></div>
-        <div class="bigwrap has-bar bar-nao" id="g1-wrap"><div class="bar" id="g1-bar"></div><div class="big s-caps" id="g1-big" data-text="não">NÃO</div></div>
+        <div class="bigwrap" id="g1-wrap"><div class="big s-caps" id="g1-big" data-text="não">NÃO</div><div class="uline" id="g1-uline"></div></div>
       </div>
       <div class="grp" id="g2">
         <div class="lead"><span class="w" id="g2-w0">mas</span> <span class="w" id="g2-w1">na</span> <span class="w" id="g2-w2">hora</span> <span class="w" id="g2-w3">você</span> <span class="w" id="g2-w4">diz</span></div>
-        <div class="bigwrap has-bar bar-sim" id="g2-wrap"><div class="bar" id="g2-bar"></div><div class="big s-caps" id="g2-big" data-text="sim">SIM</div></div>
+        <div class="bigwrap" id="g2-wrap"><div class="big s-caps" id="g2-big" data-text="sim">SIM</div></div>
       </div>
       <div class="grp" id="g3">
         <div class="lead"><span class="w" id="g3-w0">alguém</span> <span class="w" id="g3-w1">te</span> <span class="w" id="g3-w2">pede</span></div>
-        <div class="bigwrap " id="g3-wrap"><div class="big s-serif" id="g3-big" data-text="um favor">um favor</div></div>
+        <div class="bigwrap" id="g3-wrap"><div class="big s-serif" id="g3-big" data-text="um favor">um favor</div></div>
       </div>
       <div class="grp" id="g4">
         <div class="lead"><span class="w" id="g4-w0">e</span> <span class="w" id="g4-w1">você</span> <span class="w" id="g4-w2">não</span> <span class="w" id="g4-w3">queria</span></div>
-        <div class="bigwrap " id="g4-wrap"><div class="big s-ital" id="g4-big" data-text="fazer">fazer</div></div>
+        <div class="bigwrap" id="g4-wrap"><div class="big s-ital" id="g4-big" data-text="fazer">fazer</div></div>
       </div>
       <div class="grp" id="g5">
         <div class="lead"><span class="w" id="g5-w0">só</span> <span class="w" id="g5-w1">que</span> <span class="w" id="g5-w2">você</span> <span class="w" id="g5-w3">acaba</span> <span class="w" id="g5-w4">dizendo</span></div>
-        <div class="bigwrap has-bar bar-sim" id="g5-wrap"><div class="bar" id="g5-bar"></div><div class="big s-caps" id="g5-big" data-text="sim">SIM</div></div>
+        <div class="bigwrap" id="g5-wrap"><div class="big s-caps" id="g5-big" data-text="sim">SIM</div></div>
       </div>
       <div class="grp" id="g6">
         <div class="lead"></div>
-        <div class="bigwrap " id="g6-wrap"><div class="big s-type" id="g6-big" data-text="tá tudo bem, eu faço."><span class="ch" id="g6-c0">t</span><span class="ch" id="g6-c1">á</span><span class="ch" id="g6-c2">&nbsp;</span><span class="ch" id="g6-c3">t</span><span class="ch" id="g6-c4">u</span><span class="ch" id="g6-c5">d</span><span class="ch" id="g6-c6">o</span><span class="ch" id="g6-c7">&nbsp;</span><span class="ch" id="g6-c8">b</span><span class="ch" id="g6-c9">e</span><span class="ch" id="g6-c10">m</span><span class="ch" id="g6-c11">,</span><span class="ch" id="g6-c12">&nbsp;</span><span class="ch" id="g6-c13">e</span><span class="ch" id="g6-c14">u</span><span class="ch" id="g6-c15">&nbsp;</span><span class="ch" id="g6-c16">f</span><span class="ch" id="g6-c17">a</span><span class="ch" id="g6-c18">ç</span><span class="ch" id="g6-c19">o</span><span class="ch" id="g6-c20">.</span></div></div>
+        <div class="bigwrap" id="g6-wrap"><div class="big s-type" id="g6-big" data-text="tá tudo bem, eu faço."><span class="ch" id="g6-c0">t</span><span class="ch" id="g6-c1">á</span><span class="ch" id="g6-c2">&nbsp;</span><span class="ch" id="g6-c3">t</span><span class="ch" id="g6-c4">u</span><span class="ch" id="g6-c5">d</span><span class="ch" id="g6-c6">o</span><span class="ch" id="g6-c7">&nbsp;</span><span class="ch" id="g6-c8">b</span><span class="ch" id="g6-c9">e</span><span class="ch" id="g6-c10">m</span><span class="ch" id="g6-c11">,</span><span class="ch" id="g6-c12">&nbsp;</span><span class="ch" id="g6-c13">e</span><span class="ch" id="g6-c14">u</span><span class="ch" id="g6-c15">&nbsp;</span><span class="ch" id="g6-c16">f</span><span class="ch" id="g6-c17">a</span><span class="ch" id="g6-c18">ç</span><span class="ch" id="g6-c19">o</span><span class="ch" id="g6-c20">.</span></div></div>
       </div>
       <div class="grp" id="g7">
         <div class="lead"><span class="w" id="g7-w0">termina</span> <span class="w" id="g7-w1">a</span></div>
-        <div class="bigwrap " id="g7-wrap"><div class="big s-ital" id="g7-big" data-text="ligação">ligação</div></div>
+        <div class="bigwrap" id="g7-wrap"><div class="big s-ital" id="g7-big" data-text="ligação">ligação</div></div>
       </div>
       <div class="grp" id="g8">
         <div class="lead"><span class="w" id="g8-w0">morrendo</span> <span class="w" id="g8-w1">de</span></div>
-        <div class="bigwrap " id="g8-wrap"><div class="big s-caps" id="g8-big" data-text="raiva">RAIVA</div></div>
+        <div class="bigwrap" id="g8-wrap"><div class="big s-caps" id="g8-big" data-text="raiva">RAIVA</div></div>
       </div>
       <div class="grp" id="g9">
         <div class="lead"><span class="w" id="g9-w0">de</span> <span class="w" id="g9-w1">quem</span> <span class="w" id="g9-w2">pediu</span> <span class="w" id="g9-w3">e</span></div>
-        <div class="bigwrap " id="g9-wrap"><div class="big s-ital" id="g9-big" data-text="de você mesmo">de você mesmo</div></div>
+        <div class="bigwrap" id="g9-wrap"><div class="big s-ital" id="g9-big" data-text="de você mesmo">de você mesmo</div></div>
       </div>
       <div class="grp" id="g10">
         <div class="lead"><span class="w" id="g10-w0">porque</span> <span class="w" id="g10-w1">você</span> <span class="w" id="g10-w2">sabe</span> <span class="w" id="g10-w3">que</span> <span class="w" id="g10-w4">você</span> <span class="w" id="g10-w5">deveria</span> <span class="w" id="g10-w6">ter</span> <span class="w" id="g10-w7">dito</span></div>
-        <div class="bigwrap has-bar bar-nao" id="g10-wrap"><div class="bar" id="g10-bar"></div><div class="big s-caps" id="g10-big" data-text="não">NÃO</div></div>
+        <div class="bigwrap" id="g10-wrap"><div class="big s-caps" id="g10-big" data-text="não">NÃO</div><div class="uline" id="g10-uline"></div></div>
       </div>
       <div class="grp" id="g11">
         <div class="lead"><span class="w" id="g11-w0">mas</span> <span class="w" id="g11-w1">quando</span> <span class="w" id="g11-w2">chegou</span> <span class="w" id="g11-w3">na</span> <span class="w" id="g11-w4">hora,</span> <span class="w" id="g11-w5">você</span></div>
-        <div class="bigwrap " id="g11-wrap"><div class="big s-serif" id="g11-big" data-text="não conseguiu.">não conseguiu.</div></div>
-      </div>
-      <div class="grp" id="g12">
-        <div class="lead"><span class="w" id="g12-w0">e</span> <span class="w" id="g12-w1">isso</span> <span class="w" id="g12-w2">não</span> <span class="w" id="g12-w3">é</span> <span class="w" id="g12-w4">sinal</span> <span class="w" id="g12-w5">de</span> <span class="w" id="g12-w6">que</span> <span class="w" id="g12-w7">você</span> <span class="w" id="g12-w8">é</span> <span class="w" id="g12-w9">uma</span> <span class="w" id="g12-w10">pessoa</span></div>
-        <div class="bigwrap " id="g12-wrap"><div class="big s-ital" id="g12-big" data-text="fraca">fraca</div></div>
-      </div>
-      <div class="grp" id="g13">
-        <div class="lead"><span class="w" id="g13-w0">simplesmente</span> <span class="w" id="g13-w1">é</span> <span class="w" id="g13-w2">um</span> <span class="w" id="g13-w3">sinal</span> <span class="w" id="g13-w4">de</span> <span class="w" id="g13-w5">que</span> <span class="w" id="g13-w6">você</span> <span class="w" id="g13-w7">ainda</span> <span class="w" id="g13-w8">está</span></div>
-        <div class="bigwrap " id="g13-wrap"><div class="big s-serif" id="g13-big" data-text="condicionada">condicionada</div></div>
-      </div>
-      <div class="grp" id="g14">
-        <div class="lead"><span class="w" id="g14-w0">porque</span> <span class="w" id="g14-w1">você</span> <span class="w" id="g14-w2">aprendeu</span> <span class="w" id="g14-w3">que</span> <span class="w" id="g14-w4">dizer</span></div>
-        <div class="bigwrap has-bar bar-nao" id="g14-wrap"><div class="bar" id="g14-bar"></div><div class="big s-caps" id="g14-big" data-text="não">NÃO</div></div>
-      </div>
-      <div class="grp" id="g15">
-        <div class="lead"><span class="w" id="g15-w0">gerava</span></div>
-        <div class="bigwrap " id="g15-wrap"><div class="big s-ital" id="g15-big" data-text="consequências">consequências</div></div>
-      </div>
-      <div class="grp" id="g16">
-        <div class="lead"></div>
-        <div class="bigwrap " id="g16-wrap"><div class="big s-ital" id="g16-big" data-text="conflitos">conflitos</div></div>
-      </div>
-      <div class="grp" id="g17">
-        <div class="lead"><span class="w" id="g17-w0">e</span></div>
-        <div class="bigwrap " id="g17-wrap"><div class="big s-caps" id="g17-big" data-text="rejeição">REJEIÇÃO</div></div>
-      </div>
-      <div class="grp" id="g18">
-        <div class="lead"><span class="w" id="g18-w0">pra</span> <span class="w" id="g18-w1">evitar</span> <span class="w" id="g18-w2">isso,</span> <span class="w" id="g18-w3">você</span> <span class="w" id="g18-w4">foi</span> <span class="w" id="g18-w5">se</span> <span class="w" id="g18-w6">tornando</span></div>
-        <div class="bigwrap " id="g18-wrap"><div class="big s-serif" id="g18-big" data-text="a mulher">a mulher</div></div>
-      </div>
-      <div class="grp" id="g19">
-        <div class="lead"><span class="w" id="g19-w0">que</span> <span class="w" id="g19-w1">diz</span></div>
-        <div class="bigwrap has-bar bar-sim" id="g19-wrap"><div class="bar" id="g19-bar"></div><div class="big s-caps" id="g19-big" data-text="sim">SIM</div></div>
-      </div>
-      <div class="grp" id="g20">
-        <div class="lead"><span class="w" id="g20-w0">pra</span> <span class="w" id="g20-w1">tudo</span> <span class="w" id="g20-w2">e</span></div>
-        <div class="bigwrap " id="g20-wrap"><div class="big s-ital" id="g20-big" data-text="pra todos">pra todos</div></div>
-      </div>
-      <div class="grp" id="g21">
-        <div class="lead"><span class="w" id="g21-w0">pra</span> <span class="w" id="g21-w1">você</span> <span class="w" id="g21-w2">não</span> <span class="w" id="g21-w3">perder</span> <span class="w" id="g21-w4">o</span></div>
-        <div class="bigwrap " id="g21-wrap"><div class="big s-serif" id="g21-big" data-text="amor">amor</div></div>
-      </div>
-      <div class="grp" id="g22">
-        <div class="lead"><span class="w" id="g22-w0">mesmo</span> <span class="w" id="g22-w1">que</span> <span class="w" id="g22-w2">isso</span></div>
-        <div class="bigwrap " id="g22-wrap"><div class="big s-ital" id="g22-big" data-text="custe">custe</div></div>
-      </div>
-      <div class="grp" id="g23">
-        <div class="lead"><span class="w" id="g23-w0">a</span> <span class="w" id="g23-w1">sua</span></div>
-        <div class="bigwrap " id="g23-wrap"><div class="big s-caps" id="g23-big" data-text="paz">PAZ</div></div>
-      </div>
-      <div class="grp" id="g24">
-        <div class="lead"><span class="w" id="g24-w0">e</span> <span class="w" id="g24-w1">qualquer</span> <span class="w" id="g24-w2">outra</span> <span class="w" id="g24-w3">coisa</span> <span class="w" id="g24-w4">que</span> <span class="w" id="g24-w5">é</span></div>
-        <div class="bigwrap " id="g24-wrap"><div class="big s-ital" id="g24-big" data-text="importante">importante</div></div>
-      </div>
-      <div class="grp" id="g25">
-        <div class="lead"><span class="w" id="g25-w0">é</span> <span class="w" id="g25-w1">por</span> <span class="w" id="g25-w2">isso</span> <span class="w" id="g25-w3">que</span> <span class="w" id="g25-w4">eu</span> <span class="w" id="g25-w5">não</span> <span class="w" id="g25-w6">trabalho</span> <span class="w" id="g25-w7">apenas</span> <span class="w" id="g25-w8">a</span></div>
-        <div class="bigwrap " id="g25-wrap"><div class="big s-ital" id="g25-big" data-text="comunicação">comunicação</div></div>
-      </div>
-      <div class="grp" id="g26">
-        <div class="lead"><span class="w" id="g26-w0">eu</span> <span class="w" id="g26-w1">trabalho</span> <span class="w" id="g26-w2">a</span></div>
-        <div class="bigwrap " id="g26-wrap"><div class="big s-caps" id="g26-big" data-text="identidade">IDENTIDADE</div></div>
-      </div>
-      <div class="grp" id="g27">
-        <div class="lead"><span class="w" id="g27-w0">porque</span> <span class="w" id="g27-w1">os</span> <span class="w" id="g27-w2">limites</span> <span class="w" id="g27-w3">começam</span> <span class="w" id="g27-w4">numa</span> <span class="w" id="g27-w5">identidade</span></div>
-        <div class="bigwrap " id="g27-wrap"><div class="big s-serif" id="g27-big" data-text="bem ancorada">bem ancorada</div></div>
-      </div>
-      <div class="grp" id="g28">
-        <div class="lead"><span class="w" id="g28-w0">a</span> <span class="w" id="g28-w1">mulher</span> <span class="w" id="g28-w2">que</span> <span class="w" id="g28-w3">sabe</span></div>
-        <div class="bigwrap " id="g28-wrap"><div class="big s-ital" id="g28-big" data-text="quem ela é">quem ela é</div></div>
-      </div>
-      <div class="grp" id="g29">
-        <div class="lead"><span class="w" id="g29-w0">e</span> <span class="w" id="g29-w1">entende</span> <span class="w" id="g29-w2">que</span> <span class="w" id="g29-w3">dizer</span></div>
-        <div class="bigwrap has-bar bar-nao" id="g29-wrap"><div class="bar" id="g29-bar"></div><div class="big s-caps" id="g29-big" data-text="não">NÃO</div></div>
-      </div>
-      <div class="grp" id="g30">
-        <div class="lead"><span class="w" id="g30-w0">para</span> <span class="w" id="g30-w1">o</span> <span class="w" id="g30-w2">outro</span> <span class="w" id="g30-w3">é</span> <span class="w" id="g30-w4">dizer</span></div>
-        <div class="bigwrap has-bar bar-sim" id="g30-wrap"><div class="bar" id="g30-bar"></div><div class="big s-caps" id="g30-big" data-text="sim">SIM</div></div>
-      </div>
-      <div class="grp" id="g31">
-        <div class="lead"><span class="w" id="g31-w0">para</span></div>
-        <div class="bigwrap " id="g31-wrap"><div class="big s-type" id="g31-big" data-text="ela mesma."><span class="ch" id="g31-c0">e</span><span class="ch" id="g31-c1">l</span><span class="ch" id="g31-c2">a</span><span class="ch" id="g31-c3">&nbsp;</span><span class="ch" id="g31-c4">m</span><span class="ch" id="g31-c5">e</span><span class="ch" id="g31-c6">s</span><span class="ch" id="g31-c7">m</span><span class="ch" id="g31-c8">a</span><span class="ch" id="g31-c9">.</span></div></div>
-      </div>
-      <div class="grp" id="g32">
-        <div class="lead"><span class="w" id="g32-w0">se</span> <span class="w" id="g32-w1">essa</span> <span class="w" id="g32-w2">conversa</span> <span class="w" id="g32-w3">falou</span> <span class="w" id="g32-w4">com</span> <span class="w" id="g32-w5">você</span> <span class="w" id="g32-w6">de</span> <span class="w" id="g32-w7">alguma</span> <span class="w" id="g32-w8">forma,</span></div>
-        <div class="bigwrap " id="g32-wrap"><div class="big s-ital" id="g32-big" data-text="comenta">comenta</div></div>
-      </div>
-      <div class="grp" id="g33">
-        <div class="lead"><span class="w" id="g33-w0">a</span> <span class="w" id="g33-w1">palavra</span></div>
-        <div class="bigwrap has-bar bar-sim" id="g33-wrap"><div class="bar" id="g33-bar"></div><div class="big s-caps" id="g33-big" data-text="dama">DAMA</div></div>
-      </div>
-      <div class="grp" id="g34">
-        <div class="lead"><span class="w" id="g34-w0">que</span> <span class="w" id="g34-w1">eu</span> <span class="w" id="g34-w2">quero</span> <span class="w" id="g34-w3">te</span> <span class="w" id="g34-w4">mostrar</span> <span class="w" id="g34-w5">qual</span></div>
-        <div class="bigwrap " id="g34-wrap"><div class="big s-serif" id="g34-big" data-text="padrão emocional">padrão emocional</div></div>
-      </div>
-      <div class="grp" id="g35">
-        <div class="lead"><span class="w" id="g35-w0">está</span> <span class="w" id="g35-w1">por</span> <span class="w" id="g35-w2">trás</span> <span class="w" id="g35-w3">dessa</span> <span class="w" id="g35-w4">sua</span></div>
-        <div class="bigwrap " id="g35-wrap"><div class="big s-ital" id="g35-big" data-text="dificuldade">dificuldade</div></div>
-      </div>
-      <div class="grp" id="g36">
-        <div class="lead"><span class="w" id="g36-w0">de</span> <span class="w" id="g36-w1">se</span> <span class="w" id="g36-w2">colocar</span> <span class="w" id="g36-w3">em</span></div>
-        <div class="bigwrap " id="g36-wrap"><div class="big s-ital" id="g36-big" data-text="primeiro lugar.">primeiro lugar.</div></div>
+        <div class="bigwrap" id="g11-wrap"><div class="big s-serif" id="g11-big" data-text="não conseguiu.">não conseguiu.</div></div>
       </div>
       </div>
     </div>
-    <audio id="voice" src="assets/bruto.mp4" data-start="0" data-duration="64.2" data-track-index="10" data-volume="1"></audio>
-    <audio id="sfx-0" src="assets/sfx/pop.wav" data-start="0" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-1" src="assets/sfx/whoosh.wav" data-start="0.73" data-duration="0.450" data-track-index="11" data-volume="0.5"></audio>
-    <audio id="sfx-2" src="assets/sfx/pop.wav" data-start="1.4" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-3" src="assets/sfx/impacto.wav" data-start="2.54" data-duration="0.700" data-track-index="11" data-volume="0.55"></audio>
-    <audio id="sfx-4" src="assets/sfx/pop.wav" data-start="3.09" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-5" src="assets/sfx/ding.wav" data-start="4.54" data-duration="1.400" data-track-index="11" data-volume="0.4"></audio>
-    <audio id="sfx-6" src="assets/sfx/shutter.wav" data-start="4.893" data-duration="0.220" data-track-index="12" data-volume="0.5"></audio>
-    <audio id="sfx-7" src="assets/sfx/pop.wav" data-start="5.08" data-duration="0.120" data-track-index="13" data-volume="0.3"></audio>
-    <audio id="sfx-8" src="assets/sfx/glitter.wav" data-start="5.82" data-duration="0.900" data-track-index="12" data-volume="0.35"></audio>
-    <audio id="sfx-9" src="assets/sfx/pop.wav" data-start="6.37" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-10" src="assets/sfx/swish.wav" data-start="7.37" data-duration="0.280" data-track-index="11" data-volume="0.5"></audio>
-    <audio id="sfx-11" src="assets/sfx/pop.wav" data-start="8.04" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-12" src="assets/sfx/ding.wav" data-start="9.02" data-duration="1.400" data-track-index="11" data-volume="0.4"></audio>
-    <audio id="sfx-13" src="assets/sfx/tecla.wav" data-start="9.36" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-14" src="assets/sfx/tecla.wav" data-start="9.64" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-15" src="assets/sfx/tecla.wav" data-start="9.72" data-duration="0.120" data-track-index="13" data-volume="0.3"></audio>
-    <audio id="sfx-16" src="assets/sfx/tecla.wav" data-start="9.76" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-17" src="assets/sfx/tecla.wav" data-start="9.88" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-18" src="assets/sfx/tecla.wav" data-start="10.07" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-19" src="assets/sfx/tecla.wav" data-start="10.16" data-duration="0.120" data-track-index="13" data-volume="0.3"></audio>
-    <audio id="sfx-20" src="assets/sfx/tecla.wav" data-start="10.3" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-21" src="assets/sfx/tecla.wav" data-start="10.44" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-22" src="assets/sfx/pop.wav" data-start="10.53" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-23" src="assets/sfx/whoosh-curto.wav" data-start="10.89" data-duration="0.220" data-track-index="11" data-volume="0.5"></audio>
-    <audio id="sfx-24" src="assets/sfx/pop.wav" data-start="11.89" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-25" src="assets/sfx/impacto.wav" data-start="12.54" data-duration="0.700" data-track-index="11" data-volume="0.55"></audio>
-    <audio id="sfx-26" src="assets/sfx/pop.wav" data-start="13.08" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-27" src="assets/sfx/swish.wav" data-start="13.77" data-duration="0.280" data-track-index="11" data-volume="0.5"></audio>
-    <audio id="sfx-28" src="assets/sfx/pop.wav" data-start="14.53" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-29" src="assets/sfx/shutter.wav" data-start="14.56" data-duration="0.220" data-track-index="12" data-volume="0.5"></audio>
-    <audio id="sfx-30" src="assets/sfx/impacto.wav" data-start="16.38" data-duration="0.700" data-track-index="11" data-volume="0.55"></audio>
-    <audio id="sfx-31" src="assets/sfx/pop.wav" data-start="16.92" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-32" src="assets/sfx/glitter.wav" data-start="18.54" data-duration="0.900" data-track-index="11" data-volume="0.35"></audio>
-    <audio id="sfx-33" src="assets/sfx/pop.wav" data-start="19.445" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-34" src="assets/sfx/shutter.wav" data-start="19.46" data-duration="0.220" data-track-index="12" data-volume="0.5"></audio>
-    <audio id="sfx-35" src="assets/sfx/swish.wav" data-start="21.085" data-duration="0.280" data-track-index="11" data-volume="0.5"></audio>
-    <audio id="sfx-36" src="assets/sfx/pop.wav" data-start="21.755" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-37" src="assets/sfx/glitter.wav" data-start="24.495" data-duration="0.900" data-track-index="11" data-volume="0.35"></audio>
-    <audio id="sfx-38" src="assets/sfx/pop.wav" data-start="25.365" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-39" src="assets/sfx/shutter.wav" data-start="25.493" data-duration="0.220" data-track-index="11" data-volume="0.5"></audio>
-    <audio id="sfx-40" src="assets/sfx/impacto.wav" data-start="26.895" data-duration="0.700" data-track-index="11" data-volume="0.55"></audio>
-    <audio id="sfx-41" src="assets/sfx/pop.wav" data-start="27.435" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-42" src="assets/sfx/whoosh-curto.wav" data-start="27.725" data-duration="0.220" data-track-index="11" data-volume="0.5"></audio>
-    <audio id="sfx-43" src="assets/sfx/whoosh-curto.wav" data-start="28.525" data-duration="0.220" data-track-index="11" data-volume="0.5"></audio>
-    <audio id="sfx-44" src="assets/sfx/pop.wav" data-start="29.205" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-45" src="assets/sfx/impacto.wav" data-start="29.375" data-duration="0.700" data-track-index="11" data-volume="0.55"></audio>
-    <audio id="sfx-46" src="assets/sfx/pop.wav" data-start="30.005" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-47" src="assets/sfx/shutter.wav" data-start="30.027" data-duration="0.220" data-track-index="13" data-volume="0.5"></audio>
-    <audio id="sfx-48" src="assets/sfx/glitter.wav" data-start="32.095" data-duration="0.900" data-track-index="11" data-volume="0.35"></audio>
-    <audio id="sfx-49" src="assets/sfx/pop.wav" data-start="32.635" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-50" src="assets/sfx/ding.wav" data-start="32.895" data-duration="1.400" data-track-index="12" data-volume="0.4"></audio>
-    <audio id="sfx-51" src="assets/sfx/pop.wav" data-start="33.435" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-52" src="assets/sfx/swish.wav" data-start="33.645" data-duration="0.280" data-track-index="11" data-volume="0.5"></audio>
-    <audio id="sfx-53" src="assets/sfx/pop.wav" data-start="34.405" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-54" src="assets/sfx/glitter.wav" data-start="35.295" data-duration="0.900" data-track-index="11" data-volume="0.35"></audio>
-    <audio id="sfx-55" src="assets/sfx/pop.wav" data-start="36.085" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-56" src="assets/sfx/whoosh-curto.wav" data-start="36.845" data-duration="0.220" data-track-index="11" data-volume="0.5"></audio>
-    <audio id="sfx-57" src="assets/sfx/pop.wav" data-start="37.67" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-58" src="assets/sfx/impacto.wav" data-start="38.24" data-duration="0.700" data-track-index="11" data-volume="0.55"></audio>
-    <audio id="sfx-59" src="assets/sfx/pop.wav" data-start="38.78" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-60" src="assets/sfx/swish.wav" data-start="39.63" data-duration="0.280" data-track-index="11" data-volume="0.5"></audio>
-    <audio id="sfx-61" src="assets/sfx/pop.wav" data-start="40.55" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-62" src="assets/sfx/shutter.wav" data-start="40.593" data-duration="0.220" data-track-index="12" data-volume="0.5"></audio>
-    <audio id="sfx-63" src="assets/sfx/whoosh.wav" data-start="42.59" data-duration="0.450" data-track-index="11" data-volume="0.5"></audio>
-    <audio id="sfx-64" src="assets/sfx/pop.wav" data-start="43.51" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-65" src="assets/sfx/impacto.wav" data-start="44.32" data-duration="0.700" data-track-index="11" data-volume="0.55"></audio>
-    <audio id="sfx-66" src="assets/sfx/shutter.wav" data-start="45.26" data-duration="0.220" data-track-index="11" data-volume="0.5"></audio>
-    <audio id="sfx-67" src="assets/sfx/pop.wav" data-start="45.35" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-68" src="assets/sfx/glitter.wav" data-start="48.24" data-duration="0.900" data-track-index="11" data-volume="0.35"></audio>
-    <audio id="sfx-69" src="assets/sfx/pop.wav" data-start="49.11" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-70" src="assets/sfx/swish.wav" data-start="49.87" data-duration="0.280" data-track-index="11" data-volume="0.5"></audio>
-    <audio id="sfx-71" src="assets/sfx/pop.wav" data-start="50.87" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-72" src="assets/sfx/impacto.wav" data-start="52.48" data-duration="0.700" data-track-index="11" data-volume="0.55"></audio>
-    <audio id="sfx-73" src="assets/sfx/pop.wav" data-start="53.02" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-74" src="assets/sfx/ding.wav" data-start="53.92" data-duration="1.400" data-track-index="11" data-volume="0.4"></audio>
-    <audio id="sfx-75" src="assets/sfx/tecla.wav" data-start="54.42" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-76" src="assets/sfx/pop.wav" data-start="54.46" data-duration="0.120" data-track-index="13" data-volume="0.3"></audio>
-    <audio id="sfx-77" src="assets/sfx/tecla.wav" data-start="54.56" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-78" src="assets/sfx/tecla.wav" data-start="54.66" data-duration="0.120" data-track-index="13" data-volume="0.3"></audio>
-    <audio id="sfx-79" src="assets/sfx/tecla.wav" data-start="54.798" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-80" src="assets/sfx/tecla.wav" data-start="54.937" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-81" src="assets/sfx/pop.wav" data-start="55.05" data-duration="0.120" data-track-index="13" data-volume="0.3"></audio>
-    <audio id="sfx-82" src="assets/sfx/shutter.wav" data-start="55.06" data-duration="0.220" data-track-index="12" data-volume="0.5"></audio>
-    <audio id="sfx-83" src="assets/sfx/whoosh.wav" data-start="56.845" data-duration="0.450" data-track-index="11" data-volume="0.5"></audio>
-    <audio id="sfx-84" src="assets/sfx/pop.wav" data-start="57.515" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-85" src="assets/sfx/impacto.wav" data-start="57.775" data-duration="0.700" data-track-index="11" data-volume="0.55"></audio>
-    <audio id="sfx-86" src="assets/sfx/pop.wav" data-start="58.315" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
-    <audio id="sfx-87" src="assets/sfx/glitter.wav" data-start="59.375" data-duration="0.900" data-track-index="11" data-volume="0.35"></audio>
-    <audio id="sfx-88" src="assets/sfx/pop.wav" data-start="60.405" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-89" src="assets/sfx/swish.wav" data-start="61.805" data-duration="0.280" data-track-index="11" data-volume="0.5"></audio>
-    <audio id="sfx-90" src="assets/sfx/pop.wav" data-start="62.485" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
-    <audio id="sfx-91" src="assets/sfx/whoosh.wav" data-start="63.405" data-duration="0.450" data-track-index="11" data-volume="0.5"></audio>
+    <audio id="voice" src="assets/bruto.mp4" data-start="0" data-duration="19.5" data-track-index="10" data-volume="1"></audio>
+    <audio id="sfx-0" src="assets/sfx/whoosh.wav" data-start="0.68" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
+    <audio id="sfx-1" src="assets/sfx/impacto.wav" data-start="2.54" data-duration="0.700" data-track-index="11" data-volume="0.16"></audio>
+    <audio id="sfx-2" src="assets/sfx/whoosh.wav" data-start="4.36" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
+    <audio id="sfx-3" src="assets/sfx/whoosh.wav" data-start="5.64" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
+    <audio id="sfx-4" src="assets/sfx/whoosh.wav" data-start="7.32" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
+    <audio id="sfx-5" src="assets/sfx/whoosh.wav" data-start="8.84" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
+    <audio id="sfx-6" src="assets/sfx/whoosh.wav" data-start="10.84" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
+    <audio id="sfx-7" src="assets/sfx/whoosh.wav" data-start="12.36" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
+    <audio id="sfx-8" src="assets/sfx/whoosh.wav" data-start="13.72" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
+    <audio id="sfx-9" src="assets/sfx/impacto.wav" data-start="16.38" data-duration="0.700" data-track-index="11" data-volume="0.16"></audio>
+    <audio id="sfx-10" src="assets/sfx/whoosh.wav" data-start="18.36" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
     <script>
-      const G = [{"id":"g0","style":"ital","at":0.88,"end":1.4,"start":0,"bar":false,"lead":[0,0.24,0.32,0.56,0.72]},{"id":"g1","style":"caps","at":2.56,"end":3.09,"start":1.43,"punch":0.06,"bar":true,"lead":[1.43,1.52,2,2.24]},{"id":"g2","style":"caps","at":4.56,"end":5.08,"start":3.12,"bar":true,"lead":[3.12,3.36,3.6,3.92,4.24]},{"id":"g3","style":"serif","at":5.84,"end":6.37,"start":5.11,"bar":false,"lead":[5.11,5.36,5.52]},{"id":"g4","style":"ital","at":7.52,"end":8.04,"start":6.4,"bar":false,"lead":[6.4,6.56,6.88,7.04]},{"id":"g5","style":"caps","at":9.04,"end":9.56,"start":8.07,"punch":0.04,"bar":true,"lead":[8.07,8.08,8.24,8.4,8.72]},{"id":"g6","style":"type","at":9.59,"end":10.53,"start":9.59,"bar":false,"lead":[],"chars":[9.36,9.43,9.5,9.6,9.64,9.68,9.72,9.76,9.76,9.82,9.88,9.94,10,10,10.07,10.14,10.16,10.23,10.3,10.37,10.44]},{"id":"g7","style":"ital","at":11.04,"end":11.89,"start":10.56,"bar":false,"lead":[10.56,10.96]},{"id":"g8","style":"caps","at":12.56,"end":13.08,"start":11.92,"punch":0.1,"shake":true,"bar":false,"lead":[11.92,12.4]},{"id":"g9","style":"ital","at":13.92,"end":14.53,"start":13.11,"bar":false,"lead":[13.11,13.2,13.44,13.76]},{"id":"g10","style":"caps","at":16.4,"end":16.92,"start":14.56,"punch":0.07,"bar":true,"lead":[14.56,14.8,14.96,15.2,15.36,15.52,15.92,16.08]},{"id":"g11","style":"serif","at":18.56,"end":19.445,"start":16.95,"bar":false,"lead":[16.95,17.04,17.36,17.76,17.92,18.32]},{"id":"g12","style":"ital","at":21.235,"end":21.755,"start":19.475,"bar":false,"lead":[19.475,19.635,19.795,19.955,20.115,20.435,20.515,20.595,20.755,20.835,20.995]},{"id":"g13","style":"serif","at":24.515,"end":25.365,"start":21.785,"bar":false,"lead":[21.785,22.115,22.275,22.355,22.595,22.755,22.915,23.395,24.035]},{"id":"g14","style":"caps","at":26.915,"end":27.435,"start":25.395,"punch":0.07,"bar":true,"lead":[25.395,25.795,25.955,26.435,26.595]},{"id":"g15","style":"ital","at":27.875,"end":28.645,"start":27.465,"bar":false,"lead":[27.465]},{"id":"g16","style":"ital","at":28.675,"end":29.205,"start":28.675,"bar":false,"lead":[]},{"id":"g17","style":"caps","at":29.395,"end":30.005,"start":29.235,"punch":0.08,"shake":true,"bar":false,"lead":[29.235]},{"id":"g18","style":"serif","at":32.115,"end":32.635,"start":30.035,"bar":false,"lead":[30.035,30.275,30.675,31.155,31.395,31.635,31.795]},{"id":"g19","style":"caps","at":32.915,"end":33.435,"start":32.665,"bar":true,"lead":[32.665,32.675]},{"id":"g20","style":"ital","at":33.795,"end":34.405,"start":33.465,"bar":false,"lead":[33.465,33.505,33.635]},{"id":"g21","style":"serif","at":35.315,"end":36.085,"start":34.435,"bar":false,"lead":[34.435,34.595,34.755,34.835,35.155]},{"id":"g22","style":"ital","at":36.995,"end":37.67,"start":36.115,"bar":false,"lead":[36.115,36.515,36.755]},{"id":"g23","style":"caps","at":38.26,"end":38.78,"start":37.7,"punch":0.07,"bar":false,"lead":[37.7,37.94]},{"id":"g24","style":"ital","at":39.78,"end":40.55,"start":38.81,"bar":false,"lead":[38.81,38.85,39.06,39.22,39.46,39.62]},{"id":"g25","style":"ital","at":42.74,"end":43.51,"start":40.58,"bar":false,"lead":[40.58,40.74,40.9,41.06,41.3,41.46,41.62,42.1,42.42]},{"id":"g26","style":"caps","at":44.34,"end":45.35,"start":43.54,"punch":0.08,"bar":false,"lead":[43.54,43.7,44.02]},{"id":"g27","style":"serif","at":48.26,"end":49.11,"start":45.38,"bar":false,"lead":[45.38,45.7,45.94,46.58,47.14,47.62]},{"id":"g28","style":"ital","at":50.02,"end":50.87,"start":49.14,"bar":false,"lead":[49.14,49.3,49.54,49.7]},{"id":"g29","style":"caps","at":52.5,"end":53.02,"start":50.9,"punch":0.06,"bar":true,"lead":[50.9,51.22,51.86,52.1]},{"id":"g30","style":"caps","at":53.94,"end":54.46,"start":53.05,"punch":0.06,"bar":true,"lead":[53.05,53.09,53.06,53.38,53.62]},{"id":"g31","style":"type","at":54.53,"end":55.05,"start":54.49,"bar":false,"lead":[54.49],"chars":[54.42,54.49,54.56,54.63,54.66,54.729,54.798,54.867,54.937,55.006]},{"id":"g32","style":"ital","at":56.995,"end":57.515,"start":55.08,"bar":false,"lead":[55.08,55.235,55.395,55.635,55.875,56.035,56.275,56.355,56.595]},{"id":"g33","style":"caps","at":57.795,"end":58.315,"start":57.545,"punch":0.1,"shake":true,"bar":true,"lead":[57.545,57.585]},{"id":"g34","style":"serif","at":59.395,"end":60.405,"start":58.345,"bar":false,"lead":[58.345,58.355,58.435,58.595,58.755,58.995]},{"id":"g35","style":"ital","at":61.955,"end":62.485,"start":60.435,"bar":false,"lead":[60.435,60.675,60.995,61.395,61.715]},{"id":"g36","style":"ital","at":63.555,"end":64.2,"start":62.515,"punch":0.06,"bar":false,"lead":[62.515,62.675,62.915,63.395]}];
-      const CUTS = [4.933,14.6,19.5,25.533,30.067,40.633,45.3,55.1];
-      const MAX = { caps: 230, ital: 175, serif: 165, type: 120 };
+      const G = [{"id":"g0","style":"ital","at":0.88,"end":1.4,"start":0,"bar":false,"lead":[0,0.24,0.32,0.56,0.72]},{"id":"g1","style":"caps","at":2.56,"end":3.09,"start":1.43,"punch":0.06,"bar":true,"lead":[1.43,1.52,2,2.24]},{"id":"g2","style":"caps","at":4.56,"end":5.08,"start":3.12,"bar":false,"lead":[3.12,3.36,3.6,3.92,4.24]},{"id":"g3","style":"serif","at":5.84,"end":6.37,"start":5.11,"bar":false,"lead":[5.11,5.36,5.52]},{"id":"g4","style":"ital","at":7.52,"end":8.04,"start":6.4,"bar":false,"lead":[6.4,6.56,6.88,7.04]},{"id":"g5","style":"caps","at":9.04,"end":9.56,"start":8.07,"punch":0.04,"bar":false,"lead":[8.07,8.08,8.24,8.4,8.72]},{"id":"g6","style":"type","at":9.59,"end":10.53,"start":9.59,"bar":false,"lead":[],"chars":[9.36,9.43,9.5,9.6,9.64,9.68,9.72,9.76,9.76,9.82,9.88,9.94,10,10,10.07,10.14,10.16,10.23,10.3,10.37,10.44]},{"id":"g7","style":"ital","at":11.04,"end":11.89,"start":10.56,"bar":false,"lead":[10.56,10.96]},{"id":"g8","style":"caps","at":12.56,"end":13.08,"start":11.92,"punch":0.1,"shake":true,"bar":false,"lead":[11.92,12.4]},{"id":"g9","style":"ital","at":13.92,"end":14.53,"start":13.11,"bar":false,"lead":[13.11,13.2,13.44,13.76]},{"id":"g10","style":"caps","at":16.4,"end":16.92,"start":14.56,"punch":0.07,"bar":true,"lead":[14.56,14.8,14.96,15.2,15.36,15.52,15.92,16.08]},{"id":"g11","style":"serif","at":18.56,"end":19.5,"start":16.95,"bar":false,"lead":[16.95,17.04,17.36,17.76,17.92,18.32]}];
+      const CUTS = [4.933,14.6];
+      const MAX = { caps: 150, ital: 170, serif: 170, type: 105 };
       const FIT = 940;
       function fontSpec(style, px) {
-        if (style === "caps") return "900 " + px + "px Montserrat";
-        if (style === "ital") return "italic 900 " + px + "px Montserrat";
-        return "italic 400 " + px + "px 'Playfair Display'";
+        if (style === "caps") return "600 " + px + "px 'Cormorant Garamond'";
+        return "italic 500 " + px + "px 'Cormorant Garamond'";
       }
       function build() {
         const ctx = document.createElement("canvas").getContext("2d");
@@ -296,8 +110,8 @@
           const el = document.getElementById(g.id + "-big");
           const text = g.style === "caps" ? el.dataset.text.toUpperCase() : el.dataset.text;
           ctx.font = fontSpec(g.style, 100);
-          const pad = g.bar ? 0.4 : 0;
-          const w = ctx.measureText(text).width / 100 + pad;
+          const spacing = g.style === "caps" ? 0.06 * text.length : 0;
+          const w = ctx.measureText(text).width / 100 + spacing;
           el.style.fontSize = Math.floor(Math.min(MAX[g.style], FIT / w)) + "px";
         });
 
@@ -306,65 +120,42 @@
         G.forEach((g) => {
           const grp = "#" + g.id, big = grp + "-big";
           tl.set(grp, { opacity: 1 }, g.start - 0.01);
-          // linha pequena: palavra a palavra, no tempo da fala
+          // linha pequena: palavra a palavra, no tempo da fala (fade curto, sobe pouco)
           g.lead.forEach((at, i) => {
-            tl.set(grp + "-w" + i, { opacity: 1, y: 28 }, at);
-            tl.to(grp + "-w" + i, { y: 0, duration: 0.14, ease: "power4.out" }, at);
+            tl.fromTo(grp + "-w" + i, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.18, ease: "power2.out" }, at);
           });
-          // palavra-chave
-          const t = g.at - 0.04;
-          if (g.bar) {
-            tl.fromTo(grp + "-bar", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.16, ease: "power4.out" }, t - 0.06);
-          }
+          // palavra-chave: entra suave, com leve desfoque que se resolve
+          const t = g.at - 0.06;
           if (g.style === "type") {
             g.chars.forEach((at, i) => {
-              tl.set(grp + "-c" + i, { opacity: 1, y: 10 }, at);
-              tl.to(grp + "-c" + i, { y: 0, duration: 0.1, ease: "power3.out" }, at);
+              tl.fromTo(grp + "-c" + i, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, at);
             });
-          } else if (g.style === "caps") {
-            tl.set(big, { opacity: 1 }, t);
-            tl.fromTo(big, { scale: 1.45, filter: "blur(12px)" }, { scale: 1, filter: "blur(0px)", duration: 0.2, ease: "expo.out" }, t);
-          } else if (g.style === "ital") {
-            tl.set(big, { opacity: 1 }, t);
-            tl.fromTo(big, { scale: 0.6, y: 40, filter: "blur(14px)" }, { scale: 1, y: 0, filter: "blur(0px)", duration: 0.22, ease: "power4.out" }, t);
           } else {
-            tl.fromTo(big, { opacity: 0, y: 24, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.3, ease: "power3.out" }, t);
+            tl.fromTo(big, { opacity: 0, y: 16, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.38, ease: "power2.out" }, t);
           }
-          if (g.shake) {
-            [10, -8, 6, -4, 0].forEach((x, i) => tl.to(grp + "-wrap", { x, duration: F, ease: "none" }, t + 0.2 + i * F));
+          if (g.bar) {
+            tl.fromTo(grp + "-uline", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.4, ease: "power2.inOut" }, t + 0.2);
           }
-          // saida rapida
-          if (g.end < 64.2 - 0.05) {
-            tl.to(grp, { opacity: 0, y: -26, filter: "blur(8px)", duration: 0.09, ease: "power2.in" }, g.end - 0.09);
+          // saida: fade curto
+          if (g.end < 19.5 - 0.05) {
+            tl.to(grp, { opacity: 0, duration: 0.14, ease: "power1.in" }, g.end - 0.14);
           }
         });
 
-        // camera: cada trecho entre cortes tem um enquadramento base (alterna aberto/fechado,
-        // como o jump zoom da referencia); punch-in nas palavras de impacto; blur rapido no corte
+        // camera: so uma aproximacao lenta e discreta em cada trecho entre cortes
         const SEG = [0].concat(CUTS);
         SEG.forEach((s0, i) => {
-          const s1 = i + 1 < SEG.length ? SEG[i + 1] : 64.2;
-          const base = i % 2 ? 1.1 : 1.0;
-          if (i === 0) tl.fromTo("#cam", { scale: base, transformOrigin: "50% 32%" }, { scale: base, duration: 0.01 }, 0);
-          else {
-            tl.set("#cam", { scale: base + 0.06 }, s0);
-            tl.to("#cam", { scale: base, duration: 0.45, ease: "power3.out" }, s0);
-            tl.fromTo("#cam", { filter: "blur(10px)" }, { filter: "blur(0px)", duration: 0.12, ease: "power2.out", immediateRender: false }, s0);
-          }
-          G.filter((g) => g.punch && g.at > s0 + 0.5 && g.at < s1 - 0.3).forEach((g) => {
-            const back = Math.min(g.at + 0.55, s1 - 0.7);
-            tl.to("#cam", { scale: base + g.punch, duration: 0.14, ease: "power4.out" }, g.at - 0.04);
-            if (back > g.at + 0.2) tl.to("#cam", { scale: base, duration: Math.min(0.6, s1 - back - 0.05), ease: "power2.inOut" }, back);
-          });
+          const s1 = i + 1 < SEG.length ? SEG[i + 1] : 19.5;
+          if (i === 0) tl.fromTo("#cam", { scale: 1, transformOrigin: "50% 32%" }, { scale: 1.03, duration: s1 - s0, ease: "none" }, s0);
+          else tl.fromTo("#cam", { scale: 1 }, { scale: 1.03, duration: s1 - s0, ease: "none", immediateRender: false }, s0);
         });
         window.__timelines["main"] = tl;
         if (window.__hfForceTimelineRebind) window.__hfForceTimelineRebind();
       }
       Promise.all([
-        document.fonts.load("900 100px Montserrat"),
-        document.fonts.load("italic 900 100px Montserrat"),
         document.fonts.load("500 50px Montserrat"),
-        document.fonts.load("italic 400 100px 'Playfair Display'"),
+        document.fonts.load("600 100px 'Cormorant Garamond'"),
+        document.fonts.load("italic 500 100px 'Cormorant Garamond'"),
       ]).then(build);
     </script>
   </body>

@@ -53,3 +53,18 @@ primeiros 20 segundos** (teste de estilo antes do vídeo inteiro).
   (`MIN_HOLD`); as primeiras palavras da frase seguinte entram em cascata logo depois.
 - CTA final: "comenta a palavra **DAMA**" com faixa rosa + punch-in, como destaque
   de CTA ("WHATSAPP" na referência).
+
+## Revisão 1 — versão elegante (pedido do cliente)
+
+"Acho que a gente deu uma exagerada" — a cliente final é detalhista e não curte
+edição extravagante. Mudanças:
+
+- Cores: só branco, vermelho e preto. Legenda branca; o vermelho aparece só como
+  sublinhado fino que se desenha sob o "NÃO". Sem faixas coloridas, sem rosa.
+- Tipografia: Montserrat nas palavras normais; Cormorant Garamond (o cliente
+  disse "Comodoro" — interpretado como Cormorant) nos destaques.
+- SFX bem mais baixos: só um sopro suave (whoosh 0.14) nos destaques e um grave
+  curto (0.16) no NÃO. Sem o "tim" (ding), pop, tecla ou obturador.
+- Animação: fades curtos com leve subida/desfoque; sem slam, tremida, punch-in
+  ou jump zoom. Câmera só com aproximação lenta (1.00 → 1.03) por trecho.
+- De volta ao teste de 20s (`node build/generate.mjs`; `DUR=64.2` para o inteiro).
