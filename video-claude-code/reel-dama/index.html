@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <!-- gerado por build/generate.mjs — edite o PLAN la, nao aqui -->
+    <link rel="stylesheet" href="assets/fonts.css" />
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      #cam { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      #footage { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+      #caps { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      .grp { position: absolute; left: 60px; top: 960px; width: 960px; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #fff; text-align: center; opacity: 0; }
+      .lead { font-family: Montserrat, sans-serif; font-weight: 500; font-size: 50px; line-height: 1.15; letter-spacing: -0.01em; max-width: 900px; min-height: 58px;
+        text-shadow: 0 3px 14px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.45); }
+      .w { display: inline-block; opacity: 0; }
+      .bigwrap { position: relative; display: block; width: max-content; max-width: 960px; }
+      .big { position: relative; display: block; opacity: 0; line-height: 0.95; white-space: nowrap;
+        text-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4); }
+      .s-caps { font-family: Montserrat, sans-serif; font-weight: 900; letter-spacing: -0.03em; }
+      .s-ital { font-family: Montserrat, sans-serif; font-weight: 900; font-style: italic; letter-spacing: -0.035em; }
+      .s-serif, .s-type { font-family: "Playfair Display", serif; font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+      .s-type { opacity: 1; }
+      .ch { display: inline-block; opacity: 0; }
+      .has-bar .big { padding: 0.06em 0.2em 0.02em; text-shadow: none; }
+      .bar { position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 6px; }
+      .bar-sim .bar { background: #e8417a; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); }
+      .bar-nao .bar { background: #d7263d; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="19.5" data-width="1080" data-height="1920">
+      <div id="cam">
+        <video id="footage" class="clip" src="assets/bruto-20s.mp4" data-start="0" data-duration="19.5" data-track-index="0" muted playsinline></video>
+      </div>
+      <div id="caps">
+      <div class="grp" id="g0">
+        <div class="lead"><span class="w" id="g0-w0">hoje</span> <span class="w" id="g0-w1">eu</span> <span class="w" id="g0-w2">quero</span> <span class="w" id="g0-w3">falar</span> <span class="w" id="g0-w4">com</span></div>
+        <div class="bigwrap " id="g0-wrap"><div class="big s-ital" id="g0-big" data-text="você">você</div></div>
+      </div>
+      <div class="grp" id="g1">
+        <div class="lead"><span class="w" id="g1-w0">que</span> <span class="w" id="g1-w1">pensa</span> <span class="w" id="g1-w2">em</span> <span class="w" id="g1-w3">dizer</span></div>
+        <div class="bigwrap has-bar bar-nao" id="g1-wrap"><div class="bar" id="g1-bar"></div><div class="big s-caps" id="g1-big" data-text="não">NÃO</div></div>
+      </div>
+      <div class="grp" id="g2">
+        <div class="lead"><span class="w" id="g2-w0">mas</span> <span class="w" id="g2-w1">na</span> <span class="w" id="g2-w2">hora</span> <span class="w" id="g2-w3">você</span> <span class="w" id="g2-w4">diz</span></div>
+        <div class="bigwrap has-bar bar-sim" id="g2-wrap"><div class="bar" id="g2-bar"></div><div class="big s-caps" id="g2-big" data-text="sim">SIM</div></div>
+      </div>
+      <div class="grp" id="g3">
+        <div class="lead"><span class="w" id="g3-w0">alguém</span> <span class="w" id="g3-w1">te</span> <span class="w" id="g3-w2">pede</span></div>
+        <div class="bigwrap " id="g3-wrap"><div class="big s-serif" id="g3-big" data-text="um favor">um favor</div></div>
+      </div>
+      <div class="grp" id="g4">
+        <div class="lead"><span class="w" id="g4-w0">e</span> <span class="w" id="g4-w1">você</span> <span class="w" id="g4-w2">não</span> <span class="w" id="g4-w3">queria</span></div>
+        <div class="bigwrap " id="g4-wrap"><div class="big s-ital" id="g4-big" data-text="fazer">fazer</div></div>
+      </div>
+      <div class="grp" id="g5">
+        <div class="lead"><span class="w" id="g5-w0">só</span> <span class="w" id="g5-w1">que</span> <span class="w" id="g5-w2">você</span> <span class="w" id="g5-w3">acaba</span> <span class="w" id="g5-w4">dizendo</span></div>
+        <div class="bigwrap has-bar bar-sim" id="g5-wrap"><div class="bar" id="g5-bar"></div><div class="big s-caps" id="g5-big" data-text="sim">SIM</div></div>
+      </div>
+      <div class="grp" id="g6">
+        <div class="lead"></div>
+        <div class="bigwrap " id="g6-wrap"><div class="big s-type" id="g6-big" data-text="tá tudo bem, eu faço."><span class="ch" id="g6-c0">t</span><span class="ch" id="g6-c1">á</span><span class="ch" id="g6-c2">&nbsp;</span><span class="ch" id="g6-c3">t</span><span class="ch" id="g6-c4">u</span><span class="ch" id="g6-c5">d</span><span class="ch" id="g6-c6">o</span><span class="ch" id="g6-c7">&nbsp;</span><span class="ch" id="g6-c8">b</span><span class="ch" id="g6-c9">e</span><span class="ch" id="g6-c10">m</span><span class="ch" id="g6-c11">,</span><span class="ch" id="g6-c12">&nbsp;</span><span class="ch" id="g6-c13">e</span><span class="ch" id="g6-c14">u</span><span class="ch" id="g6-c15">&nbsp;</span><span class="ch" id="g6-c16">f</span><span class="ch" id="g6-c17">a</span><span class="ch" id="g6-c18">ç</span><span class="ch" id="g6-c19">o</span><span class="ch" id="g6-c20">.</span></div></div>
+      </div>
+      <div class="grp" id="g7">
+        <div class="lead"><span class="w" id="g7-w0">termina</span> <span class="w" id="g7-w1">a</span></div>
+        <div class="bigwrap " id="g7-wrap"><div class="big s-ital" id="g7-big" data-text="ligação">ligação</div></div>
+      </div>
+      <div class="grp" id="g8">
+        <div class="lead"><span class="w" id="g8-w0">morrendo</span> <span class="w" id="g8-w1">de</span></div>
+        <div class="bigwrap " id="g8-wrap"><div class="big s-caps" id="g8-big" data-text="raiva">RAIVA</div></div>
+      </div>
+      <div class="grp" id="g9">
+        <div class="lead"><span class="w" id="g9-w0">de</span> <span class="w" id="g9-w1">quem</span> <span class="w" id="g9-w2">pediu</span> <span class="w" id="g9-w3">e</span></div>
+        <div class="bigwrap " id="g9-wrap"><div class="big s-ital" id="g9-big" data-text="de você mesmo">de você mesmo</div></div>
+      </div>
+      <div class="grp" id="g10">
+        <div class="lead"><span class="w" id="g10-w0">porque</span> <span class="w" id="g10-w1">você</span> <span class="w" id="g10-w2">sabe</span> <span class="w" id="g10-w3">que</span> <span class="w" id="g10-w4">você</span> <span class="w" id="g10-w5">deveria</span> <span class="w" id="g10-w6">ter</span> <span class="w" id="g10-w7">dito</span></div>
+        <div class="bigwrap has-bar bar-nao" id="g10-wrap"><div class="bar" id="g10-bar"></div><div class="big s-caps" id="g10-big" data-text="não">NÃO</div></div>
+      </div>
+      <div class="grp" id="g11">
+        <div class="lead"><span class="w" id="g11-w0">mas</span> <span class="w" id="g11-w1">quando</span> <span class="w" id="g11-w2">chegou</span> <span class="w" id="g11-w3">na</span> <span class="w" id="g11-w4">hora,</span> <span class="w" id="g11-w5">você</span></div>
+        <div class="bigwrap " id="g11-wrap"><div class="big s-serif" id="g11-big" data-text="não conseguiu.">não conseguiu.</div></div>
+      </div>
+      </div>
+    </div>
+    <audio id="voice" src="assets/bruto-20s.mp4" data-start="0" data-duration="19.5" data-track-index="10" data-volume="1"></audio>
+    <audio id="sfx-0" src="assets/sfx/pop.wav" data-start="0" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
+    <audio id="sfx-1" src="assets/sfx/whoosh.wav" data-start="0.73" data-duration="0.450" data-track-index="11" data-volume="0.5"></audio>
+    <audio id="sfx-2" src="assets/sfx/pop.wav" data-start="1.25" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
+    <audio id="sfx-3" src="assets/sfx/impacto.wav" data-start="2.54" data-duration="0.700" data-track-index="11" data-volume="0.55"></audio>
+    <audio id="sfx-4" src="assets/sfx/pop.wav" data-start="3.09" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
+    <audio id="sfx-5" src="assets/sfx/ding.wav" data-start="4.54" data-duration="1.400" data-track-index="11" data-volume="0.4"></audio>
+    <audio id="sfx-6" src="assets/sfx/shutter.wav" data-start="4.893" data-duration="0.220" data-track-index="12" data-volume="0.5"></audio>
+    <audio id="sfx-7" src="assets/sfx/pop.wav" data-start="5.01" data-duration="0.120" data-track-index="13" data-volume="0.3"></audio>
+    <audio id="sfx-8" src="assets/sfx/glitter.wav" data-start="5.82" data-duration="0.900" data-track-index="12" data-volume="0.35"></audio>
+    <audio id="sfx-9" src="assets/sfx/pop.wav" data-start="6.37" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
+    <audio id="sfx-10" src="assets/sfx/swish.wav" data-start="7.37" data-duration="0.280" data-track-index="11" data-volume="0.5"></audio>
+    <audio id="sfx-11" src="assets/sfx/pop.wav" data-start="7.89" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
+    <audio id="sfx-12" src="assets/sfx/ding.wav" data-start="9.02" data-duration="1.400" data-track-index="11" data-volume="0.4"></audio>
+    <audio id="sfx-13" src="assets/sfx/tecla.wav" data-start="9.36" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
+    <audio id="sfx-14" src="assets/sfx/tecla.wav" data-start="9.64" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
+    <audio id="sfx-15" src="assets/sfx/tecla.wav" data-start="9.72" data-duration="0.120" data-track-index="13" data-volume="0.3"></audio>
+    <audio id="sfx-16" src="assets/sfx/tecla.wav" data-start="9.76" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
+    <audio id="sfx-17" src="assets/sfx/tecla.wav" data-start="9.88" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
+    <audio id="sfx-18" src="assets/sfx/tecla.wav" data-start="10.07" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
+    <audio id="sfx-19" src="assets/sfx/tecla.wav" data-start="10.16" data-duration="0.120" data-track-index="13" data-volume="0.3"></audio>
+    <audio id="sfx-20" src="assets/sfx/tecla.wav" data-start="10.3" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
+    <audio id="sfx-21" src="assets/sfx/tecla.wav" data-start="10.44" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
+    <audio id="sfx-22" src="assets/sfx/pop.wav" data-start="10.53" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
+    <audio id="sfx-23" src="assets/sfx/whoosh-curto.wav" data-start="10.89" data-duration="0.220" data-track-index="11" data-volume="0.5"></audio>
+    <audio id="sfx-24" src="assets/sfx/pop.wav" data-start="11.89" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
+    <audio id="sfx-25" src="assets/sfx/impacto.wav" data-start="12.54" data-duration="0.700" data-track-index="11" data-volume="0.55"></audio>
+    <audio id="sfx-26" src="assets/sfx/pop.wav" data-start="13.01" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
+    <audio id="sfx-27" src="assets/sfx/swish.wav" data-start="13.77" data-duration="0.280" data-track-index="11" data-volume="0.5"></audio>
+    <audio id="sfx-28" src="assets/sfx/pop.wav" data-start="14.53" data-duration="0.120" data-track-index="11" data-volume="0.3"></audio>
+    <audio id="sfx-29" src="assets/sfx/shutter.wav" data-start="14.56" data-duration="0.220" data-track-index="12" data-volume="0.5"></audio>
+    <audio id="sfx-30" src="assets/sfx/impacto.wav" data-start="16.38" data-duration="0.700" data-track-index="11" data-volume="0.55"></audio>
+    <audio id="sfx-31" src="assets/sfx/pop.wav" data-start="16.77" data-duration="0.120" data-track-index="12" data-volume="0.3"></audio>
+    <audio id="sfx-32" src="assets/sfx/glitter.wav" data-start="18.54" data-duration="0.900" data-track-index="11" data-volume="0.35"></audio>
+    <script>
+      const G = [{"id":"g0","style":"ital","at":0.88,"end":1.25,"start":0,"bar":false,"lead":[0,0.24,0.32,0.56,0.72]},{"id":"g1","style":"caps","at":2.56,"end":3.09,"start":1.28,"punch":0.06,"bar":true,"lead":[1.28,1.52,2,2.24]},{"id":"g2","style":"caps","at":4.56,"end":5.01,"start":3.12,"bar":true,"lead":[3.12,3.36,3.6,3.92,4.24]},{"id":"g3","style":"serif","at":5.84,"end":6.37,"start":5.04,"bar":false,"lead":[5.04,5.36,5.52]},{"id":"g4","style":"ital","at":7.52,"end":7.89,"start":6.4,"bar":false,"lead":[6.4,6.56,6.88,7.04]},{"id":"g5","style":"caps","at":9.04,"end":9.33,"start":7.92,"punch":0.04,"bar":true,"lead":[7.92,8.08,8.24,8.4,8.72]},{"id":"g6","style":"type","at":9.36,"end":10.53,"start":9.36,"bar":false,"lead":[],"chars":[9.36,9.43,9.5,9.6,9.64,9.68,9.72,9.76,9.76,9.82,9.88,9.94,10,10,10.07,10.14,10.16,10.23,10.3,10.37,10.44]},{"id":"g7","style":"ital","at":11.04,"end":11.89,"start":10.56,"bar":false,"lead":[10.56,10.96]},{"id":"g8","style":"caps","at":12.56,"end":13.01,"start":11.92,"punch":0.1,"shake":true,"bar":false,"lead":[11.92,12.4]},{"id":"g9","style":"ital","at":13.92,"end":14.53,"start":13.04,"bar":false,"lead":[13.04,13.2,13.44,13.76]},{"id":"g10","style":"caps","at":16.4,"end":16.77,"start":14.56,"punch":0.07,"bar":true,"lead":[14.56,14.8,14.96,15.2,15.36,15.52,15.92,16.08]},{"id":"g11","style":"serif","at":18.56,"end":19.5,"start":16.8,"bar":false,"lead":[16.8,17.04,17.36,17.76,17.92,18.32]}];
+      const CUTS = [4.933,14.6];
+      const MAX = { caps: 230, ital: 175, serif: 165, type: 120 };
+      const FIT = 940;
+      function fontSpec(style, px) {
+        if (style === "caps") return "900 " + px + "px Montserrat";
+        if (style === "ital") return "italic 900 " + px + "px Montserrat";
+        return "italic 400 " + px + "px 'Playfair Display'";
+      }
+      function build() {
+        const ctx = document.createElement("canvas").getContext("2d");
+        G.forEach((g) => {
+          const el = document.getElementById(g.id + "-big");
+          const text = g.style === "caps" ? el.dataset.text.toUpperCase() : el.dataset.text;
+          ctx.font = fontSpec(g.style, 100);
+          const pad = g.bar ? 0.4 : 0;
+          const w = ctx.measureText(text).width / 100 + pad;
+          el.style.fontSize = Math.floor(Math.min(MAX[g.style], FIT / w)) + "px";
+        });
+
+        const tl = gsap.timeline({ paused: true });
+        const F = 1 / 30;
+        G.forEach((g) => {
+          const grp = "#" + g.id, big = grp + "-big";
+          tl.set(grp, { opacity: 1 }, g.start - 0.01);
+          // linha pequena: palavra a palavra, no tempo da fala
+          g.lead.forEach((at, i) => {
+            tl.set(grp + "-w" + i, { opacity: 1, y: 28 }, at);
+            tl.to(grp + "-w" + i, { y: 0, duration: 0.14, ease: "power4.out" }, at);
+          });
+          // palavra-chave
+          const t = g.at - 0.04;
+          if (g.bar) {
+            tl.fromTo(grp + "-bar", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.16, ease: "power4.out" }, t - 0.06);
+          }
+          if (g.style === "type") {
+            g.chars.forEach((at, i) => {
+              tl.set(grp + "-c" + i, { opacity: 1, y: 10 }, at);
+              tl.to(grp + "-c" + i, { y: 0, duration: 0.1, ease: "power3.out" }, at);
+            });
+          } else if (g.style === "caps") {
+            tl.set(big, { opacity: 1 }, t);
+            tl.fromTo(big, { scale: 1.45, filter: "blur(12px)" }, { scale: 1, filter: "blur(0px)", duration: 0.2, ease: "expo.out" }, t);
+          } else if (g.style === "ital") {
+            tl.set(big, { opacity: 1 }, t);
+            tl.fromTo(big, { scale: 0.6, y: 40, filter: "blur(14px)" }, { scale: 1, y: 0, filter: "blur(0px)", duration: 0.22, ease: "power4.out" }, t);
+          } else {
+            tl.fromTo(big, { opacity: 0, y: 24, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.3, ease: "power3.out" }, t);
+          }
+          if (g.shake) {
+            [10, -8, 6, -4, 0].forEach((x, i) => tl.to(grp + "-wrap", { x, duration: F, ease: "none" }, t + 0.2 + i * F));
+          }
+          // saida rapida
+          if (g.end < 19.5 - 0.05) {
+            tl.to(grp, { opacity: 0, y: -26, filter: "blur(8px)", duration: 0.09, ease: "power2.in" }, g.end - 0.09);
+          }
+        });
+
+        // camera: push lento + punch-in nas palavras de impacto + zoom no corte
+        tl.fromTo("#cam", { scale: 1, transformOrigin: "50% 32%" }, { scale: 1.04, duration: CUTS[0], ease: "none" }, 0);
+        let base = 1.04;
+        G.filter((g) => g.punch && g.at < CUTS[0]).forEach((g) => {
+          tl.to("#cam", { scale: base + g.punch, duration: 0.14, ease: "power4.out" }, g.at - 0.04);
+          tl.to("#cam", { scale: base, duration: 0.6, ease: "power2.inOut" }, g.at + 0.5);
+        });
+        // corte 1: jump zoom
+        tl.set("#cam", { scale: 1.16 }, CUTS[0]);
+        tl.fromTo("#cam", { filter: "blur(10px)" }, { filter: "blur(0px)", duration: 0.12, ease: "power2.out", immediateRender: false }, CUTS[0]);
+        tl.to("#cam", { scale: 1.1, duration: 0.5, ease: "power3.out" }, CUTS[0]);
+        G.filter((g) => g.punch && g.at > CUTS[0] && g.at < CUTS[1]).forEach((g) => {
+          tl.to("#cam", { scale: 1.1 + g.punch, duration: 0.14, ease: "power4.out" }, g.at - 0.04);
+          tl.to("#cam", { scale: 1.1, duration: 0.6, ease: "power2.inOut" }, g.at + 0.6);
+        });
+        // corte 2: volta aberto, com blur rapido
+        tl.set("#cam", { scale: 1.0 }, CUTS[1]);
+        tl.fromTo("#cam", { filter: "blur(10px)" }, { filter: "blur(0px)", duration: 0.12, ease: "power2.out", immediateRender: false }, CUTS[1]);
+        G.filter((g) => g.punch && g.at > CUTS[1]).forEach((g) => {
+          tl.to("#cam", { scale: 1 + g.punch, duration: 0.14, ease: "power4.out" }, g.at - 0.04);
+          tl.to("#cam", { scale: 1.02, duration: 0.8, ease: "power2.inOut" }, g.at + 0.6);
+        });
+        tl.to("#cam", { scale: 1.08, duration: 19.5 - 17.4, ease: "none" }, 17.4);
+
+        window.__timelines["main"] = tl;
+        if (window.__hfForceTimelineRebind) window.__hfForceTimelineRebind();
+      }
+      Promise.all([
+        document.fonts.load("900 100px Montserrat"),
+        document.fonts.load("italic 900 100px Montserrat"),
+        document.fonts.load("500 50px Montserrat"),
+        document.fonts.load("italic 400 100px 'Playfair Display'"),
+      ]).then(build);
+    </script>
+  </body>
+</html>
