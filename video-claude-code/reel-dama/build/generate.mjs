@@ -4,8 +4,8 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 
 const ROOT = new URL("..", import.meta.url).pathname;
-const DUR = 19.5;
-const words = JSON.parse(readFileSync(ROOT + "media/words-0-20s.json", "utf8"));
+const DUR = 64.2;
+const words = JSON.parse(readFileSync(ROOT + "media/words.json", "utf8"));
 
 // Cada grupo: linha pequena (lead) + palavra-chave grande (big).
 // lead/big sao procurados na transcricao a partir de `from`, na ordem.
@@ -23,9 +23,34 @@ const PLAN = [
   { from: 13.0, lead: "de quem pediu e", big: "de você mesmo", style: "ital", sfx: "swish" },
   { from: 14.5, lead: "porque você sabe que você deveria ter dito", big: "não", style: "caps", bar: "nao", sfx: "impacto", punch: 0.07 },
   { from: 16.7, lead: "mas quando chegou na hora, você", big: "não conseguiu.", style: "serif", sfx: "glitter" },
+  { from: 19.4, lead: "e isso não é sinal de que você é uma pessoa", big: "fraca", style: "ital", sfx: "swish" },
+  { from: 21.6, lead: "simplesmente é um sinal de que você ainda está", big: "condicionada", style: "serif", sfx: "glitter" },
+  { from: 25.3, lead: "porque você aprendeu que dizer", big: "não", style: "caps", bar: "nao", sfx: "impacto", punch: 0.07 },
+  { from: 27.2, lead: "gerava", big: "consequências", style: "ital", sfx: "whoosh-curto" },
+  { from: 28.6, lead: "", big: "conflitos", style: "ital", sfx: "whoosh-curto" },
+  { from: 29.2, lead: "e", big: "rejeição", style: "caps", sfx: "impacto", punch: 0.08, shake: true },
+  { from: 30.0, lead: "pra evitar isso, você foi se tornando", big: "a mulher", style: "serif", sfx: "glitter" },
+  { from: 32.4, lead: "que diz", big: "sim", style: "caps", bar: "sim", sfx: "ding" },
+  { from: 33.1, lead: "pra tudo e", big: "pra todos", style: "ital", sfx: "swish" },
+  { from: 34.4, lead: "pra você não perder o", big: "amor", style: "serif", sfx: "glitter" },
+  { from: 36.0, lead: "mesmo que isso", big: "custe", style: "ital", sfx: "whoosh-curto" },
+  { from: 37.6, lead: "a sua", big: "paz", style: "caps", sfx: "impacto", punch: 0.07 },
+  { from: 38.5, lead: "e qualquer outra coisa que é", big: "importante", style: "ital", sfx: "swish" },
+  { from: 40.5, lead: "é por isso que eu não trabalho apenas a", big: "comunicação", style: "ital", sfx: "whoosh" },
+  { from: 43.4, lead: "eu trabalho a", big: "identidade", style: "caps", sfx: "impacto", punch: 0.08 },
+  { from: 45.3, lead: "porque os limites começam numa identidade", big: "bem ancorada", style: "serif", sfx: "glitter" },
+  { from: 49.0, lead: "a mulher que sabe", big: "quem ela é", style: "ital", sfx: "swish" },
+  { from: 50.8, lead: "e entende que dizer", big: "não", style: "caps", bar: "nao", sfx: "impacto", punch: 0.06 },
+  { from: 52.7, lead: "para o outro é dizer", big: "sim", style: "caps", bar: "sim", sfx: "ding", punch: 0.06 },
+  { from: 54.2, lead: "para", big: "ela mesma.", style: "type" },
+  { from: 55.0, lead: "se essa conversa falou com você de alguma forma,", big: "comenta", style: "ital", sfx: "whoosh" },
+  { from: 57.3, lead: "a palavra", big: "dama", style: "caps", bar: "sim", sfx: "impacto", punch: 0.1, shake: true },
+  { from: 58.1, lead: "que eu quero te mostrar qual", big: "padrão emocional", style: "serif", sfx: "glitter" },
+  { from: 60.3, lead: "está por trás dessa sua", big: "dificuldade", style: "ital", sfx: "swish" },
+  { from: 62.4, lead: "de se colocar em", big: "primeiro lugar.", style: "ital", sfx: "whoosh", punch: 0.06 },
 ];
 // cortes de cena do bruto (ffmpeg scene > 0.25)
-const CUTS = [4.933, 14.6];
+const CUTS = [4.933, 14.6, 19.5, 25.533, 30.067, 40.633, 45.3, 55.1];
 
 const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
 let cursor = 0;
@@ -44,6 +69,20 @@ const groups = PLAN.map((g, gi) => {
   const bigWords = bigTokens.map((t) => find(t, g.from));
   const at = bigWords[0].start;
   return { ...g, id: `g${gi}`, lead, at, bigEnd: bigWords.at(-1).end, start: lead.length ? lead[0].at : at };
+});
+// palavra-chave fica no ar pelo menos MIN_HOLD; se a proxima fala ja comecou,
+// as primeiras palavras dela entram juntas logo depois (em cascata curta)
+const MIN_HOLD = 0.55;
+groups.forEach((g, i) => {
+  if (i === 0) return;
+  const p = groups[i - 1];
+  const earliest = +(p.at + MIN_HOLD).toFixed(3);
+  if (g.start < earliest) {
+    g.start = earliest;
+    let k = 0;
+    g.lead.forEach((w) => { if (w.at < earliest) w.at = +(earliest + 0.04 * k++).toFixed(3); });
+    if (g.at < earliest + 0.04 * k) g.at = +(earliest + 0.04 * k).toFixed(3);
+  }
 });
 groups.forEach((g, i) => (g.end = i + 1 < groups.length ? groups[i + 1].start - 0.03 : DUR));
 
@@ -118,7 +157,7 @@ const html = `<!doctype html>
       #caps { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
       .grp { position: absolute; left: 60px; top: 960px; width: 960px; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #fff; text-align: center; opacity: 0; }
       .lead { font-family: Montserrat, sans-serif; font-weight: 500; font-size: 50px; line-height: 1.15; letter-spacing: -0.01em; max-width: 900px; min-height: 58px;
-        text-shadow: 0 3px 14px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.45); }
+        text-shadow: 0 0 2px rgba(0, 0, 0, 0.7), 0 2px 4px rgba(0, 0, 0, 0.55), 0 4px 18px rgba(0, 0, 0, 0.6); }
       .w { display: inline-block; opacity: 0; }
       .bigwrap { position: relative; display: block; width: max-content; max-width: 960px; }
       .big { position: relative; display: block; opacity: 0; line-height: 0.95; white-space: nowrap;
@@ -137,13 +176,13 @@ const html = `<!doctype html>
   <body>
     <div id="root" data-composition-id="main" data-start="0" data-duration="${DUR}" data-width="1080" data-height="1920">
       <div id="cam">
-        <video id="footage" class="clip" src="assets/bruto-20s.mp4" data-start="0" data-duration="${DUR}" data-track-index="0" muted playsinline></video>
+        <video id="footage" class="clip" src="assets/bruto.mp4" data-start="0" data-duration="${DUR}" data-track-index="0" muted playsinline></video>
       </div>
       <div id="caps">
 ${capHtml}
       </div>
     </div>
-    <audio id="voice" src="assets/bruto-20s.mp4" data-start="0" data-duration="${DUR}" data-track-index="10" data-volume="1"></audio>
+    <audio id="voice" src="assets/bruto.mp4" data-start="0" data-duration="${DUR}" data-track-index="10" data-volume="1"></audio>
 ${sfxHtml}
     <script>
       const G = ${JSON.stringify(timing)};
@@ -204,30 +243,24 @@ ${sfxHtml}
           }
         });
 
-        // camera: push lento + punch-in nas palavras de impacto + zoom no corte
-        tl.fromTo("#cam", { scale: 1, transformOrigin: "50% 32%" }, { scale: 1.04, duration: CUTS[0], ease: "none" }, 0);
-        let base = 1.04;
-        G.filter((g) => g.punch && g.at < CUTS[0]).forEach((g) => {
-          tl.to("#cam", { scale: base + g.punch, duration: 0.14, ease: "power4.out" }, g.at - 0.04);
-          tl.to("#cam", { scale: base, duration: 0.6, ease: "power2.inOut" }, g.at + 0.5);
+        // camera: cada trecho entre cortes tem um enquadramento base (alterna aberto/fechado,
+        // como o jump zoom da referencia); punch-in nas palavras de impacto; blur rapido no corte
+        const SEG = [0].concat(CUTS);
+        SEG.forEach((s0, i) => {
+          const s1 = i + 1 < SEG.length ? SEG[i + 1] : ${DUR};
+          const base = i % 2 ? 1.1 : 1.0;
+          if (i === 0) tl.fromTo("#cam", { scale: base, transformOrigin: "50% 32%" }, { scale: base, duration: 0.01 }, 0);
+          else {
+            tl.set("#cam", { scale: base + 0.06 }, s0);
+            tl.to("#cam", { scale: base, duration: 0.45, ease: "power3.out" }, s0);
+            tl.fromTo("#cam", { filter: "blur(10px)" }, { filter: "blur(0px)", duration: 0.12, ease: "power2.out", immediateRender: false }, s0);
+          }
+          G.filter((g) => g.punch && g.at > s0 + 0.5 && g.at < s1 - 0.3).forEach((g) => {
+            const back = Math.min(g.at + 0.55, s1 - 0.7);
+            tl.to("#cam", { scale: base + g.punch, duration: 0.14, ease: "power4.out" }, g.at - 0.04);
+            if (back > g.at + 0.2) tl.to("#cam", { scale: base, duration: Math.min(0.6, s1 - back - 0.05), ease: "power2.inOut" }, back);
+          });
         });
-        // corte 1: jump zoom
-        tl.set("#cam", { scale: 1.16 }, CUTS[0]);
-        tl.fromTo("#cam", { filter: "blur(10px)" }, { filter: "blur(0px)", duration: 0.12, ease: "power2.out", immediateRender: false }, CUTS[0]);
-        tl.to("#cam", { scale: 1.1, duration: 0.5, ease: "power3.out" }, CUTS[0]);
-        G.filter((g) => g.punch && g.at > CUTS[0] && g.at < CUTS[1]).forEach((g) => {
-          tl.to("#cam", { scale: 1.1 + g.punch, duration: 0.14, ease: "power4.out" }, g.at - 0.04);
-          tl.to("#cam", { scale: 1.1, duration: 0.6, ease: "power2.inOut" }, g.at + 0.6);
-        });
-        // corte 2: volta aberto, com blur rapido
-        tl.set("#cam", { scale: 1.0 }, CUTS[1]);
-        tl.fromTo("#cam", { filter: "blur(10px)" }, { filter: "blur(0px)", duration: 0.12, ease: "power2.out", immediateRender: false }, CUTS[1]);
-        G.filter((g) => g.punch && g.at > CUTS[1]).forEach((g) => {
-          tl.to("#cam", { scale: 1 + g.punch, duration: 0.14, ease: "power4.out" }, g.at - 0.04);
-          tl.to("#cam", { scale: 1.02, duration: 0.8, ease: "power2.inOut" }, g.at + 0.6);
-        });
-        tl.to("#cam", { scale: 1.08, duration: ${DUR} - 17.4, ease: "none" }, 17.4);
-
         window.__timelines["main"] = tl;
         if (window.__hfForceTimelineRebind) window.__hfForceTimelineRebind();
       }

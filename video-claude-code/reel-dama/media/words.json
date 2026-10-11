@@ -1,0 +1,1092 @@
+[
+{
+"text": "Hoje",
+"start": 0.0,
+"end": 0.24
+},
+{
+"text": "eu",
+"start": 0.24,
+"end": 0.32
+},
+{
+"text": "quero",
+"start": 0.32,
+"end": 0.56
+},
+{
+"text": "falar",
+"start": 0.56,
+"end": 0.72
+},
+{
+"text": "com",
+"start": 0.72,
+"end": 0.88
+},
+{
+"text": "você",
+"start": 0.88,
+"end": 1.28
+},
+{
+"text": "que",
+"start": 1.28,
+"end": 1.52
+},
+{
+"text": "pensa",
+"start": 1.52,
+"end": 2.0
+},
+{
+"text": "em",
+"start": 2.0,
+"end": 2.24
+},
+{
+"text": "dizer",
+"start": 2.24,
+"end": 2.56
+},
+{
+"text": "não,",
+"start": 2.56,
+"end": 3.12
+},
+{
+"text": "mas",
+"start": 3.12,
+"end": 3.36
+},
+{
+"text": "na",
+"start": 3.36,
+"end": 3.6
+},
+{
+"text": "hora",
+"start": 3.6,
+"end": 3.92
+},
+{
+"text": "você",
+"start": 3.92,
+"end": 4.24
+},
+{
+"text": "diz",
+"start": 4.24,
+"end": 4.56
+},
+{
+"text": "sim.",
+"start": 4.56,
+"end": 5.04
+},
+{
+"text": "Alguém",
+"start": 5.04,
+"end": 5.36
+},
+{
+"text": "te",
+"start": 5.36,
+"end": 5.52
+},
+{
+"text": "pede",
+"start": 5.52,
+"end": 5.84
+},
+{
+"text": "um",
+"start": 5.84,
+"end": 5.92
+},
+{
+"text": "favor",
+"start": 5.92,
+"end": 6.4
+},
+{
+"text": "e",
+"start": 6.4,
+"end": 6.56
+},
+{
+"text": "você",
+"start": 6.56,
+"end": 6.88
+},
+{
+"text": "não",
+"start": 6.88,
+"end": 7.04
+},
+{
+"text": "queria",
+"start": 7.04,
+"end": 7.52
+},
+{
+"text": "fazer.",
+"start": 7.52,
+"end": 7.92
+},
+{
+"text": "Só",
+"start": 7.92,
+"end": 8.08
+},
+{
+"text": "que",
+"start": 8.08,
+"end": 8.24
+},
+{
+"text": "você",
+"start": 8.24,
+"end": 8.4
+},
+{
+"text": "acaba",
+"start": 8.4,
+"end": 8.72
+},
+{
+"text": "dizendo",
+"start": 8.72,
+"end": 9.04
+},
+{
+"text": "sim,",
+"start": 9.04,
+"end": 9.36
+},
+{
+"text": "tá",
+"start": 9.36,
+"end": 9.6
+},
+{
+"text": "tudo",
+"start": 9.6,
+"end": 9.76
+},
+{
+"text": "bem,",
+"start": 9.76,
+"end": 10.0
+},
+{
+"text": "eu",
+"start": 10.0,
+"end": 10.16
+},
+{
+"text": "faço.",
+"start": 10.16,
+"end": 10.56
+},
+{
+"text": "Termina",
+"start": 10.56,
+"end": 10.96
+},
+{
+"text": "a",
+"start": 10.96,
+"end": 11.04
+},
+{
+"text": "ligação,",
+"start": 11.04,
+"end": 11.44
+},
+{
+"text": "você",
+"start": 11.44,
+"end": 11.76
+},
+{
+"text": "te",
+"start": 11.76,
+"end": 11.92
+},
+{
+"text": "morrendo",
+"start": 11.92,
+"end": 12.4
+},
+{
+"text": "de",
+"start": 12.4,
+"end": 12.56
+},
+{
+"text": "raiva",
+"start": 12.56,
+"end": 13.04
+},
+{
+"text": "de",
+"start": 13.04,
+"end": 13.2
+},
+{
+"text": "quem",
+"start": 13.2,
+"end": 13.44
+},
+{
+"text": "pediu",
+"start": 13.44,
+"end": 13.76
+},
+{
+"text": "e",
+"start": 13.76,
+"end": 13.92
+},
+{
+"text": "de",
+"start": 13.92,
+"end": 14.0
+},
+{
+"text": "você",
+"start": 14.0,
+"end": 14.24
+},
+{
+"text": "mesmo.",
+"start": 14.24,
+"end": 14.56
+},
+{
+"text": "Porque",
+"start": 14.56,
+"end": 14.8
+},
+{
+"text": "você",
+"start": 14.8,
+"end": 14.96
+},
+{
+"text": "sabe",
+"start": 14.96,
+"end": 15.2
+},
+{
+"text": "que",
+"start": 15.2,
+"end": 15.36
+},
+{
+"text": "você",
+"start": 15.36,
+"end": 15.52
+},
+{
+"text": "deveria",
+"start": 15.52,
+"end": 15.92
+},
+{
+"text": "ter",
+"start": 15.92,
+"end": 16.08
+},
+{
+"text": "dito",
+"start": 16.08,
+"end": 16.4
+},
+{
+"text": "não,",
+"start": 16.4,
+"end": 16.8
+},
+{
+"text": "mas",
+"start": 16.8,
+"end": 17.04
+},
+{
+"text": "quando",
+"start": 17.04,
+"end": 17.36
+},
+{
+"text": "chegou",
+"start": 17.36,
+"end": 17.76
+},
+{
+"text": "na",
+"start": 17.76,
+"end": 17.92
+},
+{
+"text": "hora,",
+"start": 17.92,
+"end": 18.32
+},
+{
+"text": "você",
+"start": 18.32,
+"end": 18.56
+},
+{
+"text": "não",
+"start": 18.56,
+"end": 18.72
+},
+{
+"text": "conseguiu.",
+"start": 18.72,
+"end": 19.475
+},
+{
+"text": "E",
+"start": 19.475,
+"end": 19.635
+},
+{
+"text": "isso",
+"start": 19.635,
+"end": 19.795
+},
+{
+"text": "não",
+"start": 19.795,
+"end": 19.955
+},
+{
+"text": "é",
+"start": 19.955,
+"end": 20.115
+},
+{
+"text": "sinal",
+"start": 20.115,
+"end": 20.435
+},
+{
+"text": "de",
+"start": 20.435,
+"end": 20.515
+},
+{
+"text": "que",
+"start": 20.515,
+"end": 20.595
+},
+{
+"text": "você",
+"start": 20.595,
+"end": 20.755
+},
+{
+"text": "é",
+"start": 20.755,
+"end": 20.835
+},
+{
+"text": "uma",
+"start": 20.835,
+"end": 20.995
+},
+{
+"text": "pessoa",
+"start": 20.995,
+"end": 21.235
+},
+{
+"text": "fraca,",
+"start": 21.235,
+"end": 21.715
+},
+{
+"text": "simplesmente",
+"start": 21.715,
+"end": 22.115
+},
+{
+"text": "é",
+"start": 22.115,
+"end": 22.275
+},
+{
+"text": "um",
+"start": 22.275,
+"end": 22.355
+},
+{
+"text": "sinal",
+"start": 22.355,
+"end": 22.595
+},
+{
+"text": "de",
+"start": 22.595,
+"end": 22.755
+},
+{
+"text": "que",
+"start": 22.755,
+"end": 22.915
+},
+{
+"text": "você",
+"start": 22.915,
+"end": 23.395
+},
+{
+"text": "ainda",
+"start": 23.395,
+"end": 24.035
+},
+{
+"text": "está",
+"start": 24.035,
+"end": 24.515
+},
+{
+"text": "condicionada.",
+"start": 24.515,
+"end": 25.315
+},
+{
+"text": "Porque",
+"start": 25.395,
+"end": 25.795
+},
+{
+"text": "você",
+"start": 25.795,
+"end": 25.955
+},
+{
+"text": "aprendeu",
+"start": 25.955,
+"end": 26.435
+},
+{
+"text": "que",
+"start": 26.435,
+"end": 26.595
+},
+{
+"text": "dizer",
+"start": 26.595,
+"end": 26.915
+},
+{
+"text": "não",
+"start": 26.915,
+"end": 27.315
+},
+{
+"text": "gerava",
+"start": 27.315,
+"end": 27.875
+},
+{
+"text": "consequências,",
+"start": 27.875,
+"end": 28.675
+},
+{
+"text": "conflitos",
+"start": 28.675,
+"end": 29.235
+},
+{
+"text": "e",
+"start": 29.235,
+"end": 29.395
+},
+{
+"text": "rejeição.",
+"start": 29.395,
+"end": 30.035
+},
+{
+"text": "Pra",
+"start": 30.035,
+"end": 30.275
+},
+{
+"text": "evitar",
+"start": 30.275,
+"end": 30.675
+},
+{
+"text": "isso,",
+"start": 30.675,
+"end": 31.155
+},
+{
+"text": "você",
+"start": 31.155,
+"end": 31.395
+},
+{
+"text": "foi",
+"start": 31.395,
+"end": 31.635
+},
+{
+"text": "se",
+"start": 31.635,
+"end": 31.795
+},
+{
+"text": "tornando",
+"start": 31.795,
+"end": 32.115
+},
+{
+"text": "a",
+"start": 32.115,
+"end": 32.195
+},
+{
+"text": "mulher",
+"start": 32.195,
+"end": 32.435
+},
+{
+"text": "que",
+"start": 32.435,
+"end": 32.675
+},
+{
+"text": "diz",
+"start": 32.675,
+"end": 32.915
+},
+{
+"text": "sim",
+"start": 32.915,
+"end": 33.155
+},
+{
+"text": "pra",
+"start": 33.155,
+"end": 33.395
+},
+{
+"text": "tudo",
+"start": 33.395,
+"end": 33.635
+},
+{
+"text": "e",
+"start": 33.635,
+"end": 33.795
+},
+{
+"text": "pra",
+"start": 33.795,
+"end": 34.035
+},
+{
+"text": "todos,",
+"start": 34.035,
+"end": 34.435
+},
+{
+"text": "pra",
+"start": 34.435,
+"end": 34.595
+},
+{
+"text": "você",
+"start": 34.595,
+"end": 34.755
+},
+{
+"text": "não",
+"start": 34.755,
+"end": 34.835
+},
+{
+"text": "perder",
+"start": 34.835,
+"end": 35.155
+},
+{
+"text": "o",
+"start": 35.155,
+"end": 35.315
+},
+{
+"text": "amor,",
+"start": 35.315,
+"end": 36.115
+},
+{
+"text": "mesmo",
+"start": 36.115,
+"end": 36.515
+},
+{
+"text": "que",
+"start": 36.515,
+"end": 36.755
+},
+{
+"text": "isso",
+"start": 36.755,
+"end": 36.995
+},
+{
+"text": "custe.",
+"start": 36.995,
+"end": 37.7
+},
+{
+"text": "A",
+"start": 37.7,
+"end": 37.94
+},
+{
+"text": "sua",
+"start": 37.94,
+"end": 38.26
+},
+{
+"text": "paz",
+"start": 38.26,
+"end": 38.58
+},
+{
+"text": "e",
+"start": 38.58,
+"end": 38.74
+},
+{
+"text": "qualquer",
+"start": 38.74,
+"end": 39.06
+},
+{
+"text": "outra",
+"start": 39.06,
+"end": 39.22
+},
+{
+"text": "coisa",
+"start": 39.22,
+"end": 39.46
+},
+{
+"text": "que",
+"start": 39.46,
+"end": 39.62
+},
+{
+"text": "é",
+"start": 39.62,
+"end": 39.78
+},
+{
+"text": "importante",
+"start": 39.78,
+"end": 40.1
+},
+{
+"text": "pra",
+"start": 40.1,
+"end": 40.26
+},
+{
+"text": "você.",
+"start": 40.26,
+"end": 40.58
+},
+{
+"text": "É",
+"start": 40.58,
+"end": 40.74
+},
+{
+"text": "por",
+"start": 40.74,
+"end": 40.9
+},
+{
+"text": "isso",
+"start": 40.9,
+"end": 41.06
+},
+{
+"text": "que",
+"start": 41.06,
+"end": 41.3
+},
+{
+"text": "eu",
+"start": 41.3,
+"end": 41.46
+},
+{
+"text": "não",
+"start": 41.46,
+"end": 41.62
+},
+{
+"text": "trabalho",
+"start": 41.62,
+"end": 42.1
+},
+{
+"text": "apenas",
+"start": 42.1,
+"end": 42.42
+},
+{
+"text": "a",
+"start": 42.42,
+"end": 42.74
+},
+{
+"text": "comunicação,",
+"start": 42.74,
+"end": 43.54
+},
+{
+"text": "eu",
+"start": 43.54,
+"end": 43.7
+},
+{
+"text": "trabalho",
+"start": 43.7,
+"end": 44.02
+},
+{
+"text": "a",
+"start": 44.02,
+"end": 44.34
+},
+{
+"text": "identidade,",
+"start": 44.34,
+"end": 45.14
+},
+{
+"text": "porque",
+"start": 45.38,
+"end": 45.7
+},
+{
+"text": "os",
+"start": 45.7,
+"end": 45.94
+},
+{
+"text": "limites",
+"start": 45.94,
+"end": 46.58
+},
+{
+"text": "começam",
+"start": 46.58,
+"end": 47.14
+},
+{
+"text": "numa",
+"start": 47.14,
+"end": 47.62
+},
+{
+"text": "identidade",
+"start": 47.62,
+"end": 48.26
+},
+{
+"text": "bem",
+"start": 48.26,
+"end": 48.5
+},
+{
+"text": "ancorada.",
+"start": 48.5,
+"end": 49.14
+},
+{
+"text": "A",
+"start": 49.14,
+"end": 49.3
+},
+{
+"text": "mulher",
+"start": 49.3,
+"end": 49.54
+},
+{
+"text": "que",
+"start": 49.54,
+"end": 49.7
+},
+{
+"text": "sabe",
+"start": 49.7,
+"end": 50.02
+},
+{
+"text": "quem",
+"start": 50.02,
+"end": 50.34
+},
+{
+"text": "ela",
+"start": 50.34,
+"end": 50.5
+},
+{
+"text": "é",
+"start": 50.5,
+"end": 50.9
+},
+{
+"text": "e",
+"start": 50.9,
+"end": 51.22
+},
+{
+"text": "entende",
+"start": 51.22,
+"end": 51.86
+},
+{
+"text": "que",
+"start": 51.86,
+"end": 52.1
+},
+{
+"text": "dizer",
+"start": 52.1,
+"end": 52.5
+},
+{
+"text": "não",
+"start": 52.5,
+"end": 52.74
+},
+{
+"text": "para",
+"start": 52.74,
+"end": 52.9
+},
+{
+"text": "o",
+"start": 52.9,
+"end": 53.06
+},
+{
+"text": "outro",
+"start": 53.06,
+"end": 53.38
+},
+{
+"text": "é",
+"start": 53.38,
+"end": 53.62
+},
+{
+"text": "dizer",
+"start": 53.62,
+"end": 53.94
+},
+{
+"text": "sim",
+"start": 53.94,
+"end": 54.26
+},
+{
+"text": "para",
+"start": 54.26,
+"end": 54.42
+},
+{
+"text": "ela",
+"start": 54.42,
+"end": 54.66
+},
+{
+"text": "mesma.",
+"start": 54.66,
+"end": 55.075
+},
+{
+"text": "Se",
+"start": 55.075,
+"end": 55.235
+},
+{
+"text": "essa",
+"start": 55.235,
+"end": 55.395
+},
+{
+"text": "conversa",
+"start": 55.395,
+"end": 55.635
+},
+{
+"text": "falou",
+"start": 55.635,
+"end": 55.875
+},
+{
+"text": "com",
+"start": 55.875,
+"end": 56.035
+},
+{
+"text": "você",
+"start": 56.035,
+"end": 56.275
+},
+{
+"text": "de",
+"start": 56.275,
+"end": 56.355
+},
+{
+"text": "alguma",
+"start": 56.355,
+"end": 56.595
+},
+{
+"text": "forma,",
+"start": 56.595,
+"end": 56.995
+},
+{
+"text": "comenta",
+"start": 56.995,
+"end": 57.395
+},
+{
+"text": "a",
+"start": 57.395,
+"end": 57.475
+},
+{
+"text": "palavra",
+"start": 57.475,
+"end": 57.795
+},
+{
+"text": "dama,",
+"start": 57.795,
+"end": 58.195
+},
+{
+"text": "que",
+"start": 58.195,
+"end": 58.355
+},
+{
+"text": "eu",
+"start": 58.355,
+"end": 58.435
+},
+{
+"text": "quero",
+"start": 58.435,
+"end": 58.595
+},
+{
+"text": "te",
+"start": 58.595,
+"end": 58.755
+},
+{
+"text": "mostrar",
+"start": 58.755,
+"end": 58.995
+},
+{
+"text": "qual",
+"start": 58.995,
+"end": 59.395
+},
+{
+"text": "padrão",
+"start": 59.395,
+"end": 59.795
+},
+{
+"text": "emocional",
+"start": 59.795,
+"end": 60.435
+},
+{
+"text": "está",
+"start": 60.435,
+"end": 60.675
+},
+{
+"text": "por",
+"start": 60.675,
+"end": 60.995
+},
+{
+"text": "trás",
+"start": 60.995,
+"end": 61.395
+},
+{
+"text": "dessa",
+"start": 61.395,
+"end": 61.715
+},
+{
+"text": "sua",
+"start": 61.715,
+"end": 61.955
+},
+{
+"text": "dificuldade",
+"start": 61.955,
+"end": 62.515
+},
+{
+"text": "de",
+"start": 62.515,
+"end": 62.675
+},
+{
+"text": "se",
+"start": 62.675,
+"end": 62.915
+},
+{
+"text": "colocar",
+"start": 62.915,
+"end": 63.395
+},
+{
+"text": "em",
+"start": 63.395,
+"end": 63.555
+},
+{
+"text": "primeiro",
+"start": 63.555,
+"end": 63.795
+},
+{
+"text": "lugar.",
+"start": 63.795,
+"end": 64.203
+}
+]

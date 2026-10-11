@@ -6,7 +6,7 @@ message: "Dizer não para o outro é dizer sim para você mesma."
 destination: Reel / Instagram (in-feed)
 aspect: portrait (1080x1920)
 language: pt-BR
-length: teste de 19.5s (primeiros ~20s do bruto de 64s)
+length: 64.2s (vídeo inteiro; os primeiros 20s foram aprovados como teste)
 angle: talking-head vertical com legenda cinética no estilo do Reel de referência
 ---
 
@@ -48,3 +48,8 @@ primeiros 20 segundos** (teste de estilo antes do vídeo inteiro).
 
 - Cliente dispensou as perguntas de revisão/modo/cor e pediu "primeiros 20
   segundos" — tratado como automation, sem storyboard, cores da referência.
+- Teste de 20s aprovado pelo cliente ("Dá teu show então") → vídeo inteiro de
+  64.2s no mesmo estilo. Palavra-chave fica no ar no mínimo 0.55s
+  (`MIN_HOLD`); as primeiras palavras da frase seguinte entram em cascata logo depois.
+- CTA final: "comenta a palavra **DAMA**" com faixa rosa + punch-in, como destaque
+  de CTA ("WHATSAPP" na referência).
