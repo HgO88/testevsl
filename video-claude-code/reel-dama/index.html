@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1920" />
-    <!-- gerado por build/generate.mjs — edite LOCKUPS / regras la, nao aqui -->
+    <!-- gerado por build/generate.mjs — edite o PLAN la, nao aqui -->
     <link rel="stylesheet" href="assets/fonts.css" />
     <script src="vendor/gsap.min.js"></script>
     <style>
@@ -12,19 +12,18 @@
       #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
       #cam { position: absolute; inset: 0; width: 1080px; height: 1920px; }
       #footage { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
-      #caps, #locks { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
-      .cap { position: absolute; left: 90px; top: 1075px; width: 900px; text-align: center; opacity: 0;
-        font-family: Montserrat, sans-serif; font-weight: 600; font-size: 46px; line-height: 1.2; color: #fff; letter-spacing: 0.005em;
-        text-shadow: 0 0 2px rgba(0, 0, 0, 0.6), 0 2px 5px rgba(0, 0, 0, 0.45), 0 4px 18px rgba(0, 0, 0, 0.5); }
-      .lock { position: absolute; left: 90px; top: 930px; width: 900px; height: 360px; opacity: 0; }
-      .script { position: absolute; left: 0; top: 70px; width: 900px; text-align: center; white-space: nowrap;
-        font-family: "Pinyon Script", cursive; font-size: 230px; line-height: 1.1; color: #f6efe4;
-        text-shadow: 0 0 2px rgba(0, 0, 0, 0.45), 0 4px 22px rgba(0, 0, 0, 0.55); }
-      .sm { position: absolute; font-family: Montserrat, sans-serif; font-weight: 600; font-size: 44px; color: #fff; white-space: nowrap;
-        text-shadow: 0 0 2px rgba(0, 0, 0, 0.6), 0 2px 5px rgba(0, 0, 0, 0.45), 0 4px 18px rgba(0, 0, 0, 0.5); }
-      .sm-top { right: 90px; top: 55px; }
-      .sm-bottom { left: 70px; top: 270px; }
-      .fio { position: absolute; left: 250px; top: 335px; width: 400px; height: 4px; border-radius: 2px; background: #c8102e; }
+      #locks { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      /* bloco centrado na altura da blusa (fundo escuro = leitura) */
+      .lock { position: absolute; left: 90px; top: 1130px; width: 900px; display: flex; flex-direction: column; align-items: center;
+        transform: translateY(-50%); opacity: 0; }
+      .script { display: block; text-align: center; white-space: nowrap; font-family: "Pinyon Script", cursive; font-size: 220px; line-height: 1.05;
+        color: #f6efe4; padding: 0 0.12em; text-shadow: 0 0 2px rgba(0, 0, 0, 0.45), 0 4px 22px rgba(0, 0, 0, 0.55); }
+      .sm { display: block; max-width: 860px; font-family: Montserrat, sans-serif; font-weight: 600; font-size: 44px; line-height: 1.2; color: #fff;
+        text-shadow: 0 0 2px rgba(0, 0, 0, 0.6), 0 2px 5px rgba(0, 0, 0, 0.45), 0 4px 18px rgba(0, 0, 0, 0.5); position: relative; z-index: 1; }
+      .top { margin-bottom: -38px; text-align: center; }
+      .bottom { margin-top: -34px; text-align: center; }
+      .w { display: inline-block; opacity: 0; }
+      .fio { display: block; height: 4px; border-radius: 2px; background: #c8102e; margin-top: -6px; }
     </style>
   </head>
   <body>
@@ -32,92 +31,125 @@
       <div id="cam">
         <video id="footage" class="clip" src="assets/bruto.mp4" data-start="0" data-duration="19.5" data-track-index="0" muted playsinline></video>
       </div>
-      <div id="caps">
-        <div class="cap" id="c0">mas na hora</div>
-        <div class="cap" id="c1">você diz sim</div>
-        <div class="cap" id="c2">alguém te pede</div>
-        <div class="cap" id="c3">um favor e</div>
-        <div class="cap" id="c4">você não queria</div>
-        <div class="cap" id="c5">fazer</div>
-        <div class="cap" id="c6">só que você</div>
-        <div class="cap" id="c7">acaba dizendo</div>
-        <div class="cap" id="c8">sim</div>
-        <div class="cap" id="c9">tá tudo bem</div>
-        <div class="cap" id="c10">eu faço</div>
-        <div class="cap" id="c11">termina a</div>
-        <div class="cap" id="c12">ligação</div>
-        <div class="cap" id="c13">você</div>
-        <div class="cap" id="c14">de quem pediu</div>
-        <div class="cap" id="c15">e de você</div>
-        <div class="cap" id="c16">mesmo</div>
-        <div class="cap" id="c17">porque você sabe</div>
-        <div class="cap" id="c18">que você deveria</div>
-        <div class="cap" id="c19">ter dito não</div>
-        <div class="cap" id="c20">mas quando</div>
-        <div class="cap" id="c21">chegou na hora</div>
-      </div>
       <div id="locks">
-      <div class="lock" id="L0">
-        <div class="sm sm-top" id="L0-top">para você que</div>
-        <div class="script" id="L0-script">diz sim</div>
-        
-        <div class="sm sm-bottom" id="L0-bottom">quando quer dizer não</div>
-      </div>
-      <div class="lock" id="L1">
-        <div class="sm sm-top" id="L1-top">morrendo de</div>
-        <div class="script" id="L1-script">raiva</div>
+      <div class="lock" id="g0">
+        <div class="sm top" id="g0-top"><span class="w" id="g0-t0">hoje</span> <span class="w" id="g0-t1">eu</span> <span class="w" id="g0-t2">quero</span> <span class="w" id="g0-t3">falar</span> <span class="w" id="g0-t4">com</span></div>
+        <div class="script" id="g0-script">você</div>
         
         
       </div>
-      <div class="lock" id="L2">
-        <div class="sm sm-top" id="L2-top">você</div>
-        <div class="script" id="L2-script">não conseguiu</div>
-        <div class="fio" id="L2-fio"></div>
+      <div class="lock" id="g1">
+        <div class="sm top" id="g1-top"><span class="w" id="g1-t0">que</span> <span class="w" id="g1-t1">pensa</span> <span class="w" id="g1-t2">em</span> <span class="w" id="g1-t3">dizer</span></div>
+        <div class="script" id="g1-script">não</div>
+        <div class="fio" id="g1-fio"></div>
+        
+      </div>
+      <div class="lock" id="g2">
+        <div class="sm top" id="g2-top"><span class="w" id="g2-t0">mas</span> <span class="w" id="g2-t1">na</span> <span class="w" id="g2-t2">hora</span> <span class="w" id="g2-t3">você</span> <span class="w" id="g2-t4">diz</span></div>
+        <div class="script" id="g2-script">sim</div>
+        
+        
+      </div>
+      <div class="lock" id="g3">
+        <div class="sm top" id="g3-top"><span class="w" id="g3-t0">alguém</span> <span class="w" id="g3-t1">te</span> <span class="w" id="g3-t2">pede</span></div>
+        <div class="script" id="g3-script">um favor</div>
+        
+        
+      </div>
+      <div class="lock" id="g4">
+        <div class="sm top" id="g4-top"><span class="w" id="g4-t0">e</span> <span class="w" id="g4-t1">você</span> <span class="w" id="g4-t2">não</span> <span class="w" id="g4-t3">queria</span></div>
+        <div class="script" id="g4-script">fazer</div>
+        
+        
+      </div>
+      <div class="lock" id="g5">
+        <div class="sm top" id="g5-top"><span class="w" id="g5-t0">só</span> <span class="w" id="g5-t1">que</span> <span class="w" id="g5-t2">você</span> <span class="w" id="g5-t3">acaba</span> <span class="w" id="g5-t4">dizendo</span></div>
+        <div class="script" id="g5-script">sim</div>
+        
+        
+      </div>
+      <div class="lock" id="g6">
+        <div class="sm top" id="g6-top"><span class="w" id="g6-t0">tá</span></div>
+        <div class="script" id="g6-script">tudo bem</div>
+        
+        <div class="sm bottom" id="g6-bottom"><span class="w" id="g6-b0">eu</span> <span class="w" id="g6-b1">faço</span></div>
+      </div>
+      <div class="lock" id="g7">
+        <div class="sm top" id="g7-top"><span class="w" id="g7-t0">termina</span> <span class="w" id="g7-t1">a</span></div>
+        <div class="script" id="g7-script">ligação</div>
+        
+        
+      </div>
+      <div class="lock" id="g8">
+        <div class="sm top" id="g8-top"><span class="w" id="g8-t0">morrendo</span> <span class="w" id="g8-t1">de</span></div>
+        <div class="script" id="g8-script">raiva</div>
+        
+        
+      </div>
+      <div class="lock" id="g9">
+        <div class="sm top" id="g9-top"><span class="w" id="g9-t0">de</span> <span class="w" id="g9-t1">quem</span> <span class="w" id="g9-t2">pediu</span> <span class="w" id="g9-t3">e</span> <span class="w" id="g9-t4">de</span></div>
+        <div class="script" id="g9-script">você mesmo</div>
+        
+        
+      </div>
+      <div class="lock" id="g10">
+        <div class="sm top" id="g10-top"><span class="w" id="g10-t0">porque</span> <span class="w" id="g10-t1">você</span> <span class="w" id="g10-t2">sabe</span> <span class="w" id="g10-t3">que</span> <span class="w" id="g10-t4">você</span> <span class="w" id="g10-t5">deveria</span> <span class="w" id="g10-t6">ter</span> <span class="w" id="g10-t7">dito</span></div>
+        <div class="script" id="g10-script">não</div>
+        <div class="fio" id="g10-fio"></div>
+        
+      </div>
+      <div class="lock" id="g11">
+        <div class="sm top" id="g11-top"><span class="w" id="g11-t0">mas</span> <span class="w" id="g11-t1">quando</span> <span class="w" id="g11-t2">chegou</span> <span class="w" id="g11-t3">na</span> <span class="w" id="g11-t4">hora,</span> <span class="w" id="g11-t5">você</span></div>
+        <div class="script" id="g11-script">não conseguiu</div>
+        
         
       </div>
       </div>
     </div>
     <audio id="voice" src="assets/bruto.mp4" data-start="0" data-duration="19.5" data-track-index="10" data-volume="1"></audio>
-    <audio id="sfx-0" src="assets/sfx/whoosh.wav" data-start="0" data-duration="0.450" data-track-index="11" data-volume="0.12"></audio>
-    <audio id="sfx-1" src="assets/sfx/whoosh.wav" data-start="11.78" data-duration="0.450" data-track-index="12" data-volume="0.12"></audio>
-    <audio id="sfx-2" src="assets/sfx/whoosh.wav" data-start="18.18" data-duration="0.450" data-track-index="11" data-volume="0.12"></audio>
+    <audio id="sfx-0" src="assets/sfx/whoosh.wav" data-start="0.73" data-duration="0.450" data-track-index="11" data-volume="0.09"></audio>
+    <audio id="sfx-1" src="assets/sfx/whoosh.wav" data-start="2.41" data-duration="0.450" data-track-index="12" data-volume="0.09"></audio>
+    <audio id="sfx-2" src="assets/sfx/whoosh.wav" data-start="4.41" data-duration="0.450" data-track-index="11" data-volume="0.09"></audio>
+    <audio id="sfx-3" src="assets/sfx/whoosh.wav" data-start="5.69" data-duration="0.450" data-track-index="12" data-volume="0.09"></audio>
+    <audio id="sfx-4" src="assets/sfx/whoosh.wav" data-start="7.37" data-duration="0.450" data-track-index="11" data-volume="0.09"></audio>
+    <audio id="sfx-5" src="assets/sfx/whoosh.wav" data-start="8.89" data-duration="0.450" data-track-index="12" data-volume="0.09"></audio>
+    <audio id="sfx-6" src="assets/sfx/whoosh.wav" data-start="9.54" data-duration="0.450" data-track-index="11" data-volume="0.09"></audio>
+    <audio id="sfx-7" src="assets/sfx/whoosh.wav" data-start="10.89" data-duration="0.450" data-track-index="12" data-volume="0.09"></audio>
+    <audio id="sfx-8" src="assets/sfx/whoosh.wav" data-start="12.41" data-duration="0.450" data-track-index="11" data-volume="0.09"></audio>
+    <audio id="sfx-9" src="assets/sfx/whoosh.wav" data-start="13.85" data-duration="0.450" data-track-index="12" data-volume="0.09"></audio>
+    <audio id="sfx-10" src="assets/sfx/whoosh.wav" data-start="16.25" data-duration="0.450" data-track-index="11" data-volume="0.09"></audio>
+    <audio id="sfx-11" src="assets/sfx/whoosh.wav" data-start="18.41" data-duration="0.450" data-track-index="12" data-volume="0.09"></audio>
     <script>
-      const C = [{"start":3.12,"end":3.9},{"start":3.92,"end":5.02},{"start":5.04,"end":5.82},{"start":5.84,"end":6.54},{"start":6.56,"end":7.5},{"start":7.52,"end":7.9},{"start":7.92,"end":8.38},{"start":8.4,"end":9.02},{"start":9.04,"end":9.34},{"start":9.36,"end":9.98},{"start":10,"end":10.54},{"start":10.56,"end":11.02},{"start":11.04,"end":11.42},{"start":11.44,"end":11.83},{"start":13.04,"end":13.74},{"start":13.76,"end":14.22},{"start":14.24,"end":14.54},{"start":14.56,"end":15.18},{"start":15.2,"end":15.9},{"start":15.92,"end":16.78},{"start":16.8,"end":17.34},{"start":17.36,"end":18.23}];
-      const L = [{"t0":0,"t1":3.05,"top":true,"bottom":true,"accent":false,"len":7},{"t0":11.88,"t1":13,"top":true,"bottom":false,"accent":false,"len":5},{"t0":18.28,"t1":19.5,"top":true,"bottom":false,"accent":true,"len":13}];
+      const G = [{"id":"g0","start":0,"at":0.88,"end":1.45,"accent":false,"len":4,"top":[0,0.24,0.32,0.56,0.72],"bottom":[]},{"id":"g1","start":1.48,"at":2.56,"end":3.13,"accent":true,"len":3,"top":[1.48,1.52,2,2.24],"bottom":[]},{"id":"g2","start":3.16,"at":4.56,"end":5.13,"accent":false,"len":3,"top":[3.16,3.36,3.6,3.92,4.24],"bottom":[]},{"id":"g3","start":5.16,"at":5.84,"end":6.41,"accent":false,"len":8,"top":[5.16,5.36,5.52],"bottom":[]},{"id":"g4","start":6.44,"at":7.52,"end":8.09,"accent":false,"len":5,"top":[6.44,6.56,6.88,7.04],"bottom":[]},{"id":"g5","start":8.12,"at":9.04,"end":9.61,"accent":false,"len":3,"top":[8.12,8.17,8.24,8.4,8.72],"bottom":[]},{"id":"g6","start":9.64,"at":9.69,"end":10.73,"accent":false,"len":8,"top":[9.64],"bottom":[10,10.16]},{"id":"g7","start":10.76,"at":11.04,"end":11.89,"accent":false,"len":7,"top":[10.76,10.96],"bottom":[]},{"id":"g8","start":11.92,"at":12.56,"end":13.13,"accent":false,"len":5,"top":[11.92,12.4],"bottom":[]},{"id":"g9","start":13.16,"at":14,"end":14.57,"accent":false,"len":10,"top":[13.16,13.2,13.44,13.76,13.92],"bottom":[]},{"id":"g10","start":14.6,"at":16.4,"end":16.97,"accent":true,"len":3,"top":[14.6,14.8,14.96,15.2,15.36,15.52,15.92,16.08],"bottom":[]},{"id":"g11","start":17,"at":18.56,"end":19.5,"accent":false,"len":13,"top":[17,17.04,17.36,17.76,17.92,18.32],"bottom":[]}];
       const CUTS = [4.933,14.6];
       function build() {
-        // caligrafia longa encolhe para caber; as palavras pequenas e o fio vermelho
-        // se encaixam nas bordas da palavra (como "Como usar / Keyframe / para fazer")
+        // encaixe estilo "Como usar / Keyframe / para fazer": pequenas curtas encostam na
+        // borda direita (em cima) / esquerda (embaixo) da caligrafia; frase longa fica centrada
         const ctx = document.createElement("canvas").getContext("2d");
-        ctx.font = "230px 'Pinyon Script'";
-        L.forEach((l, i) => {
-          const el = document.getElementById("L" + i + "-script");
-          let w = ctx.measureText(el.textContent).width, fs = 230;
-          if (w > 840) { fs = Math.floor(230 * 840 / w); w = 840; el.style.fontSize = fs + "px"; }
-          const left = 450 - w / 2, right = 450 + w / 2;
-          const top = document.getElementById("L" + i + "-top");
-          if (top) top.style.right = Math.max(10, 900 - right + 0.04 * w) + "px";
-          const bot = document.getElementById("L" + i + "-bottom");
-          if (bot) bot.style.left = Math.max(10, left + 0.06 * w) + "px";
-          const fio = document.getElementById("L" + i + "-fio");
-          if (fio) { fio.style.left = (450 - w * 0.3) + "px"; fio.style.width = (w * 0.6) + "px"; }
+        G.forEach((g, i) => {
+          const el = document.getElementById(g.id + "-script");
+          ctx.font = "220px 'Pinyon Script'";
+          let w = ctx.measureText(el.textContent).width, fs = 220;
+          if (w > 820) { fs = Math.floor(220 * 820 / w); w = 820; el.style.fontSize = fs + "px"; }
+          w = Math.max(w, 260);
+          // pequenas centradas em cima; a de baixo levemente deslocada para a direita
+          const bot = document.getElementById(g.id + "-bottom");
+          if (bot) bot.style.marginLeft = Math.round(w * 0.25) + "px";
+          const fio = document.getElementById(g.id + "-fio");
+          if (fio) fio.style.width = Math.round(w * 0.55) + "px";
         });
 
         const tl = gsap.timeline({ paused: true });
-        // legenda corrida: aparece suave, some rapido
-        C.forEach((c, i) => {
-          tl.fromTo("#c" + i, { opacity: 0, y: 8, filter: "blur(4px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, c.start);
-          tl.to("#c" + i, { opacity: 0, duration: 0.1, ease: "power1.in" }, Math.max(c.start + 0.2, c.end - 0.1));
-        });
-        // destaques: caligrafia "escrita" da esquerda para a direita, palavras pequenas encaixam depois
-        L.forEach((l, i) => {
-          const id = "#L" + i, d = Math.min(0.9, 0.25 + l.len * 0.06);
-          tl.set(id, { opacity: 1 }, l.t0);
-          tl.fromTo(id + "-script", { clipPath: "inset(0% 100% 0% 0%)", opacity: 0.2 }, { clipPath: "inset(0% 0% 0% 0%)", opacity: 1, duration: d, ease: "power1.inOut" }, l.t0);
-          if (l.top) tl.fromTo(id + "-top", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, l.t0 + 0.15);
-          if (l.bottom) tl.fromTo(id + "-bottom", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, l.t0 + d * 0.7);
-          if (l.accent) tl.fromTo(id + "-fio", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.5, ease: "power2.inOut" }, l.t0 + d * 0.8);
-          if (l.t1 < 19.5 - 0.05) tl.to(id, { opacity: 0, duration: 0.22, ease: "power1.in" }, l.t1 - 0.22);
+        G.forEach((g) => {
+          // escrita rapida o bastante para terminar com folga antes da saida
+          const id = "#" + g.id, d = Math.max(0.25, Math.min(0.5, 0.2 + g.len * 0.03, g.end - g.at - 0.25));
+          tl.set(id, { opacity: 1 }, g.start - 0.01);
+          g.top.forEach((at, i) => tl.fromTo(id + "-t" + i, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.18, ease: "power2.out" }, at));
+          // caligrafia "escrita" da esquerda para a direita
+          tl.fromTo(id + "-script", { clipPath: "inset(-20% 100% -20% 0%)", opacity: 0.3 }, { clipPath: "inset(-20% 0% -20% 0%)", opacity: 1, duration: d, ease: "power1.inOut" }, g.at - 0.05);
+          g.bottom.forEach((at, i) => tl.fromTo(id + "-b" + i, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.18, ease: "power2.out" }, at));
+          if (g.accent) tl.fromTo(id + "-fio", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.45, ease: "power2.inOut" }, g.at + d * 0.6);
+          if (g.end < 19.5 - 0.05) tl.to(id, { opacity: 0, duration: 0.16, ease: "power1.in" }, g.end - 0.16);
         });
         // camera: aproximacao lenta e discreta em cada trecho entre cortes
         [0].concat(CUTS).forEach((s0, i, seg) => {
@@ -128,8 +160,8 @@
         if (window.__hfForceTimelineRebind) window.__hfForceTimelineRebind();
       }
       Promise.all([
-        document.fonts.load("600 46px Montserrat"),
-        document.fonts.load("230px 'Pinyon Script'"),
+        document.fonts.load("600 44px Montserrat"),
+        document.fonts.load("220px 'Pinyon Script'"),
       ]).then(build);
     </script>
   </body>

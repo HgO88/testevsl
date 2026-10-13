@@ -1,7 +1,7 @@
-// Gera index.html — versao 3, no estilo da 2a referencia do cliente (Reel "Keyframe"):
-// legenda corrida pequena (2-3 palavras por vez, Montserrat) e poucos "lockups":
-// palavra grande em caligrafia (Pinyon Script) com palavras pequenas encaixadas.
-// Paleta branco/marfim + preto; vermelho so num fio sob o ultimo destaque.
+// Gera index.html — versao 4: estilo da 2a referencia ("Como usar / Keyframe / para fazer")
+// aplicado em quase toda frase, como pediu o cliente ("enfeitada, porem simples; mais
+// palavras destacadas"). Cada frase: palavras pequenas (Montserrat) no tempo da fala +
+// palavra-chave em caligrafia (Pinyon Script, marfim). Vermelho so num fio sob o "nao".
 // Uso: node build/generate.mjs           (primeiros 19.5s, teste)
 //      DUR=64.2 node build/generate.mjs  (video inteiro)
 import { readFileSync, writeFileSync } from "node:fs";
@@ -11,65 +11,85 @@ const ROOT = new URL("..", import.meta.url).pathname;
 const DUR = +(process.env.DUR || 19.5);
 const words = JSON.parse(readFileSync(ROOT + "media/words.json", "utf8"));
 
-// Destaques ("lockups"). Durante a janela [t0, t1] a legenda corrida some.
-// top: palavras pequenas acima (alinhadas a direita), script: caligrafia, bottom: pequenas abaixo (a esquerda)
-const LOCKUPS_ALL = [
-  { t0: 0.0, t1: 3.05, top: "para você que", script: "diz sim", bottom: "quando quer dizer não" },
-  { t0: 11.88, t1: 13.0, top: "morrendo de", script: "raiva" },
-  { t0: 18.28, t1: 19.5, top: "você", script: "não conseguiu", accent: true },
+// top: pequenas antes da caligrafia; script: caligrafia; bottom: pequenas depois.
+// Os textos sao procurados na transcricao a partir de `from`, na ordem da fala.
+const PLAN_ALL = [
+  { from: 0.0, top: "hoje eu quero falar com", script: "você" },
+  { from: 1.2, top: "que pensa em dizer", script: "não", accent: true },
+  { from: 3.0, top: "mas na hora você diz", script: "sim" },
+  { from: 5.0, top: "alguém te pede", script: "um favor" },
+  { from: 6.3, top: "e você não queria", script: "fazer" },
+  { from: 7.9, top: "só que você acaba dizendo", script: "sim" },
+  { from: 9.3, top: "tá", script: "tudo bem", bottom: "eu faço" },
+  { from: 10.5, top: "termina a", script: "ligação" },
+  { from: 11.8, top: "morrendo de", script: "raiva" },
+  { from: 13.0, top: "de quem pediu e de", script: "você mesmo" },
+  { from: 14.5, top: "porque você sabe que você deveria ter dito", script: "não", accent: true },
+  { from: 16.7, top: "mas quando chegou na hora, você", script: "não conseguiu" },
 ];
-const LOCKUPS = LOCKUPS_ALL.filter((l) => l.t0 < DUR - 0.3).map((l) => ({ ...l, t1: Math.min(l.t1, DUR) }));
+const PLAN = PLAN_ALL.filter((g) => g.from < DUR - 0.5);
 const CUTS = [4.933, 14.6, 19.5, 25.533, 30.067, 40.633, 45.3, 55.1].filter((c) => c < DUR - 0.1);
 
-// palavras que a transcricao errou e que ficam de fora da legenda (inicio em s)
-const SKIP = new Set([11.76]); // "você te morrendo" — o "te" e erro do reconhecimento de fala
-
-// ---- legenda corrida: blocos de ate 3 palavras / 16 letras, quebrando em pontuacao e pausa ----
-const inLockup = (t) => LOCKUPS.some((l) => t >= l.t0 - 0.05 && t < l.t1);
-const chunks = [];
-let cur = null;
-for (const w of words) {
-  if (w.start >= DUR - 0.2) break;
-  if (inLockup(w.start)) { cur = null; continue; }
-  if (SKIP.has(+w.start.toFixed(2))) continue;
-  const text = w.text.replace(/[.,!?;:]+$/, "").toLowerCase();
-  const gap = cur ? w.start - cur.lastEnd : 0;
-  const len = cur ? cur.text.length + 1 + text.length : 0;
-  if (!cur || cur.n >= 3 || len > 16 || cur.hardBreak || gap > 0.3) {
-    cur = { text, start: w.start, lastEnd: w.end, n: 1 };
-    chunks.push(cur);
-  } else {
-    cur.text += " " + text; cur.lastEnd = w.end; cur.n++;
+const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
+let cursor = 0;
+function find(token, from) {
+  for (let i = cursor; i < words.length; i++) {
+    if (words[i].start < from - 0.01) continue;
+    if (norm(words[i].text) === norm(token)) { cursor = i + 1; return words[i]; }
   }
-  cur.hardBreak = /[.,!?;:]$/.test(w.text);
+  throw new Error(`palavra "${token}" nao encontrada depois de ${from}s`);
 }
-chunks.forEach((c, i) => {
-  const next = chunks[i + 1]?.start ?? DUR;
-  const lock = LOCKUPS.find((l) => l.t0 > c.start)?.t0 ?? DUR;
-  c.end = +Math.min(next - 0.02, c.lastEnd + 0.6, lock - 0.05, DUR).toFixed(3);
-  c.start = +c.start.toFixed(3);
-});
+const timed = (text, from) => (text ? text.split(" ").map((t) => ({ text: t, at: find(t, from).start })) : []);
 
-// ---- SFX: so um sopro bem baixo em cada destaque ----
+const groups = PLAN.map((g, gi) => {
+  cursor = 0;
+  const top = timed(g.top, g.from);
+  const sw = timed(g.script, g.from);
+  const bottom = timed(g.bottom, g.from);
+  const at = sw[0].at;
+  return { ...g, id: `g${gi}`, top, bottom, at, start: top.length ? top[0].at : at };
+});
+// caligrafia fica no ar pelo menos MIN_HOLD; se a proxima frase ja comecou, as
+// primeiras palavras dela entram em cascata logo depois
+const MIN_HOLD = 0.6;
+groups.forEach((g, i) => {
+  if (!i) return;
+  const last = Math.max(groups[i - 1].at, ...groups[i - 1].bottom.map((w) => w.at));
+  const earliest = +(last + MIN_HOLD).toFixed(3);
+  if (g.start >= earliest) return;
+  let k = 0;
+  g.top.forEach((w) => { if (w.at < earliest) w.at = +(earliest + 0.05 * k++).toFixed(3); });
+  g.start = earliest;
+  if (g.at < earliest + 0.05 * k) g.at = +(earliest + 0.05 * k).toFixed(3);
+});
+groups.forEach((g, i) => (g.end = i + 1 < groups.length ? +(groups[i + 1].start - 0.03).toFixed(3) : DUR));
+
+// ---- SFX: um sopro bem baixinho quando a caligrafia entra ----
 const wavDur = (f) => +execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", ROOT + f]).toString();
-const sfx = LOCKUPS.map((l) => ({ name: "whoosh", at: Math.max(0, +(l.t0 - 0.1).toFixed(3)), vol: 0.12 }));
+const WH = wavDur("assets/sfx/whoosh.wav");
+const sfxHtml = groups.map((g, i) => {
+  const at = Math.max(0, +(g.at - 0.15).toFixed(3));
+  return `    <audio id="sfx-${i}" src="assets/sfx/whoosh.wav" data-start="${at}" data-duration="${Math.min(WH, DUR - at).toFixed(3)}" data-track-index="${11 + (i % 2)}" data-volume="0.09"></audio>`;
+}).join("\n");
 
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
-const capHtml = chunks.map((c, i) => `        <div class="cap" id="c${i}">${esc(c.text)}</div>`).join("\n");
-const lockHtml = LOCKUPS.map((l, i) => `      <div class="lock" id="L${i}">
-        ${l.top ? `<div class="sm sm-top" id="L${i}-top">${esc(l.top)}</div>` : ""}
-        <div class="script" id="L${i}-script">${esc(l.script)}</div>
-        ${l.accent ? `<div class="fio" id="L${i}-fio"></div>` : ""}
-        ${l.bottom ? `<div class="sm sm-bottom" id="L${i}-bottom">${esc(l.bottom)}</div>` : ""}
+const spans = (ws, id, part) => ws.map((w, i) => `<span class="w" id="${id}-${part}${i}">${esc(w.text)}</span>`).join(" ");
+const lockHtml = groups.map((g) => `      <div class="lock" id="${g.id}">
+        ${g.top.length ? `<div class="sm top" id="${g.id}-top">${spans(g.top, g.id, "t")}</div>` : ""}
+        <div class="script" id="${g.id}-script">${esc(g.script)}</div>
+        ${g.accent ? `<div class="fio" id="${g.id}-fio"></div>` : ""}
+        ${g.bottom.length ? `<div class="sm bottom" id="${g.id}-bottom">${spans(g.bottom, g.id, "b")}</div>` : ""}
       </div>`).join("\n");
-const sfxHtml = sfx.map((s, i) => `    <audio id="sfx-${i}" src="assets/sfx/${s.name}.wav" data-start="${s.at}" data-duration="${Math.min(wavDur(`assets/sfx/${s.name}.wav`), DUR - s.at).toFixed(3)}" data-track-index="${11 + (i % 2)}" data-volume="${s.vol}"></audio>`).join("\n");
+
+const timing = groups.map((g) => ({ id: g.id, start: g.start, at: g.at, end: g.end, accent: !!g.accent, len: g.script.length,
+  top: g.top.map((w) => +w.at.toFixed(3)), bottom: g.bottom.map((w) => +w.at.toFixed(3)) }));
 
 const html = `<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1920" />
-    <!-- gerado por build/generate.mjs — edite LOCKUPS / regras la, nao aqui -->
+    <!-- gerado por build/generate.mjs — edite o PLAN la, nao aqui -->
     <link rel="stylesheet" href="assets/fonts.css" />
     <script src="vendor/gsap.min.js"></script>
     <style>
@@ -78,28 +98,24 @@ const html = `<!doctype html>
       #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
       #cam { position: absolute; inset: 0; width: 1080px; height: 1920px; }
       #footage { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
-      #caps, #locks { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
-      .cap { position: absolute; left: 90px; top: 1075px; width: 900px; text-align: center; opacity: 0;
-        font-family: Montserrat, sans-serif; font-weight: 600; font-size: 46px; line-height: 1.2; color: #fff; letter-spacing: 0.005em;
-        text-shadow: 0 0 2px rgba(0, 0, 0, 0.6), 0 2px 5px rgba(0, 0, 0, 0.45), 0 4px 18px rgba(0, 0, 0, 0.5); }
-      .lock { position: absolute; left: 90px; top: 930px; width: 900px; height: 360px; opacity: 0; }
-      .script { position: absolute; left: 0; top: 70px; width: 900px; text-align: center; white-space: nowrap;
-        font-family: "Pinyon Script", cursive; font-size: 230px; line-height: 1.1; color: #f6efe4;
-        text-shadow: 0 0 2px rgba(0, 0, 0, 0.45), 0 4px 22px rgba(0, 0, 0, 0.55); }
-      .sm { position: absolute; font-family: Montserrat, sans-serif; font-weight: 600; font-size: 44px; color: #fff; white-space: nowrap;
-        text-shadow: 0 0 2px rgba(0, 0, 0, 0.6), 0 2px 5px rgba(0, 0, 0, 0.45), 0 4px 18px rgba(0, 0, 0, 0.5); }
-      .sm-top { right: 90px; top: 55px; }
-      .sm-bottom { left: 70px; top: 270px; }
-      .fio { position: absolute; left: 250px; top: 335px; width: 400px; height: 4px; border-radius: 2px; background: #c8102e; }
+      #locks { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      /* bloco centrado na altura da blusa (fundo escuro = leitura) */
+      .lock { position: absolute; left: 90px; top: 1130px; width: 900px; display: flex; flex-direction: column; align-items: center;
+        transform: translateY(-50%); opacity: 0; }
+      .script { display: block; text-align: center; white-space: nowrap; font-family: "Pinyon Script", cursive; font-size: 220px; line-height: 1.05;
+        color: #f6efe4; padding: 0 0.12em; text-shadow: 0 0 2px rgba(0, 0, 0, 0.45), 0 4px 22px rgba(0, 0, 0, 0.55); }
+      .sm { display: block; max-width: 860px; font-family: Montserrat, sans-serif; font-weight: 600; font-size: 44px; line-height: 1.2; color: #fff;
+        text-shadow: 0 0 2px rgba(0, 0, 0, 0.6), 0 2px 5px rgba(0, 0, 0, 0.45), 0 4px 18px rgba(0, 0, 0, 0.5); position: relative; z-index: 1; }
+      .top { margin-bottom: -38px; text-align: center; }
+      .bottom { margin-top: -34px; text-align: center; }
+      .w { display: inline-block; opacity: 0; }
+      .fio { display: block; height: 4px; border-radius: 2px; background: #c8102e; margin-top: -6px; }
     </style>
   </head>
   <body>
     <div id="root" data-composition-id="main" data-start="0" data-duration="${DUR}" data-width="1080" data-height="1920">
       <div id="cam">
         <video id="footage" class="clip" src="assets/bruto.mp4" data-start="0" data-duration="${DUR}" data-track-index="0" muted playsinline></video>
-      </div>
-      <div id="caps">
-${capHtml}
       </div>
       <div id="locks">
 ${lockHtml}
@@ -108,42 +124,36 @@ ${lockHtml}
     <audio id="voice" src="assets/bruto.mp4" data-start="0" data-duration="${DUR}" data-track-index="10" data-volume="1"></audio>
 ${sfxHtml}
     <script>
-      const C = ${JSON.stringify(chunks.map(({ start, end }) => ({ start, end })))};
-      const L = ${JSON.stringify(LOCKUPS.map(({ t0, t1, top, bottom, accent, script }) => ({ t0, t1, top: !!top, bottom: !!bottom, accent: !!accent, len: script.length })))};
+      const G = ${JSON.stringify(timing)};
       const CUTS = ${JSON.stringify(CUTS)};
       function build() {
-        // caligrafia longa encolhe para caber; as palavras pequenas e o fio vermelho
-        // se encaixam nas bordas da palavra (como "Como usar / Keyframe / para fazer")
+        // encaixe estilo "Como usar / Keyframe / para fazer": pequenas curtas encostam na
+        // borda direita (em cima) / esquerda (embaixo) da caligrafia; frase longa fica centrada
         const ctx = document.createElement("canvas").getContext("2d");
-        ctx.font = "230px 'Pinyon Script'";
-        L.forEach((l, i) => {
-          const el = document.getElementById("L" + i + "-script");
-          let w = ctx.measureText(el.textContent).width, fs = 230;
-          if (w > 840) { fs = Math.floor(230 * 840 / w); w = 840; el.style.fontSize = fs + "px"; }
-          const left = 450 - w / 2, right = 450 + w / 2;
-          const top = document.getElementById("L" + i + "-top");
-          if (top) top.style.right = Math.max(10, 900 - right + 0.04 * w) + "px";
-          const bot = document.getElementById("L" + i + "-bottom");
-          if (bot) bot.style.left = Math.max(10, left + 0.06 * w) + "px";
-          const fio = document.getElementById("L" + i + "-fio");
-          if (fio) { fio.style.left = (450 - w * 0.3) + "px"; fio.style.width = (w * 0.6) + "px"; }
+        G.forEach((g, i) => {
+          const el = document.getElementById(g.id + "-script");
+          ctx.font = "220px 'Pinyon Script'";
+          let w = ctx.measureText(el.textContent).width, fs = 220;
+          if (w > 820) { fs = Math.floor(220 * 820 / w); w = 820; el.style.fontSize = fs + "px"; }
+          w = Math.max(w, 260);
+          // pequenas centradas em cima; a de baixo levemente deslocada para a direita
+          const bot = document.getElementById(g.id + "-bottom");
+          if (bot) bot.style.marginLeft = Math.round(w * 0.25) + "px";
+          const fio = document.getElementById(g.id + "-fio");
+          if (fio) fio.style.width = Math.round(w * 0.55) + "px";
         });
 
         const tl = gsap.timeline({ paused: true });
-        // legenda corrida: aparece suave, some rapido
-        C.forEach((c, i) => {
-          tl.fromTo("#c" + i, { opacity: 0, y: 8, filter: "blur(4px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, c.start);
-          tl.to("#c" + i, { opacity: 0, duration: 0.1, ease: "power1.in" }, Math.max(c.start + 0.2, c.end - 0.1));
-        });
-        // destaques: caligrafia "escrita" da esquerda para a direita, palavras pequenas encaixam depois
-        L.forEach((l, i) => {
-          const id = "#L" + i, d = Math.min(0.9, 0.25 + l.len * 0.06);
-          tl.set(id, { opacity: 1 }, l.t0);
-          tl.fromTo(id + "-script", { clipPath: "inset(0% 100% 0% 0%)", opacity: 0.2 }, { clipPath: "inset(0% 0% 0% 0%)", opacity: 1, duration: d, ease: "power1.inOut" }, l.t0);
-          if (l.top) tl.fromTo(id + "-top", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, l.t0 + 0.15);
-          if (l.bottom) tl.fromTo(id + "-bottom", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, l.t0 + d * 0.7);
-          if (l.accent) tl.fromTo(id + "-fio", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.5, ease: "power2.inOut" }, l.t0 + d * 0.8);
-          if (l.t1 < ${DUR} - 0.05) tl.to(id, { opacity: 0, duration: 0.22, ease: "power1.in" }, l.t1 - 0.22);
+        G.forEach((g) => {
+          // escrita rapida o bastante para terminar com folga antes da saida
+          const id = "#" + g.id, d = Math.max(0.25, Math.min(0.5, 0.2 + g.len * 0.03, g.end - g.at - 0.25));
+          tl.set(id, { opacity: 1 }, g.start - 0.01);
+          g.top.forEach((at, i) => tl.fromTo(id + "-t" + i, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.18, ease: "power2.out" }, at));
+          // caligrafia "escrita" da esquerda para a direita
+          tl.fromTo(id + "-script", { clipPath: "inset(-20% 100% -20% 0%)", opacity: 0.3 }, { clipPath: "inset(-20% 0% -20% 0%)", opacity: 1, duration: d, ease: "power1.inOut" }, g.at - 0.05);
+          g.bottom.forEach((at, i) => tl.fromTo(id + "-b" + i, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.18, ease: "power2.out" }, at));
+          if (g.accent) tl.fromTo(id + "-fio", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.45, ease: "power2.inOut" }, g.at + d * 0.6);
+          if (g.end < ${DUR} - 0.05) tl.to(id, { opacity: 0, duration: 0.16, ease: "power1.in" }, g.end - 0.16);
         });
         // camera: aproximacao lenta e discreta em cada trecho entre cortes
         [0].concat(CUTS).forEach((s0, i, seg) => {
@@ -154,13 +164,12 @@ ${sfxHtml}
         if (window.__hfForceTimelineRebind) window.__hfForceTimelineRebind();
       }
       Promise.all([
-        document.fonts.load("600 46px Montserrat"),
-        document.fonts.load("230px 'Pinyon Script'"),
+        document.fonts.load("600 44px Montserrat"),
+        document.fonts.load("220px 'Pinyon Script'"),
       ]).then(build);
     </script>
   </body>
 </html>
 `;
 writeFileSync(ROOT + "index.html", html);
-chunks.forEach((c) => console.log(c.start.toFixed(2), "-", c.end.toFixed(2), c.text));
-LOCKUPS.forEach((l) => console.log("LOCKUP", l.t0, "-", l.t1, l.top || "", "|", l.script, "|", l.bottom || ""));
+groups.forEach((g) => console.log(g.id, g.start.toFixed(2), "→", g.at.toFixed(2), "-", g.end.toFixed(2), g.top.map((w) => w.text).join(" "), "|", g.script, "|", g.bottom.map((w) => w.text).join(" ")));

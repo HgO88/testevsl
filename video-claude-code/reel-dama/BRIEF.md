@@ -84,3 +84,13 @@ a v2 ficou em `build/generate-v2.mjs`):
 - Caligrafia entra "escrita" da esquerda para a direita; vermelho só num fio
   fino sob o último destaque. SFX: só um sopro a 0.12 em cada destaque.
 - O título de abertura é texto proposto (resume a fala), não dito por ela.
+
+## Revisão 3 — mais destaques (v4)
+
+"Tu colocou uma legenda... tem que ser uma coisa mais enfeitada, porém simples.
+Usa mais palavras destacadas." Agora toda frase é um lockup: palavras pequenas
+(Montserrat 600, palavra a palavra no tempo da fala) + palavra-chave em
+caligrafia (Pinyon Script, marfim, "escrita" da esquerda para a direita em
+0.25–0.5s). Fio vermelho só sob os dois "não". Sopro a 0.09 em cada caligrafia.
+O título de abertura proposto na v3 saiu (as frases dela já abrem o vídeo).
+A v3 fica em `build/generate-v3.mjs`.
