@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1920" />
-    <!-- gerado por build/generate.mjs — edite o PLAN la, nao aqui -->
+    <!-- gerado por build/generate.mjs — edite LOCKUPS / regras la, nao aqui -->
     <link rel="stylesheet" href="assets/fonts.css" />
     <script src="vendor/gsap.min.js"></script>
     <style>
@@ -12,19 +12,19 @@
       #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
       #cam { position: absolute; inset: 0; width: 1080px; height: 1920px; }
       #footage { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
-      #caps { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
-      .grp { position: absolute; left: 60px; top: 960px; width: 960px; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #fff; text-align: center; opacity: 0; }
-      .lead { font-family: Montserrat, sans-serif; font-weight: 500; font-size: 50px; line-height: 1.15; letter-spacing: -0.01em; max-width: 900px; min-height: 58px;
-        text-shadow: 0 0 2px rgba(0, 0, 0, 0.7), 0 2px 4px rgba(0, 0, 0, 0.55), 0 4px 18px rgba(0, 0, 0, 0.6); }
-      .w { display: inline-block; opacity: 0; }
-      .bigwrap { position: relative; display: block; width: max-content; max-width: 960px; }
-      .big { position: relative; display: block; opacity: 0; line-height: 1; white-space: nowrap; font-family: "Cormorant Garamond", serif; color: #fff;
-        text-shadow: 0 0 2px rgba(0, 0, 0, 0.55), 0 4px 22px rgba(0, 0, 0, 0.55); }
-      .s-caps { font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
-      .s-ital, .s-serif, .s-type { font-style: italic; font-weight: 500; letter-spacing: -0.005em; }
-      .s-type { opacity: 1; }
-      .ch { display: inline-block; opacity: 0; }
-      .uline { position: absolute; left: 6%; bottom: -6px; width: 88%; height: 6px; border-radius: 3px; background: #c8102e; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); }
+      #caps, #locks { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+      .cap { position: absolute; left: 90px; top: 1075px; width: 900px; text-align: center; opacity: 0;
+        font-family: Montserrat, sans-serif; font-weight: 600; font-size: 46px; line-height: 1.2; color: #fff; letter-spacing: 0.005em;
+        text-shadow: 0 0 2px rgba(0, 0, 0, 0.6), 0 2px 5px rgba(0, 0, 0, 0.45), 0 4px 18px rgba(0, 0, 0, 0.5); }
+      .lock { position: absolute; left: 90px; top: 930px; width: 900px; height: 360px; opacity: 0; }
+      .script { position: absolute; left: 0; top: 70px; width: 900px; text-align: center; white-space: nowrap;
+        font-family: "Pinyon Script", cursive; font-size: 230px; line-height: 1.1; color: #f6efe4;
+        text-shadow: 0 0 2px rgba(0, 0, 0, 0.45), 0 4px 22px rgba(0, 0, 0, 0.55); }
+      .sm { position: absolute; font-family: Montserrat, sans-serif; font-weight: 600; font-size: 44px; color: #fff; white-space: nowrap;
+        text-shadow: 0 0 2px rgba(0, 0, 0, 0.6), 0 2px 5px rgba(0, 0, 0, 0.45), 0 4px 18px rgba(0, 0, 0, 0.5); }
+      .sm-top { right: 90px; top: 55px; }
+      .sm-bottom { left: 70px; top: 270px; }
+      .fio { position: absolute; left: 250px; top: 335px; width: 400px; height: 4px; border-radius: 2px; background: #c8102e; }
     </style>
   </head>
   <body>
@@ -33,129 +33,103 @@
         <video id="footage" class="clip" src="assets/bruto.mp4" data-start="0" data-duration="19.5" data-track-index="0" muted playsinline></video>
       </div>
       <div id="caps">
-      <div class="grp" id="g0">
-        <div class="lead"><span class="w" id="g0-w0">hoje</span> <span class="w" id="g0-w1">eu</span> <span class="w" id="g0-w2">quero</span> <span class="w" id="g0-w3">falar</span> <span class="w" id="g0-w4">com</span></div>
-        <div class="bigwrap" id="g0-wrap"><div class="big s-ital" id="g0-big" data-text="você">você</div></div>
+        <div class="cap" id="c0">mas na hora</div>
+        <div class="cap" id="c1">você diz sim</div>
+        <div class="cap" id="c2">alguém te pede</div>
+        <div class="cap" id="c3">um favor e</div>
+        <div class="cap" id="c4">você não queria</div>
+        <div class="cap" id="c5">fazer</div>
+        <div class="cap" id="c6">só que você</div>
+        <div class="cap" id="c7">acaba dizendo</div>
+        <div class="cap" id="c8">sim</div>
+        <div class="cap" id="c9">tá tudo bem</div>
+        <div class="cap" id="c10">eu faço</div>
+        <div class="cap" id="c11">termina a</div>
+        <div class="cap" id="c12">ligação</div>
+        <div class="cap" id="c13">você</div>
+        <div class="cap" id="c14">de quem pediu</div>
+        <div class="cap" id="c15">e de você</div>
+        <div class="cap" id="c16">mesmo</div>
+        <div class="cap" id="c17">porque você sabe</div>
+        <div class="cap" id="c18">que você deveria</div>
+        <div class="cap" id="c19">ter dito não</div>
+        <div class="cap" id="c20">mas quando</div>
+        <div class="cap" id="c21">chegou na hora</div>
       </div>
-      <div class="grp" id="g1">
-        <div class="lead"><span class="w" id="g1-w0">que</span> <span class="w" id="g1-w1">pensa</span> <span class="w" id="g1-w2">em</span> <span class="w" id="g1-w3">dizer</span></div>
-        <div class="bigwrap" id="g1-wrap"><div class="big s-caps" id="g1-big" data-text="não">NÃO</div><div class="uline" id="g1-uline"></div></div>
+      <div id="locks">
+      <div class="lock" id="L0">
+        <div class="sm sm-top" id="L0-top">para você que</div>
+        <div class="script" id="L0-script">diz sim</div>
+        
+        <div class="sm sm-bottom" id="L0-bottom">quando quer dizer não</div>
       </div>
-      <div class="grp" id="g2">
-        <div class="lead"><span class="w" id="g2-w0">mas</span> <span class="w" id="g2-w1">na</span> <span class="w" id="g2-w2">hora</span> <span class="w" id="g2-w3">você</span> <span class="w" id="g2-w4">diz</span></div>
-        <div class="bigwrap" id="g2-wrap"><div class="big s-caps" id="g2-big" data-text="sim">SIM</div></div>
+      <div class="lock" id="L1">
+        <div class="sm sm-top" id="L1-top">morrendo de</div>
+        <div class="script" id="L1-script">raiva</div>
+        
+        
       </div>
-      <div class="grp" id="g3">
-        <div class="lead"><span class="w" id="g3-w0">alguém</span> <span class="w" id="g3-w1">te</span> <span class="w" id="g3-w2">pede</span></div>
-        <div class="bigwrap" id="g3-wrap"><div class="big s-serif" id="g3-big" data-text="um favor">um favor</div></div>
-      </div>
-      <div class="grp" id="g4">
-        <div class="lead"><span class="w" id="g4-w0">e</span> <span class="w" id="g4-w1">você</span> <span class="w" id="g4-w2">não</span> <span class="w" id="g4-w3">queria</span></div>
-        <div class="bigwrap" id="g4-wrap"><div class="big s-ital" id="g4-big" data-text="fazer">fazer</div></div>
-      </div>
-      <div class="grp" id="g5">
-        <div class="lead"><span class="w" id="g5-w0">só</span> <span class="w" id="g5-w1">que</span> <span class="w" id="g5-w2">você</span> <span class="w" id="g5-w3">acaba</span> <span class="w" id="g5-w4">dizendo</span></div>
-        <div class="bigwrap" id="g5-wrap"><div class="big s-caps" id="g5-big" data-text="sim">SIM</div></div>
-      </div>
-      <div class="grp" id="g6">
-        <div class="lead"></div>
-        <div class="bigwrap" id="g6-wrap"><div class="big s-type" id="g6-big" data-text="tá tudo bem, eu faço."><span class="ch" id="g6-c0">t</span><span class="ch" id="g6-c1">á</span><span class="ch" id="g6-c2">&nbsp;</span><span class="ch" id="g6-c3">t</span><span class="ch" id="g6-c4">u</span><span class="ch" id="g6-c5">d</span><span class="ch" id="g6-c6">o</span><span class="ch" id="g6-c7">&nbsp;</span><span class="ch" id="g6-c8">b</span><span class="ch" id="g6-c9">e</span><span class="ch" id="g6-c10">m</span><span class="ch" id="g6-c11">,</span><span class="ch" id="g6-c12">&nbsp;</span><span class="ch" id="g6-c13">e</span><span class="ch" id="g6-c14">u</span><span class="ch" id="g6-c15">&nbsp;</span><span class="ch" id="g6-c16">f</span><span class="ch" id="g6-c17">a</span><span class="ch" id="g6-c18">ç</span><span class="ch" id="g6-c19">o</span><span class="ch" id="g6-c20">.</span></div></div>
-      </div>
-      <div class="grp" id="g7">
-        <div class="lead"><span class="w" id="g7-w0">termina</span> <span class="w" id="g7-w1">a</span></div>
-        <div class="bigwrap" id="g7-wrap"><div class="big s-ital" id="g7-big" data-text="ligação">ligação</div></div>
-      </div>
-      <div class="grp" id="g8">
-        <div class="lead"><span class="w" id="g8-w0">morrendo</span> <span class="w" id="g8-w1">de</span></div>
-        <div class="bigwrap" id="g8-wrap"><div class="big s-caps" id="g8-big" data-text="raiva">RAIVA</div></div>
-      </div>
-      <div class="grp" id="g9">
-        <div class="lead"><span class="w" id="g9-w0">de</span> <span class="w" id="g9-w1">quem</span> <span class="w" id="g9-w2">pediu</span> <span class="w" id="g9-w3">e</span></div>
-        <div class="bigwrap" id="g9-wrap"><div class="big s-ital" id="g9-big" data-text="de você mesmo">de você mesmo</div></div>
-      </div>
-      <div class="grp" id="g10">
-        <div class="lead"><span class="w" id="g10-w0">porque</span> <span class="w" id="g10-w1">você</span> <span class="w" id="g10-w2">sabe</span> <span class="w" id="g10-w3">que</span> <span class="w" id="g10-w4">você</span> <span class="w" id="g10-w5">deveria</span> <span class="w" id="g10-w6">ter</span> <span class="w" id="g10-w7">dito</span></div>
-        <div class="bigwrap" id="g10-wrap"><div class="big s-caps" id="g10-big" data-text="não">NÃO</div><div class="uline" id="g10-uline"></div></div>
-      </div>
-      <div class="grp" id="g11">
-        <div class="lead"><span class="w" id="g11-w0">mas</span> <span class="w" id="g11-w1">quando</span> <span class="w" id="g11-w2">chegou</span> <span class="w" id="g11-w3">na</span> <span class="w" id="g11-w4">hora,</span> <span class="w" id="g11-w5">você</span></div>
-        <div class="bigwrap" id="g11-wrap"><div class="big s-serif" id="g11-big" data-text="não conseguiu.">não conseguiu.</div></div>
+      <div class="lock" id="L2">
+        <div class="sm sm-top" id="L2-top">você</div>
+        <div class="script" id="L2-script">não conseguiu</div>
+        <div class="fio" id="L2-fio"></div>
+        
       </div>
       </div>
     </div>
     <audio id="voice" src="assets/bruto.mp4" data-start="0" data-duration="19.5" data-track-index="10" data-volume="1"></audio>
-    <audio id="sfx-0" src="assets/sfx/whoosh.wav" data-start="0.68" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
-    <audio id="sfx-1" src="assets/sfx/impacto.wav" data-start="2.54" data-duration="0.700" data-track-index="11" data-volume="0.16"></audio>
-    <audio id="sfx-2" src="assets/sfx/whoosh.wav" data-start="4.36" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
-    <audio id="sfx-3" src="assets/sfx/whoosh.wav" data-start="5.64" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
-    <audio id="sfx-4" src="assets/sfx/whoosh.wav" data-start="7.32" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
-    <audio id="sfx-5" src="assets/sfx/whoosh.wav" data-start="8.84" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
-    <audio id="sfx-6" src="assets/sfx/whoosh.wav" data-start="10.84" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
-    <audio id="sfx-7" src="assets/sfx/whoosh.wav" data-start="12.36" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
-    <audio id="sfx-8" src="assets/sfx/whoosh.wav" data-start="13.72" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
-    <audio id="sfx-9" src="assets/sfx/impacto.wav" data-start="16.38" data-duration="0.700" data-track-index="11" data-volume="0.16"></audio>
-    <audio id="sfx-10" src="assets/sfx/whoosh.wav" data-start="18.36" data-duration="0.450" data-track-index="11" data-volume="0.14"></audio>
+    <audio id="sfx-0" src="assets/sfx/whoosh.wav" data-start="0" data-duration="0.450" data-track-index="11" data-volume="0.12"></audio>
+    <audio id="sfx-1" src="assets/sfx/whoosh.wav" data-start="11.78" data-duration="0.450" data-track-index="12" data-volume="0.12"></audio>
+    <audio id="sfx-2" src="assets/sfx/whoosh.wav" data-start="18.18" data-duration="0.450" data-track-index="11" data-volume="0.12"></audio>
     <script>
-      const G = [{"id":"g0","style":"ital","at":0.88,"end":1.4,"start":0,"bar":false,"lead":[0,0.24,0.32,0.56,0.72]},{"id":"g1","style":"caps","at":2.56,"end":3.09,"start":1.43,"punch":0.06,"bar":true,"lead":[1.43,1.52,2,2.24]},{"id":"g2","style":"caps","at":4.56,"end":5.08,"start":3.12,"bar":false,"lead":[3.12,3.36,3.6,3.92,4.24]},{"id":"g3","style":"serif","at":5.84,"end":6.37,"start":5.11,"bar":false,"lead":[5.11,5.36,5.52]},{"id":"g4","style":"ital","at":7.52,"end":8.04,"start":6.4,"bar":false,"lead":[6.4,6.56,6.88,7.04]},{"id":"g5","style":"caps","at":9.04,"end":9.56,"start":8.07,"punch":0.04,"bar":false,"lead":[8.07,8.08,8.24,8.4,8.72]},{"id":"g6","style":"type","at":9.59,"end":10.53,"start":9.59,"bar":false,"lead":[],"chars":[9.36,9.43,9.5,9.6,9.64,9.68,9.72,9.76,9.76,9.82,9.88,9.94,10,10,10.07,10.14,10.16,10.23,10.3,10.37,10.44]},{"id":"g7","style":"ital","at":11.04,"end":11.89,"start":10.56,"bar":false,"lead":[10.56,10.96]},{"id":"g8","style":"caps","at":12.56,"end":13.08,"start":11.92,"punch":0.1,"shake":true,"bar":false,"lead":[11.92,12.4]},{"id":"g9","style":"ital","at":13.92,"end":14.53,"start":13.11,"bar":false,"lead":[13.11,13.2,13.44,13.76]},{"id":"g10","style":"caps","at":16.4,"end":16.92,"start":14.56,"punch":0.07,"bar":true,"lead":[14.56,14.8,14.96,15.2,15.36,15.52,15.92,16.08]},{"id":"g11","style":"serif","at":18.56,"end":19.5,"start":16.95,"bar":false,"lead":[16.95,17.04,17.36,17.76,17.92,18.32]}];
+      const C = [{"start":3.12,"end":3.9},{"start":3.92,"end":5.02},{"start":5.04,"end":5.82},{"start":5.84,"end":6.54},{"start":6.56,"end":7.5},{"start":7.52,"end":7.9},{"start":7.92,"end":8.38},{"start":8.4,"end":9.02},{"start":9.04,"end":9.34},{"start":9.36,"end":9.98},{"start":10,"end":10.54},{"start":10.56,"end":11.02},{"start":11.04,"end":11.42},{"start":11.44,"end":11.83},{"start":13.04,"end":13.74},{"start":13.76,"end":14.22},{"start":14.24,"end":14.54},{"start":14.56,"end":15.18},{"start":15.2,"end":15.9},{"start":15.92,"end":16.78},{"start":16.8,"end":17.34},{"start":17.36,"end":18.23}];
+      const L = [{"t0":0,"t1":3.05,"top":true,"bottom":true,"accent":false,"len":7},{"t0":11.88,"t1":13,"top":true,"bottom":false,"accent":false,"len":5},{"t0":18.28,"t1":19.5,"top":true,"bottom":false,"accent":true,"len":13}];
       const CUTS = [4.933,14.6];
-      const MAX = { caps: 150, ital: 170, serif: 170, type: 105 };
-      const FIT = 940;
-      function fontSpec(style, px) {
-        if (style === "caps") return "600 " + px + "px 'Cormorant Garamond'";
-        return "italic 500 " + px + "px 'Cormorant Garamond'";
-      }
       function build() {
+        // caligrafia longa encolhe para caber; as palavras pequenas e o fio vermelho
+        // se encaixam nas bordas da palavra (como "Como usar / Keyframe / para fazer")
         const ctx = document.createElement("canvas").getContext("2d");
-        G.forEach((g) => {
-          const el = document.getElementById(g.id + "-big");
-          const text = g.style === "caps" ? el.dataset.text.toUpperCase() : el.dataset.text;
-          ctx.font = fontSpec(g.style, 100);
-          const spacing = g.style === "caps" ? 0.06 * text.length : 0;
-          const w = ctx.measureText(text).width / 100 + spacing;
-          el.style.fontSize = Math.floor(Math.min(MAX[g.style], FIT / w)) + "px";
+        ctx.font = "230px 'Pinyon Script'";
+        L.forEach((l, i) => {
+          const el = document.getElementById("L" + i + "-script");
+          let w = ctx.measureText(el.textContent).width, fs = 230;
+          if (w > 840) { fs = Math.floor(230 * 840 / w); w = 840; el.style.fontSize = fs + "px"; }
+          const left = 450 - w / 2, right = 450 + w / 2;
+          const top = document.getElementById("L" + i + "-top");
+          if (top) top.style.right = Math.max(10, 900 - right + 0.04 * w) + "px";
+          const bot = document.getElementById("L" + i + "-bottom");
+          if (bot) bot.style.left = Math.max(10, left + 0.06 * w) + "px";
+          const fio = document.getElementById("L" + i + "-fio");
+          if (fio) { fio.style.left = (450 - w * 0.3) + "px"; fio.style.width = (w * 0.6) + "px"; }
         });
 
         const tl = gsap.timeline({ paused: true });
-        const F = 1 / 30;
-        G.forEach((g) => {
-          const grp = "#" + g.id, big = grp + "-big";
-          tl.set(grp, { opacity: 1 }, g.start - 0.01);
-          // linha pequena: palavra a palavra, no tempo da fala (fade curto, sobe pouco)
-          g.lead.forEach((at, i) => {
-            tl.fromTo(grp + "-w" + i, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.18, ease: "power2.out" }, at);
-          });
-          // palavra-chave: entra suave, com leve desfoque que se resolve
-          const t = g.at - 0.06;
-          if (g.style === "type") {
-            g.chars.forEach((at, i) => {
-              tl.fromTo(grp + "-c" + i, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "none" }, at);
-            });
-          } else {
-            tl.fromTo(big, { opacity: 0, y: 16, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.38, ease: "power2.out" }, t);
-          }
-          if (g.bar) {
-            tl.fromTo(grp + "-uline", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.4, ease: "power2.inOut" }, t + 0.2);
-          }
-          // saida: fade curto
-          if (g.end < 19.5 - 0.05) {
-            tl.to(grp, { opacity: 0, duration: 0.14, ease: "power1.in" }, g.end - 0.14);
-          }
+        // legenda corrida: aparece suave, some rapido
+        C.forEach((c, i) => {
+          tl.fromTo("#c" + i, { opacity: 0, y: 8, filter: "blur(4px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, c.start);
+          tl.to("#c" + i, { opacity: 0, duration: 0.1, ease: "power1.in" }, Math.max(c.start + 0.2, c.end - 0.1));
         });
-
-        // camera: so uma aproximacao lenta e discreta em cada trecho entre cortes
-        const SEG = [0].concat(CUTS);
-        SEG.forEach((s0, i) => {
-          const s1 = i + 1 < SEG.length ? SEG[i + 1] : 19.5;
-          if (i === 0) tl.fromTo("#cam", { scale: 1, transformOrigin: "50% 32%" }, { scale: 1.03, duration: s1 - s0, ease: "none" }, s0);
-          else tl.fromTo("#cam", { scale: 1 }, { scale: 1.03, duration: s1 - s0, ease: "none", immediateRender: false }, s0);
+        // destaques: caligrafia "escrita" da esquerda para a direita, palavras pequenas encaixam depois
+        L.forEach((l, i) => {
+          const id = "#L" + i, d = Math.min(0.9, 0.25 + l.len * 0.06);
+          tl.set(id, { opacity: 1 }, l.t0);
+          tl.fromTo(id + "-script", { clipPath: "inset(0% 100% 0% 0%)", opacity: 0.2 }, { clipPath: "inset(0% 0% 0% 0%)", opacity: 1, duration: d, ease: "power1.inOut" }, l.t0);
+          if (l.top) tl.fromTo(id + "-top", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, l.t0 + 0.15);
+          if (l.bottom) tl.fromTo(id + "-bottom", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, l.t0 + d * 0.7);
+          if (l.accent) tl.fromTo(id + "-fio", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.5, ease: "power2.inOut" }, l.t0 + d * 0.8);
+          if (l.t1 < 19.5 - 0.05) tl.to(id, { opacity: 0, duration: 0.22, ease: "power1.in" }, l.t1 - 0.22);
+        });
+        // camera: aproximacao lenta e discreta em cada trecho entre cortes
+        [0].concat(CUTS).forEach((s0, i, seg) => {
+          const s1 = i + 1 < seg.length ? seg[i + 1] : 19.5;
+          tl.fromTo("#cam", { scale: 1, transformOrigin: "50% 32%" }, { scale: 1.03, duration: s1 - s0, ease: "none", immediateRender: i === 0 }, s0);
         });
         window.__timelines["main"] = tl;
         if (window.__hfForceTimelineRebind) window.__hfForceTimelineRebind();
       }
       Promise.all([
-        document.fonts.load("500 50px Montserrat"),
-        document.fonts.load("600 100px 'Cormorant Garamond'"),
-        document.fonts.load("italic 500 100px 'Cormorant Garamond'"),
+        document.fonts.load("600 46px Montserrat"),
+        document.fonts.load("230px 'Pinyon Script'"),
       ]).then(build);
     </script>
   </body>

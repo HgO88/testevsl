@@ -68,3 +68,19 @@ edição extravagante. Mudanças:
 - Animação: fades curtos com leve subida/desfoque; sem slam, tremida, punch-in
   ou jump zoom. Câmera só com aproximação lenta (1.00 → 1.03) por trecho.
 - De volta ao teste de 20s (`node build/generate.mjs`; `DUR=64.2` para o inteiro).
+
+## Revisão 2 — nova referência ("Keyframe", CapCut)
+
+Cliente achou que dava para melhorar, escolheu "legenda mais refinada" e mandou
+uma 2ª referência. Estilo extraído e aplicado (versão 3, `build/generate.mjs`;
+a v2 ficou em `build/generate-v2.mjs`):
+
+- Legenda corrida pequena: Montserrat 600, 46px, minúscula, 2–3 palavras por
+  vez, fade curto, na altura da blusa.
+- Poucos destaques ("lockups"): palavra grande em caligrafia (Pinyon Script,
+  marfim) com palavras pequenas encaixadas acima/abaixo, como "Como usar /
+  Keyframe / para fazer". Nos 20s: título "para você que / diz sim / quando quer
+  dizer não", "morrendo de / raiva" e "você / não conseguiu".
+- Caligrafia entra "escrita" da esquerda para a direita; vermelho só num fio
+  fino sob o último destaque. SFX: só um sopro a 0.12 em cada destaque.
+- O título de abertura é texto proposto (resume a fala), não dito por ela.
